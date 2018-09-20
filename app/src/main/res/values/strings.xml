@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">mpcw</string>
+    <string name="Connection">Connection</string>
+    <string name="Hostname">Hostname</string>
+    <string name="Authentication">Authentication</string>
+    <string name="Enabled">Enabled</string>
+    <string name="Username">Username</string>
+    <string name="Password">Password</string>
+</resources>
