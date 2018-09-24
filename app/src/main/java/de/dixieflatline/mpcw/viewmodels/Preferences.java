@@ -26,7 +26,6 @@ public class Preferences extends BaseObservable
     private String hostname;
     private int port;
     private boolean authenticationEnabled = false;
-    private String username;
     private String password;
 
     @Bindable
@@ -63,18 +62,6 @@ public class Preferences extends BaseObservable
     {
         this.authenticationEnabled = authenticationEnabled;
         notifyPropertyChanged(BR.authenticationEnabled);
-    }
-
-    @Bindable
-    public String getUsername()
-    {
-        return username;
-    }
-
-    public void setUsername(String username)
-    {
-        this.username = username;
-        notifyPropertyChanged(BR.username);
     }
 
     @Bindable

@@ -73,16 +73,6 @@
                         android:checked="@={preferences.authenticationEnabled}" />
 
                     <EditText
-                        android:id="@+id/editUsername"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="text"
-                        android:hint="@string/Username"
-                        android:text="@={preferences.username}"
-                        app:visibleIf="@{preferences.authenticationEnabled}"/>
-
-                    <EditText
                         android:id="@+id/editPassword"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
