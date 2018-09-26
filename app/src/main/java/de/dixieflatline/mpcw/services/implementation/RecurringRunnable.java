@@ -14,17 +14,31 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.services;
+package de.dixieflatline.mpcw.services.implementation;
 
-public interface IPlayerService
+public class RecurringRunnable implements Runnable
 {
-    void startAsync();
-    void stopService();
-    void next();
-    void previous();
-    void play();
-    void pause();
-    void stop();
-    void addListener(IPlayerListener listener);
-    void removeListener(IPlayerListener listener);
+    private final long interval;
+    private final Runnable runnable;
+    private long lastDone;
+
+    public RecurringRunnable(Runnable runnable, long interval)
+    {
+        this.interval = interval;
+        this.runnable = runnable;
+    }
+
+    public boolean due()
+    {
+        long now = System.nanoTime() / 1000000;
+
+        return lastDone == 0 || now - lastDone >= interval;
+    }
+
+    @Override
+    public void run()
+    {
+        runnable.run();
+        lastDone = System.nanoTime() / 1000000;
+    }
 }

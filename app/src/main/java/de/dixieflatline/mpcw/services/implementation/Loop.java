@@ -14,17 +14,39 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.services;
+package de.dixieflatline.mpcw.services.implementation;
 
-public interface IPlayerService
+import java.util.*;
+
+public class Loop
 {
-    void startAsync();
-    void stopService();
-    void next();
-    void previous();
-    void play();
-    void pause();
-    void stop();
-    void addListener(IPlayerListener listener);
-    void removeListener(IPlayerListener listener);
+    private final List<Runnable> tasks = new ArrayList<Runnable>();
+
+    public void addTimeout(Runnable runnable)
+    {
+        tasks.add(runnable);
+    }
+
+    public void addInterval(Runnable runnable, long millis)
+    {
+        tasks.add(new RecurringRunnable(runnable, millis));
+    }
+
+    public void iterate()
+    {
+        for(Runnable runnable : tasks)
+        {
+            boolean run = true;
+
+            if(runnable instanceof RecurringRunnable)
+            {
+                run = ((RecurringRunnable)runnable).due();
+            }
+
+            if(run)
+            {
+                runnable.run();
+            }
+        }
+    }
 }

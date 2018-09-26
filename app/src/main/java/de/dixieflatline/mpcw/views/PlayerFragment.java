@@ -18,17 +18,13 @@ package de.dixieflatline.mpcw.views;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 
 import javax.inject.Inject;
 
 import de.dixieflatline.mpcw.R;
 import de.dixieflatline.mpcw.databinding.FragmentPlayerBinding;
-import de.dixieflatline.mpcw.services.EPlayerStatus;
-import de.dixieflatline.mpcw.services.IPlayerListener;
-import de.dixieflatline.mpcw.services.IPlayerService;
+import de.dixieflatline.mpcw.services.*;
 import de.dixieflatline.mpcw.viewmodels.Player;
 
 public class PlayerFragment extends AInjectableFragment implements IPlayerListener
@@ -56,7 +52,14 @@ public class PlayerFragment extends AInjectableFragment implements IPlayerListen
     {
         super.onStart();
 
-        playerService.connectAsync();
+        try
+        {
+            playerService.startAsync();
+        }
+        catch(Exception ex)
+        {
+            // TODO
+        }
     }
 
     @Override
@@ -64,7 +67,7 @@ public class PlayerFragment extends AInjectableFragment implements IPlayerListen
     {
         super.onPause();
 
-        playerService.disconnect();
+        playerService.stop();
     }
 
     @Override

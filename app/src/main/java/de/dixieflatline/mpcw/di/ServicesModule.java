@@ -23,8 +23,9 @@ import dagger.Provides;
 
 import de.dixieflatline.mpcw.services.IPlayerService;
 import de.dixieflatline.mpcw.services.IPreferencesService;
-import de.dixieflatline.mpcw.services.implementation.MPDPlayerService;
+import de.dixieflatline.mpcw.services.implementation.PlayerService;
 import de.dixieflatline.mpcw.services.implementation.SharedPreferencesService;
+import de.dixieflatline.mpcw.viewmodels.*;
 
 import javax.inject.Singleton;
 
@@ -49,6 +50,8 @@ public class ServicesModule
     @Singleton
     public IPlayerService providePlayerService()
     {
-        return new MPDPlayerService();
+        IPreferencesService preferencesService = new SharedPreferencesService(context);
+
+        return new PlayerService(preferencesService.load());
     }
 }

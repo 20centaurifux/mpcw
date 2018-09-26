@@ -14,17 +14,33 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.services;
+package de.dixieflatline.mpcw.services.implementation;
 
-public interface IPlayerService
+import java.io.*;
+import java.net.*;
+
+public final class ConnectionStringBuilder
 {
-    void startAsync();
-    void stopService();
-    void next();
-    void previous();
-    void play();
-    void pause();
-    void stop();
-    void addListener(IPlayerListener listener);
-    void removeListener(IPlayerListener listener);
+    public static String build(String host, int port)
+    {
+        return String.format("mpd://%s:%d", host, port);
+    }
+
+    public static String buildWithPassword(String host, int port, String password) throws URISyntaxException
+    {
+        String connectionString = build(host, port) + "?password=";
+
+        try
+        {
+            String parameter = URLEncoder.encode(password, "UTF-8");
+
+            connectionString += parameter;
+        }
+        catch(UnsupportedEncodingException ex)
+        {
+            throw new URISyntaxException(connectionString + password, ex.getMessage());
+        }
+
+        return connectionString;
+    }
 }

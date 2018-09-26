@@ -14,17 +14,12 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.services;
+package de.dixieflatline.mpcw.services.implementation;
 
-public interface IPlayerService
+import de.dixieflatline.mpcw.client.*;
+
+public interface IConnectionListener
 {
-    void startAsync();
-    void stopService();
-    void next();
-    void previous();
-    void play();
-    void pause();
-    void stop();
-    void addListener(IPlayerListener listener);
-    void removeListener(IPlayerListener listener);
+    void onConnected(IConnection connection);
+    void onDisconnected();
 }
