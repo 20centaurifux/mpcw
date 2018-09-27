@@ -18,7 +18,7 @@ package de.dixieflatline.mpcw.services.implementation;
 
 import android.util.*;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.concurrent.*;
 
 import de.dixieflatline.mpcw.client.*;
@@ -27,6 +27,7 @@ import de.dixieflatline.mpcw.viewmodels.*;
 
 public class PlayerService implements IPlayerService
 {
+    private final List<IPlayerListener> playerListeners = new ArrayList<IPlayerListener>();
     private final AsyncConnectionLoop loop;
     private final SynchronizePlayerStatus synchronizePlayerStatus;
     private final Semaphore semaphore = new Semaphore(1);
@@ -114,40 +115,28 @@ public class PlayerService implements IPlayerService
     }
 
     @Override
-    public void play()
+    public void toggle()
     {
         loop.addTimeout(new APlayerCommand()
         {
             @Override
             protected void run(IPlayer player) throws CommunicationException, ProtocolException
             {
-                player.play();
-            }
-        });
-    }
+                Status status = player.getStatus();
+                EPlayerStatus newStatus;
 
-    @Override
-    public void pause()
-    {
-        loop.addTimeout(new APlayerCommand()
-        {
-            @Override
-            protected void run(IPlayer player) throws CommunicationException, ProtocolException
-            {
-                player.pause();
-            }
-        });
-    }
+                if(status.getState() == EState.Play)
+                {
+                    player.pause();
+                    newStatus = EPlayerStatus.Pause;
+                }
+                else
+                {
+                    player.play();
+                    newStatus = EPlayerStatus.Play;
+                }
 
-    @Override
-    public void stop()
-    {
-        loop.addTimeout(new APlayerCommand()
-        {
-            @Override
-            protected void run(IPlayer player) throws CommunicationException, ProtocolException
-            {
-                player.stop();
+                playerListeners.forEach((l) -> l.onStatusChanged(newStatus));
             }
         });
     }
@@ -167,12 +156,14 @@ public class PlayerService implements IPlayerService
     @Override
     public void addPlayerListener(IPlayerListener listener)
     {
+        playerListeners.add(listener);
         synchronizePlayerStatus.addListener(listener);
     }
 
     @Override
     public void removePlayerListener(IPlayerListener listener)
     {
+        playerListeners.remove(listener);
         synchronizePlayerStatus.removeListener(listener);
     }
 }

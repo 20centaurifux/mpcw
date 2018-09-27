@@ -19,8 +19,12 @@ package de.dixieflatline.mpcw;
 import android.databinding.BindingAdapter;
 import android.databinding.InverseBindingAdapter;
 
+import android.graphics.drawable.*;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.*;
+
+import de.dixieflatline.mpcw.services.*;
+import de.dixieflatline.mpcw.viewmodels.*;
 
 public class BindingAdapters
 {
@@ -93,5 +97,22 @@ public class BindingAdapters
         catch(Exception ex) { }
 
         return n;
+    }
+
+    @BindingAdapter("playerStatusBackground")
+    public static void setBackgroundFromPlayerStatus(View view, int status)
+    {
+        int id;
+
+        if(status == Player.PLAY)
+        {
+            id = android.R.drawable.ic_media_pause;
+        }
+        else
+        {
+            id = android.R.drawable.ic_media_play;
+        }
+
+        view.setBackground(view.getContext().getDrawable(id));
     }
 }

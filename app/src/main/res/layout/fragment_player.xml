@@ -70,11 +70,12 @@
                         app:enableIf="@{player.hasPrevious}" />
 
                     <Button
+                        android:id="@+id/togglePlayer"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_gravity="bottom|center_horizontal"
-                        android:background="@android:drawable/ic_media_play"
+                        app:playerStatusBackground="@{player.status}" />
                         app:enableIf="@{player.status != Player.EJECT}" />
 
                     <Button
@@ -86,8 +87,6 @@
                         android:background="@android:drawable/ic_media_next"
                         app:enableIf="@{player.hasNext}" />
                 </LinearLayout>
-
-
             </LinearLayout>
         </FrameLayout>
     </android.support.wear.widget.BoxInsetLayout>

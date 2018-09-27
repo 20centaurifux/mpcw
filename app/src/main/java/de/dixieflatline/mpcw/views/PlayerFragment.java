@@ -63,6 +63,15 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
             }
         });
 
+        view.findViewById(R.id.togglePlayer).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                playerService.toggle();
+            }
+        });
+
         view.findViewById(R.id.nextSong).setOnClickListener(new View.OnClickListener()
         {
             @Override
