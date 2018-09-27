@@ -16,6 +16,8 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.services;
 
+import de.dixieflatline.mpcw.services.implementation.*;
+
 public interface IPlayerService
 {
     void startAsync();
@@ -25,6 +27,8 @@ public interface IPlayerService
     void play();
     void pause();
     void stop();
-    void addListener(IPlayerListener listener);
-    void removeListener(IPlayerListener listener);
+    void addConnectionListener(IConnectionListener listener);
+    void removeConnectionListener(IConnectionListener listener);
+    void addPlayerListener(IPlayerListener listener);
+    void removePlayerListener(IPlayerListener listener);
 }

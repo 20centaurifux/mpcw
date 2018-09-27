@@ -23,10 +23,10 @@ import de.dixieflatline.mpcw.BR;
 
 public class Player extends BaseObservable
 {
-    public static final int PLAYING = 0;
+    public static final int PLAY = 0;
     public static final int PAUSE = 1;
-    public static final int STOPPED = 2;
-    public static final int EJECTED = 3;
+    public static final int STOP = 2;
+    public static final int EJECT = 3;
 
     private int status;
     private String artist;

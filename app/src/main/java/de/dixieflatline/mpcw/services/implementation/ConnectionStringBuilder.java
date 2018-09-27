@@ -19,6 +19,8 @@ package de.dixieflatline.mpcw.services.implementation;
 import java.io.*;
 import java.net.*;
 
+import de.dixieflatline.mpcw.viewmodels.*;
+
 public final class ConnectionStringBuilder
 {
     public static String build(String host, int port)
@@ -39,6 +41,32 @@ public final class ConnectionStringBuilder
         catch(UnsupportedEncodingException ex)
         {
             throw new URISyntaxException(connectionString + password, ex.getMessage());
+        }
+
+        return connectionString;
+    }
+
+    public static String fromPreferences(Preferences preferences)
+    {
+        String connectionString;
+
+        try
+        {
+            if(preferences.getAuthenticationEnabled())
+            {
+                connectionString = ConnectionStringBuilder.buildWithPassword(preferences.getHostname(),
+                                                                             preferences.getPort(),
+                                                                             preferences.getPassword());
+            }
+            else
+            {
+                connectionString = ConnectionStringBuilder.build(preferences.getHostname(),
+                                                                 preferences.getPort());
+            }
+        }
+        catch(URISyntaxException ex)
+        {
+            connectionString = null;
         }
 
         return connectionString;

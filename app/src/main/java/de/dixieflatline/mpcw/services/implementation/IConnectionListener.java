@@ -20,6 +20,6 @@ import de.dixieflatline.mpcw.client.*;
 
 public interface IConnectionListener
 {
-    void onConnected(IConnection connection);
+    void onConnected();
     void onDisconnected();
 }

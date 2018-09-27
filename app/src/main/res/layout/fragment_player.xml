@@ -66,7 +66,7 @@
                         android:layout_weight="1"
                         android:layout_gravity="bottom|center_horizontal"
                         android:background="@android:drawable/ic_media_previous"
-                        app:enableIf="@{player.hasNext}" />
+                        app:enableIf="@{player.hasPrevious}" />
 
                     <Button
                         android:layout_width="fill_parent"
@@ -74,7 +74,7 @@
                         android:layout_weight="1"
                         android:layout_gravity="bottom|center_horizontal"
                         android:background="@android:drawable/ic_media_play"
-                        app:enableIf="@{player.status != Player.EJECTED}" />
+                        app:enableIf="@{player.status != Player.EJECT}" />
 
                     <Button
                         android:layout_width="fill_parent"

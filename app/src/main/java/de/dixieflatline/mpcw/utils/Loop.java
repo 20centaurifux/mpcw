@@ -14,38 +14,47 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.services.implementation;
+package de.dixieflatline.mpcw.utils;
 
 import java.util.*;
 
 public class Loop
 {
-    private final List<Runnable> tasks = new ArrayList<Runnable>();
+    private final List<RecurringRunnable> recurringRunnables = new ArrayList<RecurringRunnable>();
+    private final Queue<Runnable> runnables = new LinkedList<Runnable>();
 
-    public void addTimeout(Runnable runnable)
+    public void add(Runnable runnable)
     {
-        tasks.add(runnable);
+        runnables.add(runnable);
     }
 
-    public void addInterval(Runnable runnable, long millis)
+    public void add(RecurringRunnable runnable)
     {
-        tasks.add(new RecurringRunnable(runnable, millis));
+        recurringRunnables.add(runnable);
     }
 
     public void iterate()
     {
-        for(Runnable runnable : tasks)
+        for(RecurringRunnable runnable : recurringRunnables)
         {
-            boolean run = true;
-
-            if(runnable instanceof RecurringRunnable)
-            {
-                run = ((RecurringRunnable)runnable).due();
-            }
-
-            if(run)
+            if(runnable.due())
             {
                 runnable.run();
+            }
+        }
+
+        while(!runnables.isEmpty())
+        {
+            Runnable runnable = runnables.peek();
+
+            try
+            {
+                runnable.run();
+                runnables.remove();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
         }
     }

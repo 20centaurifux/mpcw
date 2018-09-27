@@ -25,9 +25,10 @@ import javax.inject.Inject;
 import de.dixieflatline.mpcw.R;
 import de.dixieflatline.mpcw.databinding.FragmentPlayerBinding;
 import de.dixieflatline.mpcw.services.*;
+import de.dixieflatline.mpcw.services.implementation.*;
 import de.dixieflatline.mpcw.viewmodels.Player;
 
-public class PlayerFragment extends AInjectableFragment implements IPlayerListener
+public class PlayerFragment extends AInjectableFragment implements IConnectionListener, IPlayerListener
 {
     private FragmentPlayerBinding binding;
     private Player player;
@@ -42,7 +43,8 @@ public class PlayerFragment extends AInjectableFragment implements IPlayerListen
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_player, container, false);
         binding.setPlayer(player);
 
-        playerService.addListener(this);
+        playerService.addConnectionListener(this);
+        playerService.addPlayerListener(this);
 
         return binding.getRoot();
     }
@@ -52,14 +54,7 @@ public class PlayerFragment extends AInjectableFragment implements IPlayerListen
     {
         super.onStart();
 
-        try
-        {
-            playerService.startAsync();
-        }
-        catch(Exception ex)
-        {
-            // TODO
-        }
+        playerService.startAsync();
     }
 
     @Override
@@ -70,14 +65,32 @@ public class PlayerFragment extends AInjectableFragment implements IPlayerListen
         playerService.stop();
     }
 
-    @Override
-    public void onConnectionChanged(boolean isConnected) { player.setConnected(isConnected); }
 
     @Override
-    public void onArtistChanged(String artist) { player.setArtist(artist); }
+    public void onConnected()
+    {
+        player.setConnected(true);
+    }
 
     @Override
-    public void onTitleChanged(String title) { player.setTitle(title); };
+    public void onDisconnected()
+    {
+        player.setConnected(false);
+    }
+
+    @Override
+    public void onPlaylistChanged(boolean hasPrevious, boolean hasNext)
+    {
+        player.setHasPrevious(hasPrevious);
+        player.setHasNext(hasNext);
+    }
+
+    @Override
+    public void onSongChanged(String artist, String title)
+    {
+        player.setArtist(artist);
+        player.setTitle(title);
+    }
 
     @Override
     public void onStatusChanged(EPlayerStatus status)
@@ -88,25 +101,13 @@ public class PlayerFragment extends AInjectableFragment implements IPlayerListen
                 player.setStatus(Player.PAUSE);
                 break;
 
-            case Playing:
-                player.setStatus(Player.PLAYING);
+            case Play:
+                player.setStatus(Player.PLAY);
                 break;
 
-            case Stopped:
-                player.setStatus(Player.STOPPED);
+            case Stop:
+                player.setStatus(Player.STOP);
                 break;
         }
-    }
-
-    @Override
-    public void onHasPreviousChanged(boolean hasPrevious) { player.setHasPrevious(hasPrevious); }
-
-    @Override
-    public void onHasNextChanged(boolean hasNext) { player.setHasNext(hasNext); }
-
-    @Override
-    public void onException(Exception reason)
-    {
-
     }
 }

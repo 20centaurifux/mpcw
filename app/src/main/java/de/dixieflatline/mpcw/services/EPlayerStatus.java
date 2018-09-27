@@ -18,8 +18,8 @@ package de.dixieflatline.mpcw.services;
 
 public enum EPlayerStatus
 {
-    Playing,
+    Play,
     Pause,
-    Stopped,
-    Ejected
+    Stop,
+    Eject
 }

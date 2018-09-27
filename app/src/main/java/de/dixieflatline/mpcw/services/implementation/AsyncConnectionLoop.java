@@ -19,14 +19,17 @@ package de.dixieflatline.mpcw.services.implementation;
 import android.util.*;
 
 import java.util.*;
+import java.util.concurrent.*;
 
 import de.dixieflatline.mpcw.client.*;
 import de.dixieflatline.mpcw.client.Connection;
+import de.dixieflatline.mpcw.utils.*;
 
 public class AsyncConnectionLoop implements Runnable
 {
     private final List<IConnectionListener> listeners = new ArrayList<IConnectionListener>();
     private final IConnection connection;
+    private final Queue<Runnable> queue = new ConcurrentLinkedDeque<Runnable>();
     private final Loop loop = new Loop();
     private boolean oldState;
 
@@ -52,12 +55,14 @@ public class AsyncConnectionLoop implements Runnable
 
     public void addTimeout(IConnectionHandler handler)
     {
-        loop.addTimeout(wrapConnectionHandler(handler));
+        queue.add(wrapConnectionHandler(handler));
     }
 
     public void addInterval(IConnectionHandler handler, long millis)
     {
-        loop.addInterval(wrapConnectionHandler(handler), millis);
+        Runnable runnable = wrapConnectionHandler(handler);
+
+        queue.add(new RecurringRunnable(runnable, millis));
     }
 
     private Runnable wrapConnectionHandler(IConnectionHandler handler)
@@ -77,6 +82,20 @@ public class AsyncConnectionLoop implements Runnable
     {
         while(!Thread.currentThread().isInterrupted())
         {
+            while(!queue.isEmpty())
+            {
+                Runnable runnable = queue.poll();
+
+                if(runnable instanceof RecurringRunnable)
+                {
+                    loop.add((RecurringRunnable)runnable);
+                }
+                else
+                {
+                    loop.add(runnable);
+                }
+            }
+
             if(connection != null)
             {
                 try
@@ -114,7 +133,7 @@ public class AsyncConnectionLoop implements Runnable
 
             if(newState)
             {
-                listeners.forEach((l) -> l.onConnected(connection));
+                listeners.forEach((l) -> l.onConnected());
             }
             else
             {

@@ -18,201 +18,72 @@ package de.dixieflatline.mpcw.services.implementation;
 
 import android.util.*;
 
-import java.net.*;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.*;
-import java.util.concurrent.locks.*;
+import java.util.concurrent.*;
 
-import de.dixieflatline.mpcw.client.*;
 import de.dixieflatline.mpcw.services.*;
 import de.dixieflatline.mpcw.viewmodels.*;
 
-public class PlayerService implements IPlayerService, IConnectionListener
+public class PlayerService implements IPlayerService
 {
-    private final ArrayList<IPlayerListener> listeners = new ArrayList<IPlayerListener>();
-    private String connectionString;
-    private final Lock lock = new ReentrantLock();
+    private final AsyncConnectionLoop loop;
+    private final SynchronizePlayerStatus synchronizePlayerStatus;
+    private final Semaphore semaphore = new Semaphore(1);
     private boolean running;
     private Thread thread;
-    private final AtomicReference<IConnection> connection = new AtomicReference<IConnection>();
 
     public PlayerService(Preferences preferences)
     {
-        try
-        {
-            if(preferences.getAuthenticationEnabled())
-            {
-                connectionString = ConnectionStringBuilder.buildWithPassword(preferences.getHostname(),
-                                                                             preferences.getPort(),
-                                                                             preferences.getPassword());
-            }
-            else
-            {
-                connectionString = ConnectionStringBuilder.build(preferences.getHostname(),
-                                                                 preferences.getPort());
-            }
-        }
-        catch(URISyntaxException ex)
-        {
-            connectionString = null;
-        }
+        String connectionString = ConnectionStringBuilder.fromPreferences(preferences);
+
+        loop = new AsyncConnectionLoop(connectionString);
+
+        synchronizePlayerStatus = new SynchronizePlayerStatus();
+
+        loop.addInterval(synchronizePlayerStatus, 1000);
     }
 
     @Override
     public void startAsync()
     {
-        lock.lock();
-
-        if(!running)
+        if(semaphore.tryAcquire())
         {
-            thread = new Thread(createConnectorRunnable());
-            running = true;
-
-            thread.start();
-        }
-
-        lock.unlock();
-    }
-
-    private Runnable createConnectorRunnable()
-    {
-        AsyncConnectionLoop connector = new AsyncConnectionLoop(connectionString);
-
-        connector.addListener(this);
-
-        connector.addInterval(new IConnectionHandler()
-        {
-            private boolean firstRun = true;
-            private String lastArtist;
-            private String lastTitle;
-            private boolean lastPreviousButton = false;
-            private EPlayerStatus lastStatus = EPlayerStatus.Ejected;
-            private boolean lastNextButton = false;
-
-            @Override
-            public void run(IConnection connection)
+            if(!running)
             {
-                try
-                {
-                    IClient client = connection.getClient();
-                    Status status = client.getPlayer().getStatus();
-                    String currentArtist = status.getArtist();
-                    String currentTitle = status.getTitle();
-                    EPlayerStatus currentStatus = mapState(status.getState());
+                thread = new Thread(loop);
+                running = true;
 
-                    if(firstRun)
-                    {
-                        listeners.forEach((l) -> l.onArtistChanged(currentArtist));
-                        listeners.forEach((l) -> l.onTitleChanged(currentTitle));
-                        listeners.forEach((l) -> l.onHasPreviousChanged(status.hasPrevious()));
-                        listeners.forEach((l) -> l.onStatusChanged(currentStatus));
-                        listeners.forEach((l) -> l.onHasNextChanged(status.hasNext()));
-
-                        firstRun = false;
-                    }
-                    else
-                    {
-                        updatePlayer(status);
-                    }
-
-                    boolean hasNext = status.hasNext();
-                    lastArtist = currentArtist;
-                    lastTitle = currentTitle;
-                    lastPreviousButton = status.hasPrevious();
-                    lastStatus = currentStatus;
-                    lastNextButton = status.hasNext();
-                }
-                catch(Exception ex)
-                {
-                    // TODO
-                }
+                thread.start();
             }
 
-            private void updatePlayer(Status status)
-            {
-                String currentArtist = status.getArtist();
-
-                if((currentArtist != null && !currentArtist.equals(lastArtist)) || lastArtist != null)
-                {
-                    listeners.forEach((l) -> l.onArtistChanged(currentArtist));
-                }
-
-                String currentTitle = status.getTitle();
-
-                if((currentTitle != null && !currentTitle.equals(lastTitle)) || lastTitle != null)
-                {
-                    listeners.forEach((l) -> l.onTitleChanged(currentTitle));
-                }
-
-                if(status.hasPrevious() != lastPreviousButton)
-                {
-                    listeners.forEach((l) -> l.onHasPreviousChanged(status.hasPrevious()));
-                }
-
-                EPlayerStatus currentStatus = mapState(status.getState());
-
-                if(currentStatus != lastStatus)
-                {
-                    listeners.forEach((l) -> l.onStatusChanged(currentStatus));
-                }
-
-                if(status.hasNext() != lastNextButton)
-                {
-                    listeners.forEach((l) -> l.onHasNextChanged(status.hasNext()));
-                }
-
-                listeners.forEach((l) -> l.onTitleChanged(status.getTitle()));
-            }
-        }, 1000);
-
-        return connector;
-    }
-
-    private static EPlayerStatus mapState(EState state)
-    {
-        EPlayerStatus status = EPlayerStatus.Ejected;
-
-        switch(state)
-        {
-            case Pause:
-                status = EPlayerStatus.Pause;
-                break;
-
-            case Stop:
-                status = EPlayerStatus.Stopped;
-                break;
-
-            case Play:
-                status = EPlayerStatus.Playing;
-                break;
+            semaphore.release();
         }
-
-        return status;
     }
 
     @Override
     public void stopService()
     {
-        lock.lock();
-
-        if(running)
+        if(semaphore.tryAcquire())
         {
-            thread.interrupt();
-
-            try
+            if(running)
             {
-                thread.wait();
-            }
-            catch(InterruptedException ex)
-            {
-                Log.w("PlayerService", ex);
+                thread.interrupt();
+
+                try
+                {
+                    thread.wait();
+                }
+                catch(InterruptedException ex)
+                {
+                    Log.w("PlayerService", ex);
+                }
+
+                thread = null;
+                running = false;
             }
 
-            thread = null;
-            running = false;
+            semaphore.release();
         }
-
-        lock.unlock();
     }
 
     @Override
@@ -246,22 +117,26 @@ public class PlayerService implements IPlayerService, IConnectionListener
     }
 
     @Override
-    public void addListener(IPlayerListener listener) { listeners.add(listener); }
-
-    @Override
-    public void removeListener(IPlayerListener listener) { listeners.remove(listener); }
-
-    @Override
-    public void onConnected(IConnection connection)
+    public void addConnectionListener(IConnectionListener listener)
     {
-        this.connection.set(connection);
-        listeners.forEach(l -> l.onConnectionChanged(true));
+        loop.addListener(listener);
     }
 
     @Override
-    public void onDisconnected()
+    public void removeConnectionListener(IConnectionListener listener)
     {
-        this.connection.set(null);
-        listeners.forEach(l -> l.onConnectionChanged(false));
+        loop.removeListener(listener);
+    }
+
+    @Override
+    public void addPlayerListener(IPlayerListener listener)
+    {
+        synchronizePlayerStatus.addListener(listener);
+    }
+
+    @Override
+    public void removePlayerListener(IPlayerListener listener)
+    {
+        synchronizePlayerStatus.removeListener(listener);
     }
 }
