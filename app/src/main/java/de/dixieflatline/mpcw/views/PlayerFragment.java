@@ -139,6 +139,10 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
     {
         switch(status)
         {
+            case Eject:
+                player.setStatus(Player.EJECT);
+                break;
+
             case Pause:
                 player.setStatus(Player.PAUSE);
                 break;

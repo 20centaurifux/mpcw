@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_gravity="bottom|center_horizontal"
-                        app:playerStatusBackground="@{player.status}" />
+                        app:playerStatusBackground="@{player.status}"
                         app:enableIf="@{player.status != Player.EJECT}" />
 
                     <Button

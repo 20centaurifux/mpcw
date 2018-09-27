@@ -56,7 +56,7 @@ public class SynchronizePlayerStatus implements IConnectionHandler
             lastArtist = status.getArtist();
             lastTitle = status.getTitle();
             lastPreviousButton = status.hasPrevious();
-            lastStatus = mapState(status.getState());
+            lastStatus = mapState(status);
             lastNextButton = status.hasNext();
         }
         catch(Exception ex)
@@ -80,7 +80,7 @@ public class SynchronizePlayerStatus implements IConnectionHandler
     private void initialRun(Status status)
     {
         listeners.forEach((l) -> l.onSongChanged(status.getArtist(), status.getTitle()));
-        listeners.forEach((l) -> l.onStatusChanged(mapState(status.getState())));
+        listeners.forEach((l) -> l.onStatusChanged(mapState(status)));
         listeners.forEach((l) -> l.onPlaylistChanged(status.hasPrevious(), status.hasNext()));
 
         firstRun = false;
@@ -93,7 +93,7 @@ public class SynchronizePlayerStatus implements IConnectionHandler
             listeners.forEach((l) -> l.onSongChanged(status.getArtist(), status.getTitle()));
         }
 
-        EPlayerStatus newStatus = mapState(status.getState());
+        final EPlayerStatus newStatus = mapState(status);
 
         if(lastStatus != newStatus)
         {
@@ -106,25 +106,28 @@ public class SynchronizePlayerStatus implements IConnectionHandler
         }
     }
 
-    private static EPlayerStatus mapState(EState state)
+    private static EPlayerStatus mapState(Status status)
     {
-        EPlayerStatus status = EPlayerStatus.Eject;
+        EPlayerStatus playerStatus = EPlayerStatus.Eject;
 
-        switch(state)
+        if(status.getArtist() != null || status.getTitle() != null)
         {
-            case Pause:
-                status = EPlayerStatus.Pause;
-                break;
+            switch(status.getState())
+            {
+                case Pause:
+                    playerStatus = EPlayerStatus.Pause;
+                    break;
 
-            case Stop:
-                status = EPlayerStatus.Stop;
-                break;
+                case Stop:
+                    playerStatus = EPlayerStatus.Stop;
+                    break;
 
-            case Play:
-                status = EPlayerStatus.Play;
-                break;
+                case Play:
+                    playerStatus = EPlayerStatus.Play;
+                    break;
+            }
         }
 
-        return status;
+        return playerStatus;
     }
 }
