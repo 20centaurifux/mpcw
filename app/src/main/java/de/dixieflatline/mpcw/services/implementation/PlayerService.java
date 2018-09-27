@@ -21,6 +21,7 @@ import android.util.*;
 import java.util.ArrayList;
 import java.util.concurrent.*;
 
+import de.dixieflatline.mpcw.client.*;
 import de.dixieflatline.mpcw.services.*;
 import de.dixieflatline.mpcw.viewmodels.*;
 
@@ -71,7 +72,7 @@ public class PlayerService implements IPlayerService
 
                 try
                 {
-                    thread.wait();
+                    thread.join();
                 }
                 catch(InterruptedException ex)
                 {
@@ -87,33 +88,68 @@ public class PlayerService implements IPlayerService
     }
 
     @Override
-    public void next()
+    public void previous()
     {
-
+        loop.addTimeout(new APlayerCommand()
+        {
+            @Override
+            protected void run(IPlayer player) throws CommunicationException, ProtocolException
+            {
+                player.previous();
+            }
+        });
     }
 
     @Override
-    public void previous()
+    public void next()
     {
-
+        loop.addTimeout(new APlayerCommand()
+        {
+            @Override
+            protected void run(IPlayer player) throws CommunicationException, ProtocolException
+            {
+                player.next();
+            }
+        });
     }
 
     @Override
     public void play()
     {
-
+        loop.addTimeout(new APlayerCommand()
+        {
+            @Override
+            protected void run(IPlayer player) throws CommunicationException, ProtocolException
+            {
+                player.play();
+            }
+        });
     }
 
     @Override
     public void pause()
     {
-
+        loop.addTimeout(new APlayerCommand()
+        {
+            @Override
+            protected void run(IPlayer player) throws CommunicationException, ProtocolException
+            {
+                player.pause();
+            }
+        });
     }
 
     @Override
     public void stop()
     {
-
+        loop.addTimeout(new APlayerCommand()
+        {
+            @Override
+            protected void run(IPlayer player) throws CommunicationException, ProtocolException
+            {
+                player.stop();
+            }
+        });
     }
 
     @Override

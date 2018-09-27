@@ -50,6 +50,40 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
+
+        view.findViewById(R.id.previousSong).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                playerService.previous();
+            }
+        });
+
+        view.findViewById(R.id.nextSong).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                playerService.next();
+            }
+        });
+    }
+
+    public void onPreviousClicked(View v)
+    {
+        playerService.previous();
+    }
+
+    public void onNextClicked(View v)
+    {
+        playerService.next();
+    }
+
+    @Override
     public void onStart()
     {
         super.onStart();
@@ -62,9 +96,8 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
     {
         super.onPause();
 
-        playerService.stop();
+        playerService.stopService();
     }
-
 
     @Override
     public void onConnected()

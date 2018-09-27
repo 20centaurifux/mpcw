@@ -61,6 +61,7 @@
                     android:orientation="horizontal"
                     android:weightSum="3">
                     <Button
+                        android:id="@+id/previousSong"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -77,6 +78,7 @@
                         app:enableIf="@{player.status != Player.EJECT}" />
 
                     <Button
+                        android:id="@+id/nextSong"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

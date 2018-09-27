@@ -80,7 +80,9 @@ public class AsyncConnectionLoop implements Runnable
     @Override
     public void run()
     {
-        while(!Thread.currentThread().isInterrupted())
+        boolean interrupted = false;
+
+        while(!interrupted)
         {
             while(!queue.isEmpty())
             {
@@ -117,9 +119,13 @@ public class AsyncConnectionLoop implements Runnable
 
             try
             {
-                Thread.sleep(150);
+                Thread.sleep(100);
+                interrupted = Thread.currentThread().isInterrupted();
             }
-            catch(InterruptedException ex) { }
+            catch(InterruptedException ex)
+            {
+                interrupted = true;
+            }
         }
     }
 
