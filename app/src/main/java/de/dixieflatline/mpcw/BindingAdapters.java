@@ -54,6 +54,19 @@ public class BindingAdapters
         view.setEnabled(enabled);
     }
 
+    @BindingAdapter("notAvailableIfNullOrEmpty")
+    public static void setTextAttrNotAvailableIfNull(TextView view, String text)
+    {
+        if(text == null || text.isEmpty())
+        {
+            view.setText("n/a");
+        }
+        else
+        {
+            view.setText(text);
+        }
+    }
+
     @BindingAdapter("textFromInteger")
     public static void setTextAttrFromInteger(TextView view, int value)
     {
