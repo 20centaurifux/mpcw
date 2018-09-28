@@ -16,18 +16,16 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.views;
 
-import android.app.FragmentManager;
-import android.content.Intent;
+import android.app.*;
 import android.os.Bundle;
 import android.support.wear.widget.drawer.WearableNavigationDrawerView;
 import android.support.wearable.activity.WearableActivity;
 import android.util.Log;
-import android.view.View;
 
 import de.dixieflatline.mpcw.NavigationAdapter;
 import de.dixieflatline.mpcw.R;
 
-public class MainActivity extends WearableActivity implements WearableNavigationDrawerView.OnItemSelectedListener
+public class MainActivity extends WearableActivity
 {
     private WearableNavigationDrawerView wearableNavigationDrawer;
 
@@ -36,16 +34,19 @@ public class MainActivity extends WearableActivity implements WearableNavigation
     {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        if(savedInstanceState == null)
+        {
+            setContentView(R.layout.activity_main);
 
-        wearableNavigationDrawer = findViewById(R.id.top_navigation_drawer);
-        wearableNavigationDrawer.setAdapter(new NavigationAdapter(this));
-        wearableNavigationDrawer.getController().peekDrawer();
-        wearableNavigationDrawer.addOnItemSelectedListener(this);
+            wearableNavigationDrawer = findViewById(R.id.top_navigation_drawer);
+            wearableNavigationDrawer.setAdapter(new NavigationAdapter(this));
+            wearableNavigationDrawer.getController().peekDrawer();
+            wearableNavigationDrawer.addOnItemSelectedListener((id) -> openFragment(id));
 
-        openFragment(NavigationAdapter.PLAYER);
+            openFragment(NavigationAdapter.PLAYER);
 
-        setAmbientEnabled();
+            setAmbientEnabled();
+        }
     }
 
     void openFragment(int id)
@@ -54,13 +55,25 @@ public class MainActivity extends WearableActivity implements WearableNavigation
 
         try
         {
-            android.app.Fragment fragment = createFragmentById(id);
+            AFragment fragment = createFragmentById(id);
 
             if(fragment != null)
             {
+                fragment.addOnSwipeListener((f) ->
+                {
+                    if(f instanceof  PlayerFragment)
+                    {
+                        finish();
+                    }
+                    else
+                    {
+                        wearableNavigationDrawer.setCurrentItem(NavigationAdapter.PLAYER, false);
+                    }
+                });
+
                 manager.beginTransaction()
-                        .replace(R.id.fragment_container, fragment)
-                        .commit();
+                       .replace(R.id.fragment_container, fragment)
+                       .commit();
             }
         }
         catch(Exception ex)
@@ -69,19 +82,19 @@ public class MainActivity extends WearableActivity implements WearableNavigation
         }
     }
 
-    static android.app.Fragment createFragmentById(int id)
+    static AFragment createFragmentById(int id)
     {
-        android.app.Fragment fragment;
+        AFragment fragment;
 
         switch(id)
         {
             case NavigationAdapter.PLAYER:
-                Log.v("Navigation", "Opening player.");
+                Log.v("Navigation", "Creating player.");
                 fragment = new PlayerFragment();
                 break;
 
             case NavigationAdapter.PREFERENCES:
-                Log.v("Navigation", "Preferences.");
+                Log.v("Navigation", "Creating Preferences.");
                 fragment = new PreferencesFragment();
                 break;
 
@@ -91,11 +104,5 @@ public class MainActivity extends WearableActivity implements WearableNavigation
         }
 
         return fragment;
-    }
-
-    @Override
-    public void onItemSelected(int id)
-    {
-        openFragment(id);
     }
 }

@@ -17,7 +17,7 @@
 package de.dixieflatline.mpcw.views;
 
 import android.databinding.DataBindingUtil;
-import android.os.Bundle;
+import android.os.*;
 import android.view.*;
 
 import javax.inject.Inject;
@@ -28,15 +28,16 @@ import de.dixieflatline.mpcw.services.*;
 import de.dixieflatline.mpcw.services.implementation.*;
 import de.dixieflatline.mpcw.viewmodels.Player;
 
-public class PlayerFragment extends AInjectableFragment implements IConnectionListener, IPlayerListener
+public class PlayerFragment extends AFragment implements IConnectionListener, IPlayerListener
 {
     private FragmentPlayerBinding binding;
     private Player player;
+    private final Handler handler = new Handler();
 
     @Inject IPlayerService playerService;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         player = new Player();
 
@@ -54,32 +55,9 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
     {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.previousSong).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                playerService.previous();
-            }
-        });
-
-        view.findViewById(R.id.togglePlayer).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                playerService.toggle();
-            }
-        });
-
-        view.findViewById(R.id.nextSong).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                playerService.next();
-            }
-        });
+        view.findViewById(R.id.previousSong).setOnClickListener(v -> playerService.previous());
+        view.findViewById(R.id.togglePlayer).setOnClickListener(v -> playerService.toggle());
+        view.findViewById(R.id.nextSong).setOnClickListener(v -> playerService.next());
     }
 
     public void onPreviousClicked(View v)
@@ -111,49 +89,58 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
     @Override
     public void onConnected()
     {
-        player.setConnected(true);
+        handler.post(() -> player.setConnected(true));
     }
 
     @Override
     public void onDisconnected()
     {
-        player.setConnected(false);
+        handler.post(() -> player.setConnected(false));
     }
 
     @Override
     public void onPlaylistChanged(boolean hasPrevious, boolean hasNext)
     {
-        player.setHasPrevious(hasPrevious);
-        player.setHasNext(hasNext);
+        handler.post(() ->
+        {
+            player.setHasPrevious(hasPrevious);
+            player.setHasNext(hasNext);
+        });
     }
 
     @Override
     public void onSongChanged(String artist, String title)
     {
-        player.setArtist(artist);
-        player.setTitle(title);
+        handler.post(() ->
+        {
+            player.setArtist(artist);
+            player.setTitle(title);
+        });
     }
 
     @Override
     public void onStatusChanged(EPlayerStatus status)
     {
-        switch(status)
+        handler.post(() ->
         {
-            case Eject:
-                player.setStatus(Player.EJECT);
-                break;
+            switch(status)
+            {
+                case Eject:
+                    player.setStatus(Player.EJECT);
+                    break;
 
-            case Pause:
-                player.setStatus(Player.PAUSE);
-                break;
+                case Pause:
+                    player.setStatus(Player.PAUSE);
+                    break;
 
-            case Play:
-                player.setStatus(Player.PLAY);
-                break;
+                case Play:
+                    player.setStatus(Player.PLAY);
+                    break;
 
-            case Stop:
-                player.setStatus(Player.STOP);
-                break;
-        }
+                case Stop:
+                    player.setStatus(Player.STOP);
+                    break;
+            }
+        });
     }
 }

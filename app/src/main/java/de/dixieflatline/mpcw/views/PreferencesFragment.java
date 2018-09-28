@@ -29,7 +29,7 @@ import de.dixieflatline.mpcw.databinding.FragmentPreferencesBinding;
 import de.dixieflatline.mpcw.services.IPreferencesService;
 import de.dixieflatline.mpcw.viewmodels.Preferences;
 
-public class PreferencesFragment extends AInjectableFragment
+public class PreferencesFragment extends AFragment
 {
     private FragmentPreferencesBinding binding;
     private Preferences preferences;
@@ -37,7 +37,7 @@ public class PreferencesFragment extends AInjectableFragment
     @Inject IPreferencesService service;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         preferences = service.load();
 
