@@ -59,17 +59,7 @@ public class MainActivity extends WearableActivity
 
             if(fragment != null)
             {
-                fragment.addOnSwipeListener((f) ->
-                {
-                    if(f instanceof  PlayerFragment)
-                    {
-                        finish();
-                    }
-                    else
-                    {
-                        wearableNavigationDrawer.setCurrentItem(NavigationAdapter.PLAYER, false);
-                    }
-                });
+                fragment.addOnSwipeListener((f) -> finish());
 
                 manager.beginTransaction()
                        .replace(R.id.fragment_container, fragment)

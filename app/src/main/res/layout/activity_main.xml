@@ -22,7 +22,7 @@
         android:id="@+id/top_navigation_drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:navigationStyle="multiPage" />
+        app:navigationStyle="singlePage" />
 
     <!--<android.support.wear.widget.drawer.WearableActionDrawerView
         android:id="@+id/bottom_action_drawer"
