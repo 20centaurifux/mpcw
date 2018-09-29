@@ -16,10 +16,9 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.services.implementation;
 
-import de.dixieflatline.mpcw.client.*;
-
 public interface IConnectionListener
 {
     void onConnected();
     void onDisconnected();
+    void onAborted(Exception cause);
 }

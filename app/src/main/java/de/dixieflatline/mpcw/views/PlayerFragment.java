@@ -16,6 +16,7 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.views;
 
+import android.app.*;
 import android.databinding.DataBindingUtil;
 import android.os.*;
 import android.view.*;
@@ -60,16 +61,6 @@ public class PlayerFragment extends AFragment implements IConnectionListener, IP
         view.findViewById(R.id.nextSong).setOnClickListener(v -> playerService.next());
     }
 
-    public void onPreviousClicked(View v)
-    {
-        playerService.previous();
-    }
-
-    public void onNextClicked(View v)
-    {
-        playerService.next();
-    }
-
     @Override
     public void onStart()
     {
@@ -96,6 +87,24 @@ public class PlayerFragment extends AFragment implements IConnectionListener, IP
     public void onDisconnected()
     {
         handler.post(() -> player.setConnected(false));
+    }
+
+    @Override
+    public void onAborted(Exception cause)
+    {
+        Bundle bundle = new Bundle();
+
+        bundle.putString("message", cause.getLocalizedMessage());
+
+        Fragment fragment = new ConnectionFailureFragment();
+
+        fragment.setArguments(bundle);
+
+        FragmentManager manager = getFragmentManager();
+
+        manager.beginTransaction()
+               .replace(R.id.fragment_container, fragment)
+               .commit();
     }
 
     @Override

@@ -20,5 +20,5 @@ import de.dixieflatline.mpcw.client.*;
 
 public interface IConnectionHandler
 {
-    void run(IConnection connection);
+    void run(IConnection connection) throws CommunicationException;
 }

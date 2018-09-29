@@ -27,6 +27,8 @@ import de.dixieflatline.mpcw.utils.*;
 
 public class AsyncConnectionLoop implements Runnable
 {
+    private static final int MAX_ERRORS = 3;
+
     private final List<IConnectionListener> listeners = new ArrayList<IConnectionListener>();
     private final IConnection connection;
     private final Queue<Runnable> queue = new ConcurrentLinkedDeque<Runnable>();
@@ -67,12 +69,15 @@ public class AsyncConnectionLoop implements Runnable
 
     private Runnable wrapConnectionHandler(IConnectionHandler handler)
     {
-        return new Runnable()
+        return () ->
         {
-            @Override
-            public void run()
+            try
             {
                 handler.run(connection);
+            }
+            catch(CommunicationException ex)
+            {
+                throw new RuntimeException(ex);
             }
         };
     }
@@ -81,50 +86,59 @@ public class AsyncConnectionLoop implements Runnable
     public void run()
     {
         boolean interrupted = false;
+        int errorCounter = 0;
 
-        while(!interrupted)
+        while(!interrupted && connection != null)
         {
-            while(!queue.isEmpty())
+            try
             {
-                Runnable runnable = queue.poll();
+                addTasksFromQueue();
 
-                if(runnable instanceof RecurringRunnable)
-                {
-                    loop.add((RecurringRunnable)runnable);
-                }
-                else
-                {
-                    loop.add(runnable);
-                }
-            }
-
-            if(connection != null)
-            {
                 try
                 {
-                    if(connect())
-                    {
-                        loop.iterate();
-                    }
+                    connect();
+                    loop.iterate();
+                    interrupted = Thread.currentThread().isInterrupted();
+                    errorCounter = 0;
                 }
                 catch(Exception ex)
                 {
-                    Log.w("AsyncConnectionLoop", ex);
-                }
-            }
-            else
-            {
-                Log.d("AsyncConnectionLoop", "connection == null");
-            }
+                    Log.d("AsyncConnectionLoop", ex.getMessage());
 
-            try
-            {
-                Thread.sleep(100);
-                interrupted = Thread.currentThread().isInterrupted();
+                    ++errorCounter;
+
+                    if(errorCounter == MAX_ERRORS)
+                    {
+                        listeners.forEach((l) -> l.onAborted(ex));
+                        interrupted = true;
+                    }
+                }
+
+                if(!interrupted)
+                {
+                    Thread.sleep(150);
+                }
             }
             catch(InterruptedException ex)
             {
                 interrupted = true;
+            }
+        }
+    }
+
+    private void addTasksFromQueue()
+    {
+        while(!queue.isEmpty())
+        {
+            Runnable runnable = queue.poll();
+
+            if(runnable instanceof RecurringRunnable)
+            {
+                loop.add((RecurringRunnable)runnable);
+            }
+            else
+            {
+                loop.add(runnable);
             }
         }
     }

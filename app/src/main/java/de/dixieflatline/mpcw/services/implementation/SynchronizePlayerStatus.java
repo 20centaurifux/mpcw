@@ -44,25 +44,31 @@ public class SynchronizePlayerStatus implements IConnectionHandler
     }
 
     @Override
-    public void run(IConnection connection)
+    public void run(IConnection connection) throws CommunicationException
     {
+        Status status = null;
+
         try
         {
             IClient client = connection.getClient();
-            Status status = client.getPlayer().getStatus();
-
-            synchronizeStatus(status);
-
-            lastArtist = status.getArtist();
-            lastTitle = status.getTitle();
-            lastPreviousButton = status.hasPrevious();
-            lastStatus = mapState(status);
-            lastNextButton = status.hasNext();
+            status = client.getPlayer().getStatus();
+        }
+        catch(CommunicationException ex)
+        {
+            throw ex;
         }
         catch(Exception ex)
         {
-            Log.w("SynchronizePlayerStatus", ex);
+            throw new CommunicationException("Couldn't receive player status.");
         }
+
+        synchronizeStatus(status);
+
+        lastArtist = status.getArtist();
+        lastTitle = status.getTitle();
+        lastPreviousButton = status.hasPrevious();
+        lastStatus = mapState(status);
+        lastNextButton = status.hasNext();
     }
 
     private void synchronizeStatus(Status status)

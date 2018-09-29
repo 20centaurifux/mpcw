@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">mpcw</string>
-    <string name="Connection">Connection</string>
-    <string name="Hostname">Hostname</string>
-    <string name="Authentication">Authentication</string>
-    <string name="Enabled">Enabled</string>
-    <string name="Username">Username</string>
-    <string name="Password">Password</string>
+    <string name="connection">Connection</string>
+    <string name="hostname">Hostname</string>
+    <string name="authentication">Authentication</string>
+    <string name="enabled">Enabled</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="network_problem">Network problem</string>
+    <string name="retry">Retry</string>
 </resources>

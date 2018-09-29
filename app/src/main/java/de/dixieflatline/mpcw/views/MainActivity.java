@@ -34,19 +34,16 @@ public class MainActivity extends WearableActivity
     {
         super.onCreate(savedInstanceState);
 
-        if(savedInstanceState == null)
-        {
-            setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
-            wearableNavigationDrawer = findViewById(R.id.top_navigation_drawer);
-            wearableNavigationDrawer.setAdapter(new NavigationAdapter(this));
-            wearableNavigationDrawer.getController().peekDrawer();
-            wearableNavigationDrawer.addOnItemSelectedListener((id) -> openFragment(id));
+        wearableNavigationDrawer = findViewById(R.id.top_navigation_drawer);
+        wearableNavigationDrawer.setAdapter(new NavigationAdapter(this));
+        wearableNavigationDrawer.getController().peekDrawer();
+        wearableNavigationDrawer.addOnItemSelectedListener((id) -> openFragment(id));
 
-            openFragment(NavigationAdapter.PLAYER);
+        openFragment(NavigationAdapter.PLAYER);
 
-            setAmbientEnabled();
-        }
+        setAmbientEnabled();
     }
 
     void openFragment(int id)
@@ -59,8 +56,6 @@ public class MainActivity extends WearableActivity
 
             if(fragment != null)
             {
-                fragment.addOnSwipeListener((f) -> finish());
-
                 manager.beginTransaction()
                        .replace(R.id.fragment_container, fragment)
                        .commit();
@@ -79,12 +74,12 @@ public class MainActivity extends WearableActivity
         switch(id)
         {
             case NavigationAdapter.PLAYER:
-                Log.v("Navigation", "Creating player.");
+                Log.v("Navigation", "Creating player fragment.");
                 fragment = new PlayerFragment();
                 break;
 
             case NavigationAdapter.PREFERENCES:
-                Log.v("Navigation", "Creating Preferences.");
+                Log.v("Navigation", "Creating preferences fragment.");
                 fragment = new PreferencesFragment();
                 break;
 

@@ -14,11 +14,23 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.views;
+package de.dixieflatline.mpcw.viewmodels;
 
-import android.app.Fragment;
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 
-public interface OnSwipeListener
+import de.dixieflatline.mpcw.BR;
+
+public class Failure extends BaseObservable
 {
-    void onSwipe(AFragment fragment);
+    private String message;
+
+    @Bindable
+    public String getMessage() { return message; }
+
+    public void setMessage(String message)
+    {
+        this.message = message;
+        notifyPropertyChanged(BR.message);
+    }
 }

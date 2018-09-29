@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="failure"
+            type="de.dixieflatline.mpcw.viewmodels.Failure" />
+    </data>
+
+    <android.support.wear.widget.BoxInsetLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark_grey"
+        android:padding="@dimen/box_inset_layout_padding"
+        tools:context=".views.ConnectionFailureFragment"
+        tools:deviceIds="wear">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/inner_frame_layout_padding"
+            app:boxedEdges="all">
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textAlignment="center"
+                        android:text="@string/network_problem" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@{failure.message}" />
+
+                    <android.support.wearable.view.CircularButton
+                        android:id="@+id/retry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:src="@android:drawable/ic_menu_rotate"
+                        android:layout_margin="16dp" />
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+        </FrameLayout>
+    </android.support.wear.widget.BoxInsetLayout>
+</layout>

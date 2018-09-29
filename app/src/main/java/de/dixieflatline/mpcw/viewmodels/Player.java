@@ -75,7 +75,7 @@ public class Player extends BaseObservable
     }
 
     @Bindable
-    public  boolean getHasPrevious() { return hasPrevious; }
+    public boolean getHasPrevious() { return hasPrevious; }
 
     public void setHasPrevious(boolean hasPrevious)
     {
@@ -84,7 +84,7 @@ public class Player extends BaseObservable
     }
 
     @Bindable
-    public  boolean getHasNext() { return hasNext; }
+    public boolean getHasNext() { return hasNext; }
 
     public void setHasNext(boolean hasNext)
     {

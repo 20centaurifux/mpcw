@@ -38,7 +38,7 @@
                         android:id="@+id/textHostTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/Connection"
+                        android:text="@string/connection"
                         android:textAlignment="center"/>
 
                     <EditText
@@ -47,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="text"
-                        android:hint="@string/Hostname"
+                        android:hint="@string/hostname"
                         android:text="@={preferences.hostname}" />
 
                     <EditText
@@ -62,14 +62,14 @@
                         android:id="@+id/textAuthenticationTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/Authentication"
+                        android:text="@string/authentication"
                         android:textAlignment="center"/>
 
                     <Switch
                         android:id="@+id/switchEnableAuthentication"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/Enabled"
+                        android:text="@string/enabled"
                         android:checked="@={preferences.authenticationEnabled}" />
 
                     <EditText
@@ -78,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="textPassword"
-                        android:hint="@string/Password"
+                        android:hint="@string/password"
                         android:text="@={preferences.password}"
                         app:visibleIf="@{preferences.authenticationEnabled}" />
                 </LinearLayout>
