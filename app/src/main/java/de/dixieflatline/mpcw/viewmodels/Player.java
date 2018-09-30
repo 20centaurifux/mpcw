@@ -16,8 +16,9 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.viewmodels;
 
-import android.databinding.BaseObservable;
-import android.databinding.Bindable;
+import android.databinding.*;
+
+import java.util.concurrent.*;
 
 import de.dixieflatline.mpcw.BR;
 
@@ -34,6 +35,9 @@ public class Player extends BaseObservable
     private boolean connected;
     private boolean hasPrevious;
     private boolean hasNext;
+    private Runnable previousCommand;
+    private Runnable nextCommand;
+    private Runnable toggleCommand;
 
     @Bindable
     public int getStatus()
@@ -90,5 +94,35 @@ public class Player extends BaseObservable
     {
         this.hasNext = hasNext;
         notifyPropertyChanged(BR.hasNext);
+    }
+
+    public Runnable getPreviousCommand()
+    {
+        return previousCommand;
+    }
+
+    public void setPreviousCommand(Runnable previousCommand)
+    {
+        this.previousCommand = previousCommand;
+    }
+
+    public Runnable getNextCommand()
+    {
+        return nextCommand;
+    }
+
+    public void setNextCommand(Runnable nextCommand)
+    {
+        this.nextCommand = nextCommand;
+    }
+
+    public Runnable getToggleCommand()
+    {
+        return toggleCommand;
+    }
+
+    public void setToggleCommand(Runnable toggleCommand)
+    {
+        this.toggleCommand = toggleCommand;
     }
 }

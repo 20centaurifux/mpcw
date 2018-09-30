@@ -16,49 +16,70 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.views;
 
-import android.app.*;
-import android.databinding.DataBindingUtil;
 import android.os.*;
-import android.view.*;
+import android.support.v7.widget.*;
+import android.support.wear.widget.*;
 
-import javax.inject.Inject;
+import javax.inject.*;
 
-import de.dixieflatline.mpcw.R;
-import de.dixieflatline.mpcw.databinding.FragmentPlayerBinding;
+import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.services.*;
 import de.dixieflatline.mpcw.services.implementation.*;
-import de.dixieflatline.mpcw.viewmodels.Player;
+import de.dixieflatline.mpcw.viewmodels.*;
 
-public class PlayerFragment extends AFragment implements IConnectionListener, IPlayerListener
+public class PlayerActivity extends AActivity implements IConnectionListener, IPlayerListener, IPlaylistListener
 {
-    private FragmentPlayerBinding binding;
-    private Player player;
+    private PlayerRecyclerAdapter adapter;
     private final Handler handler = new Handler();
 
-    @Inject IPlayerService playerService;
+    @Inject
+    IPlayerService playerService;
+
+    private final Player player = new Player();
 
     @Override
-    public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
-        player = new Player();
+        super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_player, container, false);
-        binding.setPlayer(player);
+        setContentView(R.layout.activity_player);
 
-        playerService.addConnectionListener(this);
-        playerService.addPlayerListener(this);
+        setupPlayer();
+        setupRecyclerView();
+        setupPlayerService();
+        setupDrawer(NavigationAdapter.PLAYER);
 
-        return binding.getRoot();
+        setAmbientEnabled();
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState)
+    private void setupPlayer()
     {
-        super.onViewCreated(view, savedInstanceState);
+        player.setPreviousCommand(() -> playerService.previous());
+        player.setNextCommand(() -> playerService.next());
+        player.setToggleCommand(() -> playerService.toggle());
+    }
 
-        view.findViewById(R.id.previousSong).setOnClickListener(v -> playerService.previous());
-        view.findViewById(R.id.togglePlayer).setOnClickListener(v -> playerService.toggle());
-        view.findViewById(R.id.nextSong).setOnClickListener(v -> playerService.next());
+    private void setupRecyclerView()
+    {
+        setContentView(R.layout.activity_player);
+
+        WearableRecyclerView recyclerView = findViewById(R.id.recycler_view);
+
+        recyclerView.setEdgeItemsCenteringEnabled(true);
+
+        WearableRecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new PlayerRecyclerAdapter(player);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void setupPlayerService()
+    {
+        playerService.addConnectionListener(this);
+        playerService.addPlayerListener(this);
+        playerService.addPlaylistListener(this);
     }
 
     @Override
@@ -92,19 +113,6 @@ public class PlayerFragment extends AFragment implements IConnectionListener, IP
     @Override
     public void onAborted(Exception cause)
     {
-        Bundle bundle = new Bundle();
-
-        bundle.putString("message", cause.getLocalizedMessage());
-
-        Fragment fragment = new ConnectionFailureFragment();
-
-        fragment.setArguments(bundle);
-
-        FragmentManager manager = getFragmentManager();
-
-        manager.beginTransaction()
-               .replace(R.id.fragment_container, fragment)
-               .commit();
     }
 
     @Override
@@ -150,6 +158,24 @@ public class PlayerFragment extends AFragment implements IConnectionListener, IP
                     player.setStatus(Player.STOP);
                     break;
             }
+        });
+    }
+
+    @Override
+    public void onPlaylistItemInserted(PlaylistItem item, int offset)
+    {
+        handler.post(() ->
+        {
+            adapter.insert(item, offset);
+        });
+    }
+
+    @Override
+    public void onPlaylistItemsRemoved(int from, int count)
+    {
+        handler.post(() ->
+        {
+            adapter.remove(from, count);
         });
     }
 }

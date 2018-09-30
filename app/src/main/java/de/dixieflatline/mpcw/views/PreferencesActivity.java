@@ -18,33 +18,33 @@ package de.dixieflatline.mpcw.views;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
 import de.dixieflatline.mpcw.R;
-import de.dixieflatline.mpcw.databinding.FragmentPreferencesBinding;
+import de.dixieflatline.mpcw.databinding.*;
 import de.dixieflatline.mpcw.services.IPreferencesService;
 import de.dixieflatline.mpcw.viewmodels.Preferences;
 
-public class PreferencesFragment extends AFragment
+public class PreferencesActivity extends AActivity
 {
-    private FragmentPreferencesBinding binding;
+    private ActivityPreferencesBinding binding;
     private Preferences preferences;
 
     @Inject IPreferencesService service;
 
     @Override
-    public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
+        super.onCreate(savedInstanceState);
+
         preferences = service.load();
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_preferences, container, false);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_preferences);
         binding.setPreferences(preferences);
 
-        return binding.getRoot();
+        setupDrawer(NavigationAdapter.PREFERENCES);
+        setAmbientEnabled();
     }
 
     @Override

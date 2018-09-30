@@ -26,7 +26,7 @@ import de.dixieflatline.mpcw.viewmodels.Preferences;
 public class SharedPreferencesService implements IPreferencesService
 {
     public static final String DEFAULT_MPD_HOSTNAME = "127.0.0.1";
-    public static final int DEFAULT_MPD_PORT = 6000;
+    public static final int DEFAULT_MPD_PORT = 6600;
 
     private static final String NAME = "UserPreferences";
     private static final String MPD_HOSTNAME = "mpd.hostname";

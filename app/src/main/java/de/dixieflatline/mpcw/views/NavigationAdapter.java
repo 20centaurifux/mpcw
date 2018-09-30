@@ -14,7 +14,7 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw;
+package de.dixieflatline.mpcw.views;
 
 import android.content.Context;
 import android.support.wear.widget.drawer.WearableNavigationDrawerView;
@@ -35,7 +35,7 @@ public class NavigationAdapter extends WearableNavigationDrawerView.WearableNavi
     {
         this.context = context;
 
-        texts.add("Play");
+        texts.add("Player");
         texts.add("Preferences");
 
         drawables.add(this.context.getDrawable(android.R.drawable.ic_media_play));

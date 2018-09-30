@@ -16,8 +16,6 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.services.implementation;
 
-import android.util.*;
-
 import java.util.*;
 
 import de.dixieflatline.mpcw.client.*;

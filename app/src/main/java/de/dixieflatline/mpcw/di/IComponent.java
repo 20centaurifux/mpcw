@@ -20,13 +20,12 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
-import de.dixieflatline.mpcw.views.PlayerFragment;
-import de.dixieflatline.mpcw.views.PreferencesFragment;
+import de.dixieflatline.mpcw.views.*;
 
 @Singleton
 @Component(modules = { ServicesModule.class })
 public interface IComponent
 {
-    void inject(PreferencesFragment fragment);
-    void inject(PlayerFragment fragment);
+    void inject(PlayerActivity activity);
+    void inject(PreferencesActivity activity);
 }

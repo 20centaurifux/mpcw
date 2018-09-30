@@ -25,7 +25,6 @@ import de.dixieflatline.mpcw.services.IPlayerService;
 import de.dixieflatline.mpcw.services.IPreferencesService;
 import de.dixieflatline.mpcw.services.implementation.PlayerService;
 import de.dixieflatline.mpcw.services.implementation.SharedPreferencesService;
-import de.dixieflatline.mpcw.viewmodels.*;
 
 import javax.inject.Singleton;
 

@@ -30,6 +30,7 @@ public class PlayerService implements IPlayerService
     private final List<IPlayerListener> playerListeners = new ArrayList<IPlayerListener>();
     private final AsyncConnectionLoop loop;
     private final SynchronizePlayerStatus synchronizePlayerStatus;
+    private final SynchronizePlaylist synchronizePlaylist;
     private final Semaphore semaphore = new Semaphore(1);
     private boolean running;
     private Thread thread;
@@ -41,8 +42,10 @@ public class PlayerService implements IPlayerService
         loop = new AsyncConnectionLoop(connectionString);
 
         synchronizePlayerStatus = new SynchronizePlayerStatus();
+        synchronizePlaylist = new SynchronizePlaylist();
 
         loop.addInterval(synchronizePlayerStatus, 1000);
+        loop.addInterval(synchronizePlaylist, 1500);
     }
 
     @Override
@@ -165,5 +168,17 @@ public class PlayerService implements IPlayerService
     {
         playerListeners.remove(listener);
         synchronizePlayerStatus.removeListener(listener);
+    }
+
+    @Override
+    public void addPlaylistListener(IPlaylistListener listener)
+    {
+        synchronizePlaylist.addListener(listener);
+    }
+
+    @Override
+    public void removePlaylistListener(IPlaylistListener listener)
+    {
+        synchronizePlaylist.removeListener(listener);
     }
 }

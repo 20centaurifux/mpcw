@@ -16,46 +16,55 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.views;
 
-import android.app.*;
-import android.databinding.*;
-import android.os.*;
+import android.support.v7.widget.*;
 import android.view.*;
 
 import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.databinding.*;
 import de.dixieflatline.mpcw.viewmodels.*;
 
-public class ConnectionFailureFragment extends Fragment
+public class PlayerViewHolder extends RecyclerView.ViewHolder
 {
-    private FragmentConnectionfailureBinding binding;
+    private final LayoutPlayerBinding binding;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public PlayerViewHolder(LayoutPlayerBinding binding)
     {
-        Bundle arguments = getArguments();
-        String message = arguments.getString("message");
-        Failure failure = new Failure();
+        super(binding.getRoot());
 
-        failure.setMessage(message);
-
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_connectionfailure, container, false);
-        binding.setFailure(failure);
-
-        return binding.getRoot();
+        this.binding = binding;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState)
+    public void bind(Player player)
     {
-        super.onViewCreated(view, savedInstanceState);
+        binding.setPlayer(player);
+        binding.executePendingBindings();
 
-        view.findViewById(R.id.retry).setOnClickListener(v ->
+        bindEvents();
+    }
+
+    private void bindEvents()
+    {
+        View root = binding.getRoot();
+
+        root.findViewById(R.id.previousSong).setOnClickListener(v ->
         {
-            FragmentManager manager = getFragmentManager();
+            binding.getPlayer()
+                   .getPreviousCommand()
+                   .run();
+        });
 
-            manager.beginTransaction()
-                   .replace(R.id.fragment_container, new PlayerFragment())
-                   .commit();
+        root.findViewById(R.id.nextSong).setOnClickListener(v ->
+        {
+            binding.getPlayer()
+                   .getNextCommand()
+                   .run();
+        });
+
+        root.findViewById(R.id.togglePlayer).setOnClickListener(v ->
+        {
+            binding.getPlayer()
+                   .getToggleCommand()
+                   .run();
         });
     }
 }

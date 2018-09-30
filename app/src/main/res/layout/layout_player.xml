@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="java.lang.Integer" />
+        <import type="de.dixieflatline.mpcw.viewmodels.Player" />
+
+        <variable
+            name="player"
+            type="de.dixieflatline.mpcw.viewmodels.Player" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="25dp"
+        app:boxedEdges="all">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            style="@android:style/Widget.Material.ProgressBar.Large"
+            app:visibleIfNot="@{player.connected}" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:visibleIf="@{player.connected}">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    app:notAvailableIfNullOrEmpty="@{player.artist}" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    app:notAvailableIfNullOrEmpty="@{player.title}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:weightSum="3">
+                <Button
+                    android:id="@+id/previousSong"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:background="@android:drawable/ic_media_previous"
+                    app:enableIf="@{player.hasPrevious}" />
+                <Button
+                    android:id="@+id/togglePlayer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="bottom|center_horizontal"
+                    app:playerStatusBackground="@{player.status}"
+                    app:enableIf="@{player.status != Player.EJECT}" />
+                <Button
+                    android:id="@+id/nextSong"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:background="@android:drawable/ic_media_next"
+                    app:enableIf="@{player.hasNext}" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</layout>
