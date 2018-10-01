@@ -40,11 +40,6 @@ public class AsyncConnectionLoop implements Runnable
         connection = createConnection(connectionString);
     }
 
-    public IConnection getConnection()
-    {
-        return connection;
-    }
-
     public void addListener(IConnectionListener listener)
     {
         listeners.add(listener);

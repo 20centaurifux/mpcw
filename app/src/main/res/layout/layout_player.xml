@@ -16,7 +16,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="25dp"
+        android:padding="30dp"
         app:boxedEdges="all">
         <ProgressBar
             android:layout_width="wrap_content"

@@ -9,7 +9,6 @@
     <android.support.wear.widget.BoxInsetLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="15dp"
         android:background="@color/dark_grey">
         <LinearLayout
             android:id="@+id/fragment_container"
