@@ -46,6 +46,10 @@ public class NavigationUtil implements WearableNavigationDrawerView.OnItemSelect
                 fragment = new PreferencesFragment();
                 break;
 
+            case NavigationAdapter.ABOUT:
+                fragment = new AboutFragment();
+                break;
+
             default:
                 throw new RuntimeException("Couldn't map fragment.");
         }

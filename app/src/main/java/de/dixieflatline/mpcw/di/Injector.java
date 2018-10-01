@@ -26,7 +26,7 @@ public class Injector
 {
     private static final String TAG = "Injector";
 
-    private Context context;
+    private final Context context;
 
     public Injector(Context context)
     {

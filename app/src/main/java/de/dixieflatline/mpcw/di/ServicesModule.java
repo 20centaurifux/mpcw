@@ -21,17 +21,15 @@ import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
 
-import de.dixieflatline.mpcw.services.IPlayerService;
-import de.dixieflatline.mpcw.services.IPreferencesService;
-import de.dixieflatline.mpcw.services.implementation.PlayerService;
-import de.dixieflatline.mpcw.services.implementation.SharedPreferencesService;
+import de.dixieflatline.mpcw.services.*;
+import de.dixieflatline.mpcw.services.implementation.*;
 
 import javax.inject.Singleton;
 
 @Module
 public class ServicesModule
 {
-    private Context context;
+    private final Context context;
 
     public ServicesModule(Context context)
     {
@@ -52,5 +50,14 @@ public class ServicesModule
         IPreferencesService preferencesService = new SharedPreferencesService(context);
 
         return new PlayerService(preferencesService.load());
+    }
+
+    @Provides
+    @Singleton
+    public IAboutService provideAboutService()
+    {
+        IAboutService aboutService = new AboutService(context);
+
+        return new AboutService(context);
     }
 }

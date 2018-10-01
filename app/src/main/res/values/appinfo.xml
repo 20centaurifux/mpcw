@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_author">Sebastian Fedrau</string>
+    <string name="app_date">2018</string>
+    <string name="app_license">GPLv3</string>
+    <string name="app_website">https://github.com/20centaurifux/mpcw</string>
+</resources>

@@ -14,19 +14,11 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.di;
+package de.dixieflatline.mpcw.services;
 
-import javax.inject.Singleton;
+import de.dixieflatline.mpcw.viewmodels.*;
 
-import dagger.Component;
-
-import de.dixieflatline.mpcw.views.*;
-
-@Singleton
-@Component(modules = { ServicesModule.class })
-public interface IComponent
+public interface IAboutService
 {
-    void inject(PlayerFragment fragment);
-    void inject(PreferencesFragment fragment);
-    void inject(AboutFragment fragment);
+    public About getAbout();
 }

@@ -28,6 +28,7 @@ public class NavigationAdapter extends WearableNavigationDrawerView.WearableNavi
 {
     public static final int PLAYER = 0;
     public static final int PREFERENCES = 1;
+    public static final int ABOUT = 2;
 
     private Context context;
     private ArrayList<String> texts = new ArrayList<String>();
@@ -39,9 +40,11 @@ public class NavigationAdapter extends WearableNavigationDrawerView.WearableNavi
 
         texts.add(context.getString(R.string.title_fragment_player));
         texts.add(context.getString(R.string.title_fragment_preferences));
+        texts.add(context.getString(R.string.title_fragment_about));
 
         drawables.add(this.context.getDrawable(android.R.drawable.ic_media_play));
         drawables.add(this.context.getDrawable(android.R.drawable.ic_menu_preferences));
+        drawables.add(this.context.getDrawable(android.R.drawable.ic_menu_help));
     }
 
     @Override

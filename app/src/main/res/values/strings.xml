@@ -1,4 +1,8 @@
 <resources>
+    <string name="title_activity_main">mpcw</string>
+    <string name="title_fragment_player">Player</string>
+    <string name="title_fragment_preferences">Preferences</string>
+    <string name="title_fragment_about">About</string>
     <string name="app_name">mpcw</string>
     <string name="connection">Connection</string>
     <string name="hostname">Hostname</string>
@@ -8,7 +12,9 @@
     <string name="password">Password</string>
     <string name="network_problem">Network problem</string>
     <string name="retry">Retry</string>
-    <string name="title_activity_main">mpcw</string>
-    <string name="title_fragment_player">Player</string>
-    <string name="title_fragment_preferences">Preferences</string>
+    <string name="version">Version</string>
+    <string name="date">Date</string>
+    <string name="author">Autor</string>
+    <string name="license">License</string>
+    <string name="website">Website</string>
 </resources>
