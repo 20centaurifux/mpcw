@@ -87,19 +87,13 @@ public class PlayerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position)
     {
-        int viewType = getItemViewType(position);
-
-        if(viewType == PLAYER)
+        if(position == 0)
         {
             ((PlayerViewHolder) viewHolder).bind(player);
         }
-        else if(viewType == PLAYLISTITEM)
-        {
-            ((PlaylistItemViewHolder) viewHolder).bind(items.get(position - 1));
-        }
         else
         {
-            throw new RuntimeException("Unexpected view type.");
+            ((PlaylistItemViewHolder) viewHolder).bind(items.get(position - 1));
         }
     }
 

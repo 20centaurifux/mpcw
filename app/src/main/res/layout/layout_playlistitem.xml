@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:boxedEdges="all"
+        android:paddingTop="5dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
         <LinearLayout
@@ -29,7 +30,6 @@
                 android:textStyle="bold"
                 android:ellipsize="end"
                 android:text="@{item.artist}" />
-
             <TextView
                 android:id="@+id/textTitle"
                 android:layout_width="match_parent"

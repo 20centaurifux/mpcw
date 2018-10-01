@@ -48,8 +48,6 @@ public class PlayerActivity extends AActivity implements IConnectionListener, IP
         setupRecyclerView();
         setupPlayerService();
         setupDrawer(NavigationAdapter.PLAYER);
-
-        setAmbientEnabled();
     }
 
     private void setupPlayer()

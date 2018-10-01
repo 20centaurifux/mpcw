@@ -49,7 +49,6 @@ public class NavigationItemSelectionListener implements WearableNavigationDrawer
         }
 
         Intent intent = new Intent(currentActivity, activity.getClass());
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
 
         currentActivity.startActivity(intent);
         currentActivity.finish();

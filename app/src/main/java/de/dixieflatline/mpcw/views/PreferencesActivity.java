@@ -44,7 +44,6 @@ public class PreferencesActivity extends AActivity
         binding.setPreferences(preferences);
 
         setupDrawer(NavigationAdapter.PREFERENCES);
-        setAmbientEnabled();
     }
 
     @Override
