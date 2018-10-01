@@ -18,8 +18,6 @@ package de.dixieflatline.mpcw.viewmodels;
 
 import android.databinding.*;
 
-import java.util.concurrent.*;
-
 import de.dixieflatline.mpcw.BR;
 
 public class Player extends BaseObservable

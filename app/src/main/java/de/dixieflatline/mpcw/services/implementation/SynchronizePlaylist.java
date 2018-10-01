@@ -38,6 +38,11 @@ public class SynchronizePlaylist implements IConnectionHandler
         listeners.remove(listener);
     }
 
+    public IPlaylist getPlaylist()
+    {
+        return playlist;
+    }
+
     @Override
     public void run(IConnection connection) throws CommunicationException
     {

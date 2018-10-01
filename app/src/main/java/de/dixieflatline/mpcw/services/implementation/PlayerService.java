@@ -145,6 +145,19 @@ public class PlayerService implements IPlayerService
     }
 
     @Override
+    public void playFromCurrentPlaylist(int position)
+    {
+        loop.addTimeout((connection) ->
+        {
+            try
+            {
+                synchronizePlaylist.getPlaylist().selectAndPlay(position);
+            }
+            catch(ProtocolException ex)  { }
+        });
+    }
+
+    @Override
     public void addConnectionListener(IConnectionListener listener)
     {
         loop.addListener(listener);

@@ -33,8 +33,7 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
     private PlayerRecyclerAdapter adapter;
     private final Handler handler = new Handler();
 
-    @Inject
-    IPlayerService playerService;
+    @Inject IPlayerService playerService;
 
     private final Player player = new Player();
 
@@ -169,6 +168,11 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
     {
         handler.post(() ->
         {
+            item.setSelectCommand((playlistItem, position) ->
+            {
+                playerService.playFromCurrentPlaylist(position);
+            });
+
             adapter.insert(item, offset);
         });
     }

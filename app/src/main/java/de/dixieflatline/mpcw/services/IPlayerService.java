@@ -25,6 +25,7 @@ public interface IPlayerService
     void next();
     void previous();
     void toggle();
+    void playFromCurrentPlaylist(int position);
     void addConnectionListener(IConnectionListener listener);
     void removeConnectionListener(IConnectionListener listener);
     void addPlayerListener(IPlayerListener listener);
