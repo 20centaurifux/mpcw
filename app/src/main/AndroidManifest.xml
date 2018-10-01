@@ -36,7 +36,7 @@
 
         <activity
             android:name=".views.PlayerFragment"
-            android:label="@string/title_activity_player">
+            android:label="@string/title_fragment_player">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,7 +46,7 @@
 
         <activity
             android:name=".views.PreferencesFragment"
-            android:label="@string/title_activity_preferences">
+            android:label="@string/title_fragment_preferences">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

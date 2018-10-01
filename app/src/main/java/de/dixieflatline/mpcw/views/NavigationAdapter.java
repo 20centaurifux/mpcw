@@ -22,6 +22,8 @@ import android.graphics.drawable.Drawable;
 
 import java.util.ArrayList;
 
+import de.dixieflatline.mpcw.*;
+
 public class NavigationAdapter extends WearableNavigationDrawerView.WearableNavigationDrawerAdapter
 {
     public static final int PLAYER = 0;
@@ -35,8 +37,8 @@ public class NavigationAdapter extends WearableNavigationDrawerView.WearableNavi
     {
         this.context = context;
 
-        texts.add("Player");
-        texts.add("Preferences");
+        texts.add(context.getString(R.string.title_fragment_player));
+        texts.add(context.getString(R.string.title_fragment_preferences));
 
         drawables.add(this.context.getDrawable(android.R.drawable.ic_media_play));
         drawables.add(this.context.getDrawable(android.R.drawable.ic_menu_preferences));

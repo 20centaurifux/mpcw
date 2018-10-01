@@ -9,6 +9,6 @@
     <string name="network_problem">Network problem</string>
     <string name="retry">Retry</string>
     <string name="title_activity_main">mpcw</string>
-    <string name="title_activity_player">mpcw</string>
-    <string name="title_activity_preferences">Preferences</string>
+    <string name="title_fragment_player">Player</string>
+    <string name="title_fragment_preferences">Preferences</string>
 </resources>
