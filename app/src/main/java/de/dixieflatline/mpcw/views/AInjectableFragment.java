@@ -16,39 +16,19 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.views;
 
-import android.content.*;
-import android.os.*;
-import android.support.wear.widget.drawer.*;
-import android.support.wearable.activity.*;
+import android.app.*;
+import android.content.Context;
 
-import de.dixieflatline.mpcw.*;
-import de.dixieflatline.mpcw.di.*;
+import de.dixieflatline.mpcw.di.Injector;
 
-public abstract class AActivity extends WearableActivity
+public abstract class AInjectableFragment extends Fragment
 {
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+    protected void inject()
     {
-        super.onCreate(savedInstanceState);
-
-        inject();
-    }
-
-    private void inject()
-    {
-        Context context = getApplicationContext();
+        Activity activity = getActivity();
+        Context context = activity.getApplicationContext();
         Injector injector = new Injector(context);
 
         injector.inject(this);
-    }
-
-    protected void setupDrawer(int currentItem)
-    {
-        WearableNavigationDrawerView wearableNavigationDrawer = findViewById(R.id.top_navigation_drawer);
-
-        wearableNavigationDrawer.setAdapter(new NavigationAdapter(this));
-        wearableNavigationDrawer.setCurrentItem(currentItem, false);
-        wearableNavigationDrawer.getController().peekDrawer();
-        wearableNavigationDrawer.addOnItemSelectedListener(new NavigationItemSelectionListener(this));
     }
 }

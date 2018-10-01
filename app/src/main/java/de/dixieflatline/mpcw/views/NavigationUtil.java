@@ -17,14 +17,16 @@
 package de.dixieflatline.mpcw.views;
 
 import android.app.*;
-import android.content.*;
+import android.os.*;
 import android.support.wear.widget.drawer.*;
 
-public class NavigationItemSelectionListener implements WearableNavigationDrawerView.OnItemSelectedListener
+import de.dixieflatline.mpcw.*;
+
+public class NavigationUtil implements WearableNavigationDrawerView.OnItemSelectedListener
 {
     private final Activity currentActivity;
 
-    public NavigationItemSelectionListener(Activity currentActivity)
+    public NavigationUtil(Activity currentActivity)
     {
         this.currentActivity = currentActivity;
     }
@@ -32,25 +34,54 @@ public class NavigationItemSelectionListener implements WearableNavigationDrawer
     @Override
     public void onItemSelected(int index)
     {
-        Activity activity;
+        Fragment fragment;
 
         switch(index)
         {
             case NavigationAdapter.PLAYER:
-                activity = new PlayerActivity();
+                fragment = new PlayerFragment();
                 break;
 
             case NavigationAdapter.PREFERENCES:
-                activity = new PreferencesActivity();
+                fragment = new PreferencesFragment();
                 break;
 
             default:
-                throw new RuntimeException("Couldn't map activity.");
+                throw new RuntimeException("Couldn't map fragment.");
         }
 
-        Intent intent = new Intent(currentActivity, activity.getClass());
+        navigateTo(fragment);
+    }
 
-        currentActivity.startActivity(intent);
-        currentActivity.finish();
+    public void openStartScreen()
+    {
+        openPlayer();
+    }
+
+    public void openPlayer()
+    {
+        navigateTo(new PlayerFragment());
+    }
+
+    public void openConnectionFailure(Exception ex)
+    {
+        Bundle bundle = new Bundle();
+
+        bundle.putString("message", ex.getLocalizedMessage());
+
+        Fragment fragment = new ConnectionFailureFragment();
+
+        fragment.setArguments(bundle);
+
+        navigateTo(fragment);
+    }
+
+    private void navigateTo(Fragment fragment)
+    {
+        FragmentManager manager = currentActivity.getFragmentManager();
+
+        manager.beginTransaction()
+               .replace(R.id.fragment_container, fragment)
+               .commit();
     }
 }

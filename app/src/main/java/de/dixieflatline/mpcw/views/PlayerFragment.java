@@ -19,6 +19,7 @@ package de.dixieflatline.mpcw.views;
 import android.os.*;
 import android.support.v7.widget.*;
 import android.support.wear.widget.*;
+import android.view.*;
 
 import javax.inject.*;
 
@@ -27,7 +28,7 @@ import de.dixieflatline.mpcw.services.*;
 import de.dixieflatline.mpcw.services.implementation.*;
 import de.dixieflatline.mpcw.viewmodels.*;
 
-public class PlayerActivity extends AActivity implements IConnectionListener, IPlayerListener, IPlaylistListener
+public class PlayerFragment extends AInjectableFragment implements IConnectionListener, IPlayerListener, IPlaylistListener
 {
     private PlayerRecyclerAdapter adapter;
     private final Handler handler = new Handler();
@@ -38,16 +39,19 @@ public class PlayerActivity extends AActivity implements IConnectionListener, IP
     private final Player player = new Player();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
+        inject();
 
-        setContentView(R.layout.activity_player);
+        return inflater.inflate(R.layout.fragment_player, container, false);
+    }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState)
+    {
         setupPlayer();
         setupRecyclerView();
         setupPlayerService();
-        setupDrawer(NavigationAdapter.PLAYER);
     }
 
     private void setupPlayer()
@@ -59,13 +63,11 @@ public class PlayerActivity extends AActivity implements IConnectionListener, IP
 
     private void setupRecyclerView()
     {
-        setContentView(R.layout.activity_player);
-
-        WearableRecyclerView recyclerView = findViewById(R.id.recycler_view);
+        WearableRecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
 
         recyclerView.setEdgeItemsCenteringEnabled(true);
 
-        WearableRecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        WearableRecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
 
         recyclerView.setLayoutManager(layoutManager);
 
@@ -111,6 +113,9 @@ public class PlayerActivity extends AActivity implements IConnectionListener, IP
     @Override
     public void onAborted(Exception cause)
     {
+        NavigationUtil navigationUtil = new NavigationUtil(getActivity());
+
+        navigationUtil.openConnectionFailure(cause);
     }
 
     @Override

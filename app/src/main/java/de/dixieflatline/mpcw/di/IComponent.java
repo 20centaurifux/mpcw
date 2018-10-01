@@ -26,6 +26,6 @@ import de.dixieflatline.mpcw.views.*;
 @Component(modules = { ServicesModule.class })
 public interface IComponent
 {
-    void inject(PlayerActivity activity);
-    void inject(PreferencesActivity activity);
+    void inject(PlayerFragment fragment);
+    void inject(PreferencesFragment fragment);
 }

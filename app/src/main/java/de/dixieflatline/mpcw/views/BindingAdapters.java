@@ -19,11 +19,9 @@ package de.dixieflatline.mpcw.views;
 import android.databinding.BindingAdapter;
 import android.databinding.InverseBindingAdapter;
 
-import android.graphics.drawable.*;
 import android.view.View;
 import android.widget.*;
 
-import de.dixieflatline.mpcw.services.*;
 import de.dixieflatline.mpcw.viewmodels.*;
 
 public class BindingAdapters

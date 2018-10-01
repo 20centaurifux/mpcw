@@ -9,13 +9,13 @@
     <android.support.wear.widget.BoxInsetLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/dark_grey"
-        android:padding="@dimen/box_inset_layout_padding">
+        android:padding="15dp"
+        android:background="@color/dark_grey">
         <LinearLayout
             android:id="@+id/fragment_container"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" />
+            android:layout_height="match_parent" />
     </android.support.wear.widget.BoxInsetLayout>
 
     <android.support.wear.widget.drawer.WearableNavigationDrawerView

@@ -16,41 +16,42 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.views;
 
-import android.databinding.DataBindingUtil;
-import android.os.Bundle;
+import android.os.*;
+import android.support.wear.widget.drawer.*;
+import android.support.wearable.activity.*;
 
-import javax.inject.Inject;
+import de.dixieflatline.mpcw.*;
 
-import de.dixieflatline.mpcw.R;
-import de.dixieflatline.mpcw.databinding.*;
-import de.dixieflatline.mpcw.services.IPreferencesService;
-import de.dixieflatline.mpcw.viewmodels.Preferences;
-
-public class PreferencesActivity extends AActivity
+public class MainActivity extends WearableActivity
 {
-    private ActivityPreferencesBinding binding;
-    private Preferences preferences;
-
-    @Inject IPreferencesService service;
+    private NavigationUtil navigationUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
-        preferences = service.load();
+        setContentView(R.layout.activity_main);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_preferences);
-        binding.setPreferences(preferences);
+        navigationUtil = new NavigationUtil(this);
 
-        setupDrawer(NavigationAdapter.PREFERENCES);
+        setupDrawer();
     }
 
     @Override
-    public void onPause()
+    protected void onStart()
     {
-        super.onPause();
+        super.onStart();
 
-        service.save(preferences);
+        navigationUtil.openStartScreen();
+    }
+
+    private void setupDrawer()
+    {
+        WearableNavigationDrawerView wearableNavigationDrawer = findViewById(R.id.top_navigation_drawer);
+
+        wearableNavigationDrawer.setAdapter(new NavigationAdapter(this));
+        wearableNavigationDrawer.getController().peekDrawer();
+        wearableNavigationDrawer.addOnItemSelectedListener(navigationUtil);
     }
 }
