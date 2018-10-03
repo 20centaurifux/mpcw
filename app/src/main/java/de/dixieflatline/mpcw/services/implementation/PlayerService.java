@@ -147,13 +147,17 @@ public class PlayerService implements IPlayerService
     @Override
     public void playFromCurrentPlaylist(int position)
     {
-        loop.addTimeout((connection) ->
+        loop.addTimeout(new APlaylistCommand()
         {
-            try
+            @Override
+            protected void run(IPlaylist playlist) throws Exception
             {
-                synchronizePlaylist.getPlaylist().selectAndPlay(position);
+                try
+                {
+                    playlist.selectAndPlay(position, EnumSet.of(SelectAndPlayFlags.NoRangeCheck));
+                }
+                catch(ProtocolException ex)  { }
             }
-            catch(ProtocolException ex)  { }
         });
     }
 
