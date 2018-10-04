@@ -19,8 +19,11 @@ package de.dixieflatline.mpcw.views;
 import android.databinding.BindingAdapter;
 import android.databinding.InverseBindingAdapter;
 
+import android.support.v7.widget.*;
 import android.view.View;
 import android.widget.*;
+
+import java.util.*;
 
 import de.dixieflatline.mpcw.viewmodels.*;
 
@@ -125,5 +128,16 @@ public class BindingAdapters
         }
 
         view.setBackground(view.getContext().getDrawable(id));
+    }
+
+    @BindingAdapter("foundItems")
+    public static void insertFoundItems(RecyclerView view, Iterable<Object> items)
+    {
+        RecyclerView.Adapter adapter = view.getAdapter();
+
+        if(adapter instanceof  BrowserRecyclerAdapter)
+        {
+            ((BrowserRecyclerAdapter)adapter).setItems(items);
+        }
     }
 }

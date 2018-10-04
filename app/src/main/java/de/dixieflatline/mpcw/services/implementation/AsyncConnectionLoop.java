@@ -23,6 +23,7 @@ import java.util.concurrent.*;
 
 import de.dixieflatline.mpcw.client.*;
 import de.dixieflatline.mpcw.client.Connection;
+import de.dixieflatline.mpcw.services.*;
 import de.dixieflatline.mpcw.utils.*;
 
 public class AsyncConnectionLoop implements Runnable

@@ -16,18 +16,11 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.services;
 
-public interface IPlayerService
+import de.dixieflatline.mpcw.viewmodels.*;
+
+public interface IBrowserService
 {
-    void startAsync();
-    void stopService();
-    void next();
-    void previous();
-    void toggle();
-    void playFromCurrentPlaylist(int position);
-    void addConnectionListener(IConnectionListener listener);
-    void removeConnectionListener(IConnectionListener listener);
-    void addPlayerListener(IPlayerListener listener);
-    void removePlayerListener(IPlayerListener listener);
-    void addPlaylistListener(IPlaylistListener listener);
-    void removePlaylistListener(IPlaylistListener listener);
+    Iterable<String> getAllArtists() throws Exception;
+    Iterable<String> getAlbumsByArtist(String artist) throws Exception;
+    Iterable<Song> getSongsByAlbum(String artist, String album) throws Exception;
 }

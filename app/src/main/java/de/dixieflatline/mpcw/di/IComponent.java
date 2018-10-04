@@ -29,4 +29,5 @@ public interface IComponent
     void inject(PlayerFragment fragment);
     void inject(PreferencesFragment fragment);
     void inject(AboutFragment fragment);
+    void inject(BrowserActivity fragment);
 }

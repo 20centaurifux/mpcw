@@ -14,20 +14,26 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.services;
+package de.dixieflatline.mpcw.views;
 
-public interface IPlayerService
+import android.support.v7.widget.*;
+
+import de.dixieflatline.mpcw.databinding.*;
+import de.dixieflatline.mpcw.viewmodels.*;
+
+public class SongViewHolder extends RecyclerView.ViewHolder
 {
-    void startAsync();
-    void stopService();
-    void next();
-    void previous();
-    void toggle();
-    void playFromCurrentPlaylist(int position);
-    void addConnectionListener(IConnectionListener listener);
-    void removeConnectionListener(IConnectionListener listener);
-    void addPlayerListener(IPlayerListener listener);
-    void removePlayerListener(IPlayerListener listener);
-    void addPlaylistListener(IPlaylistListener listener);
-    void removePlaylistListener(IPlaylistListener listener);
+    private final LayoutSongBinding binding;
+
+    public SongViewHolder(LayoutSongBinding binding)
+    {
+        super(binding.getRoot());
+
+        this.binding = binding;
+    }
+
+    public void bind(Song song)
+    {
+        binding.setSong(song);
+    }
 }

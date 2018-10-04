@@ -25,7 +25,6 @@ import javax.inject.*;
 
 import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.services.*;
-import de.dixieflatline.mpcw.services.implementation.*;
 import de.dixieflatline.mpcw.viewmodels.*;
 
 public class PlayerFragment extends AInjectableFragment implements IConnectionListener, IPlayerListener, IPlaylistListener

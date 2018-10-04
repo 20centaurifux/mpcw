@@ -44,12 +44,19 @@ public class ServicesModule
     }
 
     @Provides
-    @Singleton
     public IPlayerService providePlayerService()
     {
         IPreferencesService preferencesService = new SharedPreferencesService(context);
 
         return new PlayerService(preferencesService.load());
+    }
+
+    @Provides
+    public IBrowserService provideBrowserService()
+    {
+        IPreferencesService preferencesService = new SharedPreferencesService(context);
+
+        return new BrowserService(preferencesService.load());
     }
 
     @Provides

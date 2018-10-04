@@ -14,7 +14,7 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.services.implementation;
+package de.dixieflatline.mpcw.services;
 
 public interface IConnectionListener
 {

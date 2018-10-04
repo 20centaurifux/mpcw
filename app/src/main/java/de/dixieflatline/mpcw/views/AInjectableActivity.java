@@ -14,20 +14,18 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.services;
+package de.dixieflatline.mpcw.views;
 
-public interface IPlayerService
+import android.support.wearable.activity.*;
+
+import de.dixieflatline.mpcw.di.*;
+
+public abstract class AInjectableActivity extends WearableActivity
 {
-    void startAsync();
-    void stopService();
-    void next();
-    void previous();
-    void toggle();
-    void playFromCurrentPlaylist(int position);
-    void addConnectionListener(IConnectionListener listener);
-    void removeConnectionListener(IConnectionListener listener);
-    void addPlayerListener(IPlayerListener listener);
-    void removePlayerListener(IPlayerListener listener);
-    void addPlaylistListener(IPlaylistListener listener);
-    void removePlaylistListener(IPlaylistListener listener);
+    protected void inject()
+    {
+        Injector injector = new Injector(getApplicationContext());
+
+        injector.inject(this);
+    }
 }

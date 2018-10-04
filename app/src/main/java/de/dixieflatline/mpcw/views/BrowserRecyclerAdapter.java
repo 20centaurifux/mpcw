@@ -23,25 +23,34 @@ import java.util.*;
 
 import de.dixieflatline.mpcw.databinding.*;
 import de.dixieflatline.mpcw.viewmodels.*;
-import de.dixieflatline.mpcw.viewmodels.Player;
 
-public class PlayerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+public class BrowserRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
-    public static final int PLAYER = 0;
-    public static final int PLAYLISTITEM = 1;
+    public static final int TAG= 0;
+    public static final int SONG = 1;
 
-    private final Player player;
-    private final List<PlaylistItem> items = new ArrayList<PlaylistItem>();
-
-    public PlayerRecyclerAdapter(Player player)
-    {
-        this.player = player;
-    }
+    private final List<Object> items = new ArrayList<Object>();
 
     @Override
     public int getItemViewType(int position)
     {
-        return position == 0 ? PLAYER : PLAYLISTITEM;
+        Object item = items.get(position);
+        int viewType;
+
+        if(item instanceof String)
+        {
+            viewType = TAG;
+        }
+        else if(item instanceof Song)
+        {
+            viewType = SONG;
+        }
+        else
+        {
+            throw new RuntimeException("Unexpected view type.");
+        }
+
+        return viewType;
     }
 
     @Override
@@ -50,17 +59,17 @@ public class PlayerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         RecyclerView.ViewHolder viewHolder;
 
-        if(viewType == PLAYER)
+        if(viewType == TAG)
         {
-            LayoutPlayerBinding binding = LayoutPlayerBinding.inflate(inflater, viewGroup, false);
+            LayoutTagBinding binding = LayoutTagBinding.inflate(inflater, viewGroup, false);
 
-            viewHolder = new PlayerViewHolder(binding);
+            viewHolder = new TagViewHolder(binding);
         }
-        else if(viewType == PLAYLISTITEM)
+        else if(viewType == SONG)
         {
-            LayoutPlaylistitemBinding binding = LayoutPlaylistitemBinding.inflate(inflater, viewGroup, false);
+            LayoutSongBinding binding = LayoutSongBinding.inflate(inflater, viewGroup, false);
 
-            viewHolder = new PlaylistItemViewHolder(binding);
+            viewHolder = new SongViewHolder(binding);
         }
         else
         {
@@ -70,36 +79,35 @@ public class PlayerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return viewHolder;
     }
 
-    public void insert(PlaylistItem item, int offset)
+    public void setItems(Iterable<Object> items)
     {
-        items.add(offset, item);
-
-        notifyItemInserted(offset + 1);
-    }
-
-    public void remove(int from, int count)
-    {
-        items.subList(from, from + count).clear();
-
-        notifyItemRangeRemoved(from + 1, count);
+        this.items.clear();
+        items.forEach((item) -> this.items.add(item));
+        notifyDataSetChanged();
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position)
     {
-        if(position == 0)
+        Object item = items.get(position);
+
+        if(item instanceof String)
         {
-            ((PlayerViewHolder)viewHolder).bind(player);
+            ((TagViewHolder)viewHolder).bind((String)item);
+        }
+        else if(item instanceof Song)
+        {
+            ((SongViewHolder)viewHolder).bind((Song)item);
         }
         else
         {
-            ((PlaylistItemViewHolder)viewHolder).bind(items.get(position - 1));
+            throw new RuntimeException("Unexpected instance type.");
         }
     }
 
     @Override
     public int getItemCount()
     {
-        return 1 + items.size();
+        return items.size();
     }
 }

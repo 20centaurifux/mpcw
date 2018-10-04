@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="browser"
+            type="de.dixieflatline.mpcw.viewmodels.Browser" />
+    </data>
+
+    <android.support.wear.widget.BoxInsetLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark_grey"
+        android:padding="@dimen/box_inset_layout_padding">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                style="@android:style/Widget.Material.ProgressBar.Large"
+                app:visibleIfNot="@{browser.loaded}" />
+            <android.support.wear.widget.WearableRecyclerView
+                android:id="@+id/recycler_view"
+                android:scrollbars="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:visibleIf="@{browser.loaded}"
+                app:foundItems="@{browser.items}" />
+        </LinearLayout>
+    </android.support.wear.widget.BoxInsetLayout>
+</layout>
