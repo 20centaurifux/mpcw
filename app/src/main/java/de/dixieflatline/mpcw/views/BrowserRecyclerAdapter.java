@@ -37,7 +37,7 @@ public class BrowserRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         Object item = items.get(position);
         int viewType;
 
-        if(item instanceof String)
+        if(item instanceof Tag)
         {
             viewType = TAG;
         }
@@ -91,9 +91,9 @@ public class BrowserRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     {
         Object item = items.get(position);
 
-        if(item instanceof String)
+        if(item instanceof Tag)
         {
-            ((TagViewHolder)viewHolder).bind((String)item);
+            ((TagViewHolder)viewHolder).bind((Tag)item);
         }
         else if(item instanceof Song)
         {

@@ -19,10 +19,19 @@ package de.dixieflatline.mpcw.services.implementation;
 import java.net.*;
 import java.util.*;
 
-import de.dixieflatline.mpcw.client.*;
+import de.dixieflatline.mpcw.client.AuthenticationException;
+import de.dixieflatline.mpcw.client.CommunicationException;
+import de.dixieflatline.mpcw.client.Connection;
+import de.dixieflatline.mpcw.client.DispatchException;
+import de.dixieflatline.mpcw.client.ETag;
+import de.dixieflatline.mpcw.client.Filter;
+import de.dixieflatline.mpcw.client.IBrowser;
+import de.dixieflatline.mpcw.client.IClient;
+import de.dixieflatline.mpcw.client.IConnection;
+import de.dixieflatline.mpcw.client.ISearchResult;
 import de.dixieflatline.mpcw.client.ProtocolException;
-import de.dixieflatline.mpcw.services.*;
-import de.dixieflatline.mpcw.viewmodels.*;
+import de.dixieflatline.mpcw.services.IBrowserService;
+import de.dixieflatline.mpcw.viewmodels.Preferences;
 import de.dixieflatline.mpcw.viewmodels.Song;
 
 public class BrowserService implements IBrowserService
@@ -41,7 +50,7 @@ public class BrowserService implements IBrowserService
                                                    AuthenticationException,
                                                    ProtocolException
     {
-        ISearchResult<Tag> result = query(browser -> browser.findTags(ETag.Artist));
+        ISearchResult<de.dixieflatline.mpcw.client.Tag> result = query(browser -> browser.findTags(ETag.Artist));
 
         return selectTagValues(result.getItems()
                                      .iterator());
@@ -55,18 +64,18 @@ public class BrowserService implements IBrowserService
                                                                     ProtocolException
     {
         Filter[] filter = new Filter[] { new Filter(ETag.Artist, artist) };
-        ISearchResult<Tag> result = query(browser -> browser.findTags(ETag.Album, filter));
+        ISearchResult<de.dixieflatline.mpcw.client.Tag> result = query(browser -> browser.findTags(ETag.Album, filter));
 
         return selectTagValues(result.getItems()
                                      .iterator());
     }
 
-    private Iterable<String> selectTagValues(Iterator<Tag> tags)
+    private Iterable<String> selectTagValues(Iterator<de.dixieflatline.mpcw.client.Tag> tags)
     {
         return () -> createTagValueIterator(tags);
     }
 
-    private Iterator<String> createTagValueIterator(Iterator<Tag> tags)
+    private Iterator<String> createTagValueIterator(Iterator<de.dixieflatline.mpcw.client.Tag> tags)
     {
         return new Iterator<String>()
         {

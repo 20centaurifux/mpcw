@@ -6,7 +6,7 @@
     <data>
         <variable
             name="tag"
-            type="java.lang.String" />
+            type="de.dixieflatline.mpcw.viewmodels.Tag" />
     </data>
 
     <FrameLayout
@@ -27,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:text="@{tag}" />
+                android:text="@{tag.value}" />
         </LinearLayout>
     </FrameLayout>
 </layout>

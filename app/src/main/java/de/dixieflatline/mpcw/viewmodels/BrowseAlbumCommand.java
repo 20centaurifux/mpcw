@@ -14,37 +14,37 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.views;
+package de.dixieflatline.mpcw.viewmodels;
 
-import android.support.v7.widget.*;
-import android.view.*;
+import android.app.*;
+import android.content.*;
+import android.os.*;
 
-import de.dixieflatline.mpcw.*;
-import de.dixieflatline.mpcw.databinding.*;
-import de.dixieflatline.mpcw.viewmodels.*;
+import de.dixieflatline.mpcw.views.*;
 
-public class TagViewHolder extends RecyclerView.ViewHolder
+public class BrowseAlbumCommand implements ITagActivateCommand
 {
-    private final LayoutTagBinding binding;
+    private final Activity activity;
+    private final String artist;
 
-    public TagViewHolder(LayoutTagBinding binding)
+    public BrowseAlbumCommand(Activity activity, String artist)
     {
-        super(binding.getRoot());
-
-        this.binding = binding;
+        this.activity = activity;
+        this.artist = artist;
     }
 
-    public void bind(Tag tag)
+    @Override
+    public void run(Tag tag)
     {
-        binding.setTag(tag);
+        Bundle bundle = new Bundle();
 
-        View view = binding.getRoot();
+        bundle.putString("ARTIST_FILTER", artist);
+        bundle.putString("ALBUM_FILTER", tag.getValue());
 
-        view.findViewById(R.id.frame_tag);
+        Intent intent = new Intent(activity, BrowserActivity.class);
 
-        view.setOnClickListener(v ->
-        {
-            tag.getTagActivateCommand().run(tag);
-        });
+        intent.putExtras(bundle);
+
+        activity.startActivity(intent);
     }
 }

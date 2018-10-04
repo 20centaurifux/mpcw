@@ -25,7 +25,7 @@ import de.dixieflatline.mpcw.*;
 public class Browser extends BaseObservable
 {
     private boolean loaded;
-    private Iterable<String> tags;
+    private Iterable<Tag> tags;
     private Iterable<Song> songs;
 
     @Bindable
@@ -38,12 +38,12 @@ public class Browser extends BaseObservable
     }
 
     @Bindable
-    public Iterable<String> getTags()
+    public Iterable<Tag> getTags()
     {
         return tags;
     }
 
-    public void setTags(Iterable<String> tags)
+    public void setTags(Iterable<Tag> tags)
     {
         this.tags = tags;
         notifyPropertyChanged(BR.tags);
@@ -68,8 +68,8 @@ public class Browser extends BaseObservable
     {
         return () -> new Iterator<Object>()
         {
-            private final Iterator<String> tagIterator = tags != null ? tags.iterator()
-                                                                      : null;
+            private final Iterator<Tag> tagIterator = tags != null ? tags.iterator()
+                                                                   : null;
             private final Iterator<Song> songIterator = songs != null ? songs.iterator()
                                                                       : null;
 
