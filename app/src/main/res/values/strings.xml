@@ -15,7 +15,7 @@
     <string name="retry">Retry</string>
     <string name="version">Version</string>
     <string name="date">Date</string>
-    <string name="author">Autor</string>
+    <string name="author">Author</string>
     <string name="license">License</string>
     <string name="website">Website</string>
 </resources>

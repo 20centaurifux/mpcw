@@ -3,13 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
+    android:background="@color/dark_blue"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.wear.widget.BoxInsetLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/dark_grey">
+        android:background="@color/black_54p">
         <LinearLayout
             android:id="@+id/fragment_container"
             android:orientation="vertical"
@@ -22,9 +23,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:navigationStyle="singlePage" />
-
-    <!--<android.support.wear.widget.drawer.WearableActionDrawerView
-        android:id="@+id/bottom_action_drawer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />-->
 </android.support.wear.widget.drawer.WearableDrawerLayout>

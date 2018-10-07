@@ -16,10 +16,13 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.views;
 
+import android.content.*;
 import android.os.*;
 import android.support.v7.widget.*;
 import android.support.wear.widget.*;
+import android.util.*;
 import android.view.*;
+import android.widget.*;
 
 import javax.inject.*;
 
@@ -50,6 +53,7 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
         setupPlayer();
         setupRecyclerView();
         setupPlayerService();
+        setupActions();
     }
 
     private void setupPlayer()
@@ -78,6 +82,18 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
         playerService.addConnectionListener(this);
         playerService.addPlayerListener(this);
         playerService.addPlaylistListener(this);
+    }
+
+    private void setupActions()
+    {
+        Button button = getView().findViewById(R.id.browser);
+
+        button.setOnClickListener((btn) ->
+        {
+            Intent intent  = new Intent(getActivity(), BrowserActivity.class);
+
+            startActivity(intent);
+        });
     }
 
     @Override

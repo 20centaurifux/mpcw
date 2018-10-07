@@ -24,8 +24,8 @@ import android.view.View;
 import android.widget.*;
 
 import java.io.*;
-import java.util.*;
 
+import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.viewmodels.*;
 
 public class BindingAdapters
@@ -121,11 +121,11 @@ public class BindingAdapters
 
         if(status == Player.PLAY)
         {
-            id = android.R.drawable.ic_media_pause;
+            id = R.drawable.ic_pause_circle_outline_white_24dp;
         }
         else
         {
-            id = android.R.drawable.ic_media_play;
+            id = R.drawable.ic_play_circle_outline_white_24dp;
         }
 
         view.setBackground(view.getContext().getDrawable(id));
