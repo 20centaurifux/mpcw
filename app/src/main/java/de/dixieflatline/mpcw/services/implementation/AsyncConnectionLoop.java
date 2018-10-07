@@ -120,6 +120,8 @@ public class AsyncConnectionLoop implements Runnable
                 interrupted = true;
             }
         }
+
+        disconnect();
     }
 
     private void addTasksFromQueue()
@@ -165,6 +167,25 @@ public class AsyncConnectionLoop implements Runnable
         }
 
         return newState;
+    }
+
+    private void disconnect()
+    {
+        if(connection.isConnected())
+        {
+            try
+            {
+                connection.disconnect();
+            }
+            catch(CommunicationException ex)
+            {
+                Log.w("AsyncConnectionLoop", ex);
+            }
+            finally
+            {
+                listeners.forEach((l) -> l.onDisconnected());
+            }
+        }
     }
 
     private IConnection createConnection(String connectionString)

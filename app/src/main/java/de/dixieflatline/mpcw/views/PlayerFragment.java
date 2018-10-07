@@ -20,7 +20,6 @@ import android.content.*;
 import android.os.*;
 import android.support.v7.widget.*;
 import android.support.wear.widget.*;
-import android.util.*;
 import android.view.*;
 import android.widget.*;
 
@@ -97,9 +96,9 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
     }
 
     @Override
-    public void onStart()
+    public void onResume()
     {
-        super.onStart();
+        super.onResume();
 
         playerService.startAsync();
     }

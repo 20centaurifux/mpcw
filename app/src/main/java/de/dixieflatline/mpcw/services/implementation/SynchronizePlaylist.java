@@ -38,24 +38,14 @@ public class SynchronizePlaylist implements IConnectionHandler
         listeners.remove(listener);
     }
 
-    public IPlaylist getPlaylist()
-    {
-        return playlist;
-    }
-
     @Override
     public void run(IConnection connection) throws CommunicationException
     {
         try
         {
-            if(playlist == null)
-            {
-                IClient client = connection.getClient();
+            Iterable<ITransformation> transformations = getTransformations(connection);
 
-                playlist = client.getCurrentPlaylist();
-            }
-
-            for(ITransformation transformation : playlist.synchronize())
+            for(ITransformation transformation : transformations)
             {
                 if(transformation instanceof InsertPlaylistItem)
                 {
@@ -84,5 +74,50 @@ public class SynchronizePlaylist implements IConnectionHandler
         {
             throw new CommunicationException("Couldn't synchronize playlist.");
         }
+    }
+
+    private Iterable<ITransformation> getTransformations(IConnection connection) throws ProtocolException, CommunicationException
+    {
+        Iterable<ITransformation> transformations = null;
+
+        if(playlist == null)
+        {
+            transformations = loadInitialPlaylist(connection);
+        }
+        else
+        {
+            transformations = updatePlaylist(connection);
+        }
+
+        return transformations;
+    }
+
+    private Iterable<ITransformation> loadInitialPlaylist(IConnection connection) throws ProtocolException, CommunicationException
+    {
+        IClient client = connection.getClient();
+
+        playlist = client.getCurrentPlaylist();
+
+        return playlist.synchronize();
+    }
+
+    private Iterable<ITransformation> updatePlaylist(IConnection connection) throws ProtocolException, CommunicationException
+    {
+        Iterable<ITransformation> transformations;
+
+        try
+        {
+            transformations = playlist.synchronize();
+        }
+        catch(CommunicationException ex)
+        {
+            IClient client = connection.getClient();
+
+            playlist = client.resyncCurrentPlaylist(playlist);
+
+            transformations = playlist.synchronize();
+        }
+
+        return transformations;
     }
 }
