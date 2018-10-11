@@ -46,21 +46,21 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder
     {
         View root = binding.getRoot();
 
-        root.findViewById(R.id.previousSong).setOnClickListener(v ->
+        root.findViewById(R.id.previous).setOnClickListener(v ->
         {
             binding.getPlayer()
                    .getPreviousCommand()
                    .run();
         });
 
-        root.findViewById(R.id.nextSong).setOnClickListener(v ->
+        root.findViewById(R.id.next).setOnClickListener(v ->
         {
             binding.getPlayer()
                    .getNextCommand()
                    .run();
         });
 
-        root.findViewById(R.id.togglePlayer).setOnClickListener(v ->
+        root.findViewById(R.id.toggle_player).setOnClickListener(v ->
         {
             binding.getPlayer()
                    .getToggleCommand()

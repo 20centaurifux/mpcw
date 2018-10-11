@@ -121,11 +121,11 @@ public class BindingAdapters
 
         if(status == Player.PLAY)
         {
-            id = R.drawable.ic_pause_circle_outline_white_24dp;
+            id = R.drawable.ic_pause_circle_outline;
         }
         else
         {
-            id = R.drawable.ic_play_circle_outline_white_24dp;
+            id = R.drawable.ic_play_circle_outline;
         }
 
         view.setBackground(view.getContext().getDrawable(id));
