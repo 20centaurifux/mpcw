@@ -145,6 +145,19 @@ public class PlayerService implements IPlayerService
     }
 
     @Override
+    public void clear()
+    {
+        loop.addTimeout(new APlayerCommand()
+        {
+            @Override
+            protected void run(IPlayer player) throws CommunicationException, ProtocolException
+            {
+                player.clear();
+            }
+        });
+    }
+
+    @Override
     public void playFromCurrentPlaylist(int position)
     {
         loop.addTimeout(new APlaylistCommand()

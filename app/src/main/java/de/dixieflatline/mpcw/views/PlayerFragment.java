@@ -53,6 +53,7 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
         setupRecyclerView();
         setupPlayerService();
         setupActions();
+        setupListeners();
     }
 
     private void setupPlayer()
@@ -93,6 +94,13 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
 
             startActivity(intent);
         });
+    }
+
+    private void setupListeners()
+    {
+        View view = getView();
+
+        view.findViewById(R.id.clear_playlist).setOnClickListener((s) -> playerService.clear());
     }
 
     @Override

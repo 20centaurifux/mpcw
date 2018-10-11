@@ -23,6 +23,7 @@ public interface IPlayerService
     void next();
     void previous();
     void toggle();
+    void clear();
     void playFromCurrentPlaylist(int position);
     void addConnectionListener(IConnectionListener listener);
     void removeConnectionListener(IConnectionListener listener);
