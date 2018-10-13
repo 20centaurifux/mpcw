@@ -74,14 +74,14 @@ public class Browser extends BaseObservable
                                                                       : null;
 
             @Override
-            public boolean hasNext ()
+            public boolean hasNext()
             {
                 return (tagIterator != null && tagIterator.hasNext()) ||
                        (songIterator != null && songIterator.hasNext());
             }
 
             @Override
-            public Object next ()
+            public Object next()
             {
                 Object nextValue;
 

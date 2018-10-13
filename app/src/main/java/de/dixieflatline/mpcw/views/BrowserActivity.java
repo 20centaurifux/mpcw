@@ -26,6 +26,7 @@ import android.view.*;
 import android.widget.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import javax.inject.*;
 
@@ -180,11 +181,15 @@ public class BrowserActivity extends AInjectableActivity
             }
         };
 
+        Iterable<Tag> filteredTags = StreamSupport.stream(tags.spliterator(), false)
+                                                  .filter(t -> !t.getValue().isEmpty())
+                                                  ::iterator;
+
         Iterable<Song> songs = browserService.getSongsByAlbum(artist, "");
 
         handler.post(() ->
         {
-            browser.setTags(tags);
+            browser.setTags(filteredTags);
             browser.setSongs(injectSongs(songs));
         });
     }
