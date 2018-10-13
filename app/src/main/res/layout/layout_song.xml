@@ -36,7 +36,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                app:songTitle="@{song}" />
+                android:text="@{song.displayTitle}" />
         </LinearLayout>
     </FrameLayout>
 </layout>

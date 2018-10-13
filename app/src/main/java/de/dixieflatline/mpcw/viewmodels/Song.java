@@ -29,6 +29,7 @@ public class Song extends BaseObservable
     private String album;
     private int track;
     private String title;
+    private String displayTitle;
     private ISongCommand songSelectCommand;
 
     @Bindable
@@ -40,6 +41,7 @@ public class Song extends BaseObservable
     public void setFilename(String filename)
     {
         this.filename = filename;
+        updateDisplayTitle();
         notifyPropertyChanged(BR.filename);
     }
 
@@ -68,7 +70,10 @@ public class Song extends BaseObservable
     }
 
     @Bindable
-    public int getTrack() { return track; }
+    public int getTrack()
+    {
+        return track;
+    }
 
     public void setTrack(int track)
     {
@@ -85,9 +90,11 @@ public class Song extends BaseObservable
     public void setTitle(String title)
     {
         this.title = title;
+        updateDisplayTitle();
         notifyPropertyChanged(BR.title);
     }
 
+    @Bindable
     public String getDisplayTitle()
     {
         String title = this.title;
@@ -100,6 +107,21 @@ public class Song extends BaseObservable
         }
 
         return title;
+    }
+
+    public void updateDisplayTitle()
+    {
+        displayTitle = this.title;
+
+        if(displayTitle == null || displayTitle.isEmpty())
+        {
+            File file = new File(filename);
+
+            displayTitle = file.getName();
+
+
+            notifyPropertyChanged(BR.displayTitle);
+        }
     }
 
     public ISongCommand getSongSelectCommand()

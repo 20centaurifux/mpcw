@@ -141,19 +141,4 @@ public class BindingAdapters
             ((BrowserRecyclerAdapter)adapter).setItems(items);
         }
     }
-
-    @BindingAdapter("songTitle")
-    public static void setSongTitle(TextView view, Song song)
-    {
-        String title = song.getTitle();
-
-        if(title == null || title.isEmpty())
-        {
-            File file = new File(song.getFilename());
-
-            title = file.getName();
-        }
-
-        view.setText(title);
-    }
 }
