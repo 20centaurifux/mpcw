@@ -22,7 +22,7 @@ import android.os.*;
 
 import de.dixieflatline.mpcw.views.*;
 
-public class BrowseArtistCommand implements ITagActivateCommand
+public class BrowseArtistCommand implements ITagCommand
 {
     private final Activity activity;
 
@@ -32,11 +32,11 @@ public class BrowseArtistCommand implements ITagActivateCommand
     }
 
     @Override
-    public void run(Tag tag)
+    public void run(Tag artist)
     {
         Bundle bundle = new Bundle();
 
-        bundle.putString("ARTIST_FILTER", tag.getValue());
+        bundle.putString("ARTIST_FILTER", artist.getValue());
 
         Intent intent = new Intent(activity, BrowserActivity.class);
 

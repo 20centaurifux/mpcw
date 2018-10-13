@@ -30,7 +30,10 @@ public class Song extends BaseObservable
     private IPlaylistItemSelectCommand selectCommand;
 
     @Bindable
-    public String getFilename() { return filename; }
+    public String getFilename()
+    {
+        return filename;
+    }
 
     public void setFilename(String filename)
     {
@@ -39,7 +42,10 @@ public class Song extends BaseObservable
     }
 
     @Bindable
-    public String getArtist() { return artist; }
+    public String getArtist()
+    {
+        return artist;
+    }
 
     public void setArtist(String artist)
     {
@@ -48,7 +54,10 @@ public class Song extends BaseObservable
     }
 
     @Bindable
-    public String getAlbum() { return album; }
+    public String getAlbum()
+    {
+        return album;
+    }
 
     public void setAlbum(String album)
     {
@@ -66,7 +75,10 @@ public class Song extends BaseObservable
     }
 
     @Bindable
-    public String getTitle() { return title; }
+    public String getTitle()
+    {
+        return title;
+    }
 
     public void setTitle(String title)
     {

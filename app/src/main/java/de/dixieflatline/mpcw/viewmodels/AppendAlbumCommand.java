@@ -16,35 +16,37 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.viewmodels;
 
-import android.app.*;
-import android.content.*;
-import android.os.*;
+import android.util.*;
 
-import de.dixieflatline.mpcw.views.*;
+import javax.inject.*;
+;
+import de.dixieflatline.mpcw.services.*;
 
-public class BrowseAlbumCommand implements ITagCommand
+public class AppendAlbumCommand implements ITagCommand
 {
-    private final Activity activity;
     private final String artist;
+    @Inject IBrowserService browserService;
 
-    public BrowseAlbumCommand(Activity activity, String artist)
+    public AppendAlbumCommand(String artist)
     {
-        this.activity = activity;
         this.artist = artist;
     }
 
     @Override
     public void run(Tag album)
     {
-        Bundle bundle = new Bundle();
+        Thread thread = new Thread(() ->
+        {
+            try
+            {
+                browserService.appendSongsFromAlbum(artist, album.getValue());
+            }
+            catch(Exception ex)
+            {
+                Log.e("AppendAlbumCommand", ex.getMessage());
+            }
+        });
 
-        bundle.putString("ARTIST_FILTER", artist);
-        bundle.putString("ALBUM_FILTER", album.getValue());
-
-        Intent intent = new Intent(activity, BrowserActivity.class);
-
-        intent.putExtras(bundle);
-
-        activity.startActivity(intent);
+        thread.start();
     }
 }

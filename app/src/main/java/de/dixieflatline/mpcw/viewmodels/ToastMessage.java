@@ -16,35 +16,28 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.viewmodels;
 
-import android.app.*;
-import android.content.*;
-import android.os.*;
+import android.databinding.*;
 
-import de.dixieflatline.mpcw.views.*;
+import de.dixieflatline.mpcw.*;
 
-public class BrowseAlbumCommand implements ITagCommand
+public class ToastMessage extends BaseObservable
 {
-    private final Activity activity;
-    private final String artist;
+    private String message;
 
-    public BrowseAlbumCommand(Activity activity, String artist)
+    public ToastMessage(String message)
     {
-        this.activity = activity;
-        this.artist = artist;
+        this.message = message;
     }
 
-    @Override
-    public void run(Tag album)
+    @Bindable
+    public String getMessage()
     {
-        Bundle bundle = new Bundle();
+        return message;
+    }
 
-        bundle.putString("ARTIST_FILTER", artist);
-        bundle.putString("ALBUM_FILTER", album.getValue());
-
-        Intent intent = new Intent(activity, BrowserActivity.class);
-
-        intent.putExtras(bundle);
-
-        activity.startActivity(intent);
+    public void setMessage(String message)
+    {
+        this.message = message;
+        notifyPropertyChanged(BR.message);
     }
 }

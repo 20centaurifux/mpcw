@@ -20,6 +20,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
+import de.dixieflatline.mpcw.viewmodels.*;
 import de.dixieflatline.mpcw.views.*;
 
 @Singleton
@@ -30,4 +31,6 @@ public interface IComponent
     void inject(PreferencesFragment fragment);
     void inject(AboutFragment fragment);
     void inject(BrowserActivity fragment);
+    void inject(AppendArtistCommand command);
+    void inject(AppendAlbumCommand command);
 }

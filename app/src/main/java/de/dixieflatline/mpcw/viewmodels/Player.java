@@ -50,7 +50,10 @@ public class Player extends BaseObservable
     }
 
     @Bindable
-    public String getArtist() { return artist; }
+    public String getArtist()
+    {
+        return artist;
+    }
 
     public void setArtist(String artist)
     {
@@ -59,7 +62,10 @@ public class Player extends BaseObservable
     }
 
     @Bindable
-    public String getTitle() { return title; }
+    public String getTitle()
+    {
+        return title;
+    }
 
     public void setTitle(String title)
     {
@@ -77,7 +83,10 @@ public class Player extends BaseObservable
     }
 
     @Bindable
-    public boolean getHasPrevious() { return hasPrevious; }
+    public boolean getHasPrevious()
+    {
+        return hasPrevious;
+    }
 
     public void setHasPrevious(boolean hasPrevious)
     {
@@ -86,7 +95,10 @@ public class Player extends BaseObservable
     }
 
     @Bindable
-    public boolean getHasNext() { return hasNext; }
+    public boolean getHasNext()
+    {
+        return hasNext;
+    }
 
     public void setHasNext(boolean hasNext)
     {

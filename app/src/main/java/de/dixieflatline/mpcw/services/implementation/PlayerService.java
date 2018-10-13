@@ -44,8 +44,8 @@ public class PlayerService implements IPlayerService
         synchronizePlayerStatus = new SynchronizePlayerStatus();
         synchronizePlaylist = new SynchronizePlaylist();
 
-        loop.addInterval(synchronizePlayerStatus, 1000);
-        loop.addInterval(synchronizePlaylist, 1500);
+        loop.addInterval(synchronizePlayerStatus, 500);
+        loop.addInterval(synchronizePlaylist, 1000);
     }
 
     @Override

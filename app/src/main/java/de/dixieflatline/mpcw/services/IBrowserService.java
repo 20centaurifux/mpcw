@@ -23,4 +23,6 @@ public interface IBrowserService
     Iterable<String> getAllArtists() throws Exception;
     Iterable<String> getAlbumsByArtist(String artist) throws Exception;
     Iterable<Song> getSongsByAlbum(String artist, String album) throws Exception;
+    void appendSongsFromArtist(String artist) throws Exception;
+    void appendSongsFromAlbum(String artist, String album) throws Exception;
 }

@@ -27,7 +27,10 @@ public class PlaylistItem extends BaseObservable
     private IPlaylistItemSelectCommand selectCommand;
 
     @Bindable
-    public String getArtist() { return artist; }
+    public String getArtist()
+    {
+        return artist;
+    }
 
     public void setArtist(String artist)
     {
@@ -36,7 +39,10 @@ public class PlaylistItem extends BaseObservable
     }
 
     @Bindable
-    public String getTitle() { return title; }
+    public String getTitle()
+    {
+        return title;
+    }
 
     public void setTitle(String title)
     {

@@ -24,8 +24,13 @@ public abstract class AInjectableActivity extends WearableActivity
 {
     protected void inject()
     {
+        inject(this);
+    }
+
+    protected void inject(Object cls)
+    {
         Injector injector = new Injector(getApplicationContext());
 
-        injector.inject(this);
+        injector.inject(cls);
     }
 }

@@ -22,6 +22,8 @@ import android.databinding.*;
 import android.os.*;
 import android.support.wear.widget.*;
 import android.util.*;
+import android.view.*;
+import android.widget.*;
 
 import java.util.*;
 
@@ -42,7 +44,6 @@ public class BrowserActivity extends AInjectableActivity
     private Browser browser = new Browser();
     private Thread thread;
     private final Handler handler = new Handler();
-    private int mode = ARTISTS;
 
     @Inject IBrowserService browserService;
 
@@ -85,12 +86,10 @@ public class BrowserActivity extends AInjectableActivity
                 {
                     if(extras.containsKey("ALBUM_FILTER"))
                     {
-                        mode = SONGS;
                         loadSongs(extras.getString("ARTIST_FILTER"), extras.getString("ALBUM_FILTER"));
                     }
                     else
                     {
-                        mode = ALBUMS;
                         loadAlbums(extras.getString("ARTIST_FILTER"));
                     }
                 }
@@ -113,32 +112,34 @@ public class BrowserActivity extends AInjectableActivity
     private void loadAllArtists() throws Exception
     {
         Activity activity = this;
-
-        Iterable<Tag> tags = new Iterable<Tag>()
+        Iterator<String> artistIterator = browserService.getAllArtists().iterator();
+        ITagCommand activateTagCommand = new BrowseArtistCommand(activity);
+        ITagCommand selectTagCommand = new AppendArtistCommand();
+        ITagCommand selectTagCommandWrapper = tag ->
         {
-            private final Iterator<String> artistIterator = browserService.getAllArtists().iterator();
-            private final ITagActivateCommand activateTagCommand = new BrowseArtistCommand(activity);
+            postNotification(tag.getValue());
+            selectTagCommand.run(tag);
+        };
 
-            public Iterator<Tag> iterator()
+        inject(selectTagCommand);
+
+        Iterable<Tag> tags = () -> new Iterator<Tag>()
+        {
+            @Override
+            public boolean hasNext()
             {
-                return new Iterator<Tag>()
-                {
-                    @Override
-                    public boolean hasNext()
-                    {
-                        return artistIterator.hasNext();
-                    }
+                return artistIterator.hasNext();
+            }
 
-                    @Override
-                    public Tag next()
-                    {
-                        Tag tag = Tag.Artist(artistIterator.next());
+            @Override
+            public Tag next()
+            {
+                Tag tag = Tag.Artist(artistIterator.next());
 
-                        tag.setTagActivateCommand(activateTagCommand);
+                tag.setTagActivateCommand(activateTagCommand);
+                tag.setTagSelectCommand(selectTagCommandWrapper);
 
-                        return tag;
-                    }
-                };
+                return tag;
             }
         };
 
@@ -148,32 +149,34 @@ public class BrowserActivity extends AInjectableActivity
     private void loadAlbums(String artist) throws Exception
     {
         Activity activity = this;
-
-        Iterable<Tag> tags = new Iterable<Tag>()
+        Iterator<String> albumIterator = browserService.getAlbumsByArtist(artist).iterator();
+        ITagCommand activateTagCommand = new BrowseAlbumCommand(activity, artist);
+        ITagCommand selectTagCommand = new AppendAlbumCommand(artist);
+        ITagCommand selectTagCommandWrapper = tag ->
         {
-            private final Iterator<String> albumIterator = browserService.getAlbumsByArtist(artist).iterator();
-            private final ITagActivateCommand activateTagCommand = new BrowseAlbumCommand(activity, artist);
+            postNotification(tag.getValue());
+            selectTagCommand.run(tag);
+        };
 
-            public Iterator<Tag> iterator()
+        inject(selectTagCommand);
+
+        Iterable<Tag> tags = () -> new Iterator<Tag>()
+        {
+            @Override
+            public boolean hasNext()
             {
-                return new Iterator<Tag>()
-                {
-                    @Override
-                    public boolean hasNext()
-                    {
-                        return albumIterator.hasNext();
-                    }
+                return albumIterator.hasNext();
+            }
 
-                    @Override
-                    public Tag next()
-                    {
-                        Tag tag = Tag.Album(albumIterator.next());
+            @Override
+            public Tag next()
+            {
+                Tag tag = Tag.Album(albumIterator.next());
 
-                        tag.setTagActivateCommand(activateTagCommand);
+                tag.setTagActivateCommand(activateTagCommand);
+                tag.setTagSelectCommand(selectTagCommandWrapper);
 
-                        return tag;
-                    }
-                };
+                return tag;
             }
         };
 
@@ -193,6 +196,24 @@ public class BrowserActivity extends AInjectableActivity
         handler.post(() ->
         {
             browser.setSongs(songs);
+        });
+    }
+
+    private void postNotification(String message)
+    {
+        handler.post(() ->
+        {
+            Toast toast = new Toast(getApplicationContext());
+
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 15);
+
+            LayoutToastBinding binding =  DataBindingUtil.inflate(getLayoutInflater(), R.layout.layout_toast, findViewById(R.id.toast_root), false);
+
+            binding.setMessage(new ToastMessage(message));
+
+            toast.setView(binding.getRoot());
+            toast.show();
         });
     }
 

@@ -17,18 +17,11 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:background="?android:attr/selectableItemBackground">
-        <LinearLayout
+        <TextView
+            android:id="@+id/artist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:weightSum="2">
-            <TextView
-                android:id="@+id/artist"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:text="@{tag.value}" />
-        </LinearLayout>
+            android:ellipsize="end"
+            app:notAvailableIfNullOrEmpty="@{tag.value}" />
     </FrameLayout>
 </layout>

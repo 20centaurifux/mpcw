@@ -16,7 +16,7 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.viewmodels;
 
-public interface ITagActivateCommand
+public interface ITagCommand
 {
     void run(Tag tag);
 }

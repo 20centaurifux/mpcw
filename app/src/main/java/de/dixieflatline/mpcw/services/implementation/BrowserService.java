@@ -19,16 +19,7 @@ package de.dixieflatline.mpcw.services.implementation;
 import java.net.*;
 import java.util.*;
 
-import de.dixieflatline.mpcw.client.AuthenticationException;
-import de.dixieflatline.mpcw.client.CommunicationException;
-import de.dixieflatline.mpcw.client.Connection;
-import de.dixieflatline.mpcw.client.DispatchException;
-import de.dixieflatline.mpcw.client.ETag;
-import de.dixieflatline.mpcw.client.Filter;
-import de.dixieflatline.mpcw.client.IBrowser;
-import de.dixieflatline.mpcw.client.IClient;
-import de.dixieflatline.mpcw.client.IConnection;
-import de.dixieflatline.mpcw.client.ISearchResult;
+import de.dixieflatline.mpcw.client.*;
 import de.dixieflatline.mpcw.client.ProtocolException;
 import de.dixieflatline.mpcw.services.IBrowserService;
 import de.dixieflatline.mpcw.viewmodels.Preferences;
@@ -143,6 +134,51 @@ public class BrowserService implements IBrowserService
         };
     }
 
+    public void appendSongsFromArtist(String artist) throws Exception
+    {
+        appendSongs(new Filter[] { new Filter(ETag.Artist, artist) });
+    }
+
+    public void appendSongsFromAlbum(String artist, String album) throws Exception
+    {
+        Filter[] filter = new Filter[]
+        {
+            new Filter(ETag.Artist, artist),
+            new Filter(ETag.Album, album),
+        };
+
+        appendSongs(filter);
+    }
+
+    private void appendSongs(Filter[] filter) throws DispatchException,
+                                                     URISyntaxException,
+                                                     AuthenticationException,
+                                                     CommunicationException,
+                                                     ProtocolException
+    {
+        IConnection connection = Connection.create(connectionString);
+
+        connection.connect();
+
+        try
+        {
+            IClient client = connection.getClient();
+            IPlaylist playlist = client.getCurrentPlaylist();
+            IBrowser browser = client.getBrowser();
+            ISearchResult<de.dixieflatline.mpcw.client.Song> songs = browser.findSongs(filter);
+
+            playlist.appendSongs(songs.getItems());
+        }
+        catch(CommunicationException | ProtocolException ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            connection.disconnect();
+        }
+    }
+
     private <T> T query(IQuery<T> query) throws DispatchException,
                                                 URISyntaxException,
                                                 CommunicationException,
@@ -153,11 +189,24 @@ public class BrowserService implements IBrowserService
 
         connection.connect();
 
-        IClient client = connection.getClient();
-        IBrowser browser = client.getBrowser();
-        T result = query.run(browser);
+        T result = null;
 
-        connection.disconnect();
+        try
+        {
+            IClient client = connection.getClient();
+            IBrowser browser = client.getBrowser();
+            result = query.run(browser);
+
+            connection.disconnect();
+        }
+        catch(Exception ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            connection.disconnect();
+        }
 
         return result;
     }

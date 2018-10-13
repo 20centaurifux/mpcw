@@ -26,7 +26,10 @@ public class Failure extends BaseObservable
     private String message;
 
     @Bindable
-    public String getMessage() { return message; }
+    public String getMessage()
+    {
+        return message;
+    }
 
     public void setMessage(String message)
     {
