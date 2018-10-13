@@ -24,7 +24,7 @@ public class PlaylistItem extends BaseObservable
 {
     private String artist;
     private String title;
-    private IPlaylistItemSelectCommand selectCommand;
+    private IPlaylistItemCommand selectCommand;
 
     @Bindable
     public String getArtist()
@@ -50,12 +50,12 @@ public class PlaylistItem extends BaseObservable
         notifyPropertyChanged(BR.title);
     }
 
-    public IPlaylistItemSelectCommand getSelectCommand()
+    public IPlaylistItemCommand getSelectCommand()
     {
         return selectCommand;
     }
 
-    public void setSelectCommand(IPlaylistItemSelectCommand selectCommand)
+    public void setSelectCommand(IPlaylistItemCommand selectCommand)
     {
         this.selectCommand = selectCommand;
     }

@@ -16,7 +16,7 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.viewmodels;
 
-public interface IPlaylistItemSelectCommand
+public interface ISongCommand
 {
-    void run(PlaylistItem item, int position);
+    void run(Song song);
 }

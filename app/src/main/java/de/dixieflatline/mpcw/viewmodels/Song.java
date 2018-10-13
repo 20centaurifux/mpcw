@@ -18,6 +18,8 @@ package de.dixieflatline.mpcw.viewmodels;
 
 import android.databinding.*;
 
+import java.io.*;
+
 import de.dixieflatline.mpcw.*;
 
 public class Song extends BaseObservable
@@ -27,7 +29,7 @@ public class Song extends BaseObservable
     private String album;
     private int track;
     private String title;
-    private IPlaylistItemSelectCommand selectCommand;
+    private ISongCommand songSelectCommand;
 
     @Bindable
     public String getFilename()
@@ -84,5 +86,29 @@ public class Song extends BaseObservable
     {
         this.title = title;
         notifyPropertyChanged(BR.title);
+    }
+
+    public String getDisplayTitle()
+    {
+        String title = this.title;
+
+        if(title == null || title.isEmpty())
+        {
+            File file = new File(filename);
+
+            title = file.getName();
+        }
+
+        return title;
+    }
+
+    public ISongCommand getSongSelectCommand()
+    {
+        return songSelectCommand;
+    }
+
+    public void setSongSelectCommand(ISongCommand songSelectCommand)
+    {
+        this.songSelectCommand = songSelectCommand;
     }
 }

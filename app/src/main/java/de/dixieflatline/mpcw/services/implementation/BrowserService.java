@@ -179,6 +179,29 @@ public class BrowserService implements IBrowserService
         }
     }
 
+    public void appendSong(Song song) throws Exception
+    {
+        IConnection connection = Connection.create(connectionString);
+
+        connection.connect();
+
+        try
+        {
+            IClient client = connection.getClient();
+            IPlaylist playlist = client.getCurrentPlaylist();
+
+            playlist.appendSong(song.getFilename());
+        }
+        catch(CommunicationException | ProtocolException ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            connection.disconnect();
+        }
+    }
+
     private <T> T query(IQuery<T> query) throws DispatchException,
                                                 URISyntaxException,
                                                 CommunicationException,

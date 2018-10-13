@@ -33,4 +33,5 @@ public interface IComponent
     void inject(BrowserActivity fragment);
     void inject(AppendArtistCommand command);
     void inject(AppendAlbumCommand command);
+    void inject(AppendSongCommand command);
 }

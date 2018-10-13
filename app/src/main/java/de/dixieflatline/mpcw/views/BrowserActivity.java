@@ -185,7 +185,7 @@ public class BrowserActivity extends AInjectableActivity
         handler.post(() ->
         {
             browser.setTags(tags);
-            browser.setSongs(songs);
+            browser.setSongs(injectSongs(songs));
         });
     }
 
@@ -195,8 +195,30 @@ public class BrowserActivity extends AInjectableActivity
 
         handler.post(() ->
         {
-            browser.setSongs(songs);
+            browser.setSongs(injectSongs(songs));
         });
+    }
+
+    private Iterable<Song> injectSongs(Iterable<Song> songs)
+    {
+        ISongCommand selectSongCommand = new AppendSongCommand();
+        ISongCommand selectSongCommandWrapper = song ->
+        {
+            postNotification(song.getDisplayTitle());
+            selectSongCommand.run(song);
+        };
+
+        inject(selectSongCommand);
+
+        List<Song> songList = new ArrayList<Song>();
+
+        for(Song song : songs)
+        {
+            song.setSongSelectCommand(selectSongCommandWrapper);
+            songList.add(song);
+        }
+
+        return songList;
     }
 
     private void postNotification(String message)

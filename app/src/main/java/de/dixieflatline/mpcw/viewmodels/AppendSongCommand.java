@@ -14,39 +14,33 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.views;
+package de.dixieflatline.mpcw.viewmodels;
 
-import android.support.v7.widget.*;
-import android.view.*;
+import android.util.*;
 
-import de.dixieflatline.mpcw.*;
-import de.dixieflatline.mpcw.databinding.*;
-import de.dixieflatline.mpcw.viewmodels.*;
+import javax.inject.*;
 
-public class SongViewHolder extends RecyclerView.ViewHolder
+import de.dixieflatline.mpcw.services.*;
+
+public class AppendSongCommand implements ISongCommand
 {
-    private final LayoutSongBinding binding;
+    @Inject IBrowserService browserService;
 
-    public SongViewHolder(LayoutSongBinding binding)
+    @Override
+    public void run(Song song)
     {
-        super(binding.getRoot());
-
-        this.binding = binding;
-    }
-
-    public void bind(Song song)
-    {
-        binding.setSong(song);
-
-        View view = binding.getRoot();
-
-        view.findViewById(R.id.frame_song);
-
-        view.setOnLongClickListener(v ->
+        Thread thread = new Thread(() ->
         {
-            song.getSongSelectCommand().run(song);
-
-            return true;
+            try
+            {
+                browserService.appendSong(song);
+            }
+            catch(Exception ex)
+            {
+                Log.e("AppendSongCommand", ex.getMessage());
+            }
         });
+
+        thread.start();
     }
 }
