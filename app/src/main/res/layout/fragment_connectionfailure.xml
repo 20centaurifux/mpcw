@@ -9,40 +9,42 @@
             type="de.dixieflatline.mpcw.viewmodels.Failure" />
     </data>
 
-    <FrameLayout
+    <android.support.wear.widget.BoxInsetLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="15dp"
-        app:boxedEdges="all">
-
-        <android.support.v4.widget.NestedScrollView
+        android:background="@color/black_54p">
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
-
-            <LinearLayout
+            app:boxedEdges="left|top|right">
+            <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:text="@string/network_problem" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="@{failure.message}" />
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/retry"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|bottom"
-                    android:src="@drawable/ic_refresh"
-                    android:layout_margin="16dp" />
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
-    </FrameLayout>
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textAlignment="center"
+                        android:text="@string/connection_issue" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@{failure.message}" />
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/retry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:src="@drawable/ic_refresh"
+                        android:layout_margin="16dp" />
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+        </FrameLayout>
+    </android.support.wear.widget.BoxInsetLayout>
 </layout>

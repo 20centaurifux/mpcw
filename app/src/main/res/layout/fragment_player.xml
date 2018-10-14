@@ -1,48 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <android.support.wear.widget.WearableRecyclerView
-            android:id="@+id/recycler_view"
-            android:scrollbars="none"
-            android:paddingTop="@dimen/action_drawer_peek_view_height"
-            android:paddingBottom="@dimen/action_drawer_peek_view_height"
+        android:layout_height="match_parent">
+        <android.support.wear.widget.BoxInsetLayout
+            android:id="@+id/player_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true" />
-        <LinearLayout
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="@dimen/action_drawer_peek_view_height"
+            android:background="@color/black_54p">
+            <android.support.wear.widget.WearableRecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:clipToPadding="false"
+                android:layout_alignParentTop="true"
+                app:boxedEdges="left|right" />
+        </android.support.wear.widget.BoxInsetLayout>
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/action_drawer_peek_view_height"
-            android:background="@color/black"
-            android:alpha="0.80"
-            android:layout_alignBottom="@+id/recycler_view"
-            android:orientation="horizontal">
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-                <Button
-                    android:id="@+id/clear_playlist"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_centerInParent="true"
-                    android:paddingStart="50dp"
-                    android:background="@drawable/ic_clear_all" />
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-                <Button
-                    android:id="@+id/browser"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/ic_playlist_add" />
-            </RelativeLayout>
-        </LinearLayout>
+            android:layout_alignParentBottom="true"
+            android:background="@color/black">
+            <android.support.wear.widget.BoxInsetLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    app:boxedEdges="left|right">
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+                        <Button
+                            android:id="@+id/clear_playlist"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/ic_clear_all" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+                        <Button
+                            android:id="@+id/browser"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/ic_playlist_add" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </android.support.wear.widget.BoxInsetLayout>
+        </FrameLayout>
     </RelativeLayout>
 </layout>

@@ -17,7 +17,9 @@
 package de.dixieflatline.mpcw.views;
 
 import android.support.v7.widget.*;
+import android.util.*;
 import android.view.*;
+import android.widget.*;
 
 import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.databinding.*;

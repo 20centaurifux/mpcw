@@ -7,16 +7,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.wear.widget.BoxInsetLayout
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black_54p">
-        <LinearLayout
-            android:id="@+id/fragment_container"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </android.support.wear.widget.BoxInsetLayout>
+        android:background="@color/dark_blue">
+    </FrameLayout>
 
     <android.support.wear.widget.drawer.WearableNavigationDrawerView
         android:id="@+id/top_navigation_drawer"

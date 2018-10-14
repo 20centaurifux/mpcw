@@ -11,7 +11,7 @@
     <string name="enabled">Enabled</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="network_problem">Network problem</string>
+    <string name="connection_issue">Connection issue</string>
     <string name="retry">Retry</string>
     <string name="version">Version</string>
     <string name="date">Date</string>

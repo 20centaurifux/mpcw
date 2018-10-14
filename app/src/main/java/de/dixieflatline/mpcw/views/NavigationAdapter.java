@@ -42,9 +42,9 @@ public class NavigationAdapter extends WearableNavigationDrawerView.WearableNavi
         texts.add(context.getString(R.string.title_fragment_preferences));
         texts.add(context.getString(R.string.title_fragment_about));
 
-        drawables.add(this.context.getDrawable(android.R.drawable.ic_media_play));
-        drawables.add(this.context.getDrawable(android.R.drawable.ic_menu_preferences));
-        drawables.add(this.context.getDrawable(android.R.drawable.ic_menu_help));
+        drawables.add(this.context.getDrawable(R.drawable.ic_audiotrack));
+        drawables.add(this.context.getDrawable(R.drawable.ic_settings));
+        drawables.add(this.context.getDrawable(R.drawable.ic_help_outline));
     }
 
     @Override

@@ -79,9 +79,12 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
 
     private void setupPlayerService()
     {
-        playerService.addConnectionListener(this);
-        playerService.addPlayerListener(this);
-        playerService.addPlaylistListener(this);
+        if(playerService != null)
+        {
+            playerService.addConnectionListener(this);
+            playerService.addPlayerListener(this);
+            playerService.addPlaylistListener(this);
+        }
     }
 
     private void setupActions()
@@ -108,7 +111,16 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
     {
         super.onResume();
 
-        playerService.startAsync();
+        if(playerService == null)
+        {
+            NavigationUtil navigationUtil = new NavigationUtil(getActivity());
+
+            navigationUtil.openConnectionFailure(new Exception("Please check connection preferences."));
+        }
+        else
+        {
+            playerService.startAsync();
+        }
     }
 
     @Override
@@ -116,7 +128,10 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
     {
         super.onPause();
 
-        playerService.stopService();
+        if(playerService != null)
+        {
+            playerService.stopService();
+        }
     }
 
     @Override

@@ -12,85 +12,94 @@
             type="de.dixieflatline.mpcw.viewmodels.Player" />
     </data>
 
-    <FrameLayout
+    <android.support.wear.widget.BoxInsetLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:boxedEdges="all">
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical"
-            style="@android:style/Widget.Material.ProgressBar.Large"
-            app:visibleIfNot="@{player.connected}" />
-        <LinearLayout
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/player_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:visibleIf="@{player.connected}">
-            <LinearLayout
-                android:layout_width="match_parent"
+            app:boxedEdges="top">
+            <ProgressBar
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textStyle="bold"
-                    android:padding="2dp"
-                    app:notAvailableIfNullOrEmpty="@{player.artist}" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:padding="2dp"
-                    app:notAvailableIfNullOrEmpty="@{player.title}" />
-            </LinearLayout>
-
-            <LinearLayout
+                android:layout_gravity="center_horizontal|center_vertical"
+                style="@android:style/Widget.Material.ProgressBar.Large"
+                app:visibleIfNot="@{player.connected}" />
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="3">
-                <RelativeLayout
-                    android:layout_width="0dp"
+                android:padding="2dp"
+                app:visibleIf="@{player.connected}">
+                <TextView
+                    android:id="@+id/artist"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical">
-                    <Button
-                        android:id="@+id/previous"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/ic_skip_previous"
-                        app:enableIf="@{player.hasPrevious}" />
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="0dp"
+                    android:textAlignment="center"
+                    android:layout_alignParentTop="true"
+                    android:textStyle="bold"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@{player.artist}" />
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical">
-                    <Button
-                        android:id="@+id/toggle_player"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_centerInParent="true"
-                        app:playerStatusBackground="@{player.status}"
-                        app:enableIf="@{player.status != Player.EJECT}" />
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="0dp"
+                    android:layout_alignParentBottom="true"
+                    android:textAlignment="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@{player.title}" />
+                <LinearLayout
+                    android:id="@+id/player_buttons"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical">
-                    <Button
-                        android:id="@+id/next"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/ic_skip_next"
-                        app:enableIf="@{player.hasNext}" />
-                </RelativeLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </FrameLayout>
+                    android:layout_centerInParent="true"
+                    android:orientation="horizontal"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:weightSum="3">
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical">
+                        <Button
+                            android:id="@+id/previous"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/ic_skip_previous"
+                            app:enableIf="@{player.hasPrevious}" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical">
+                        <Button
+                            android:id="@+id/toggle_player"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_centerInParent="true"
+                            app:playerStatusBackground="@{player.status}"
+                            app:enableIf="@{player.status != Player.EJECT}" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical">
+                        <Button
+                            android:id="@+id/next"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/ic_skip_next"
+                            app:enableIf="@{player.hasNext}" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </FrameLayout>
+    </android.support.wear.widget.BoxInsetLayout>
 </layout>
