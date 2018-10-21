@@ -76,7 +76,7 @@ public class PlayerService implements IPlayerService
 
                 try
                 {
-                    thread.join();
+                    thread.join(500);
                 }
                 catch(InterruptedException ex)
                 {
