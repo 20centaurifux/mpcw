@@ -97,11 +97,13 @@ public class BrowserActivity extends AInjectableActivity
                     loadAllArtists();
                 }
 
-                handler.post(() -> browser.setLoaded(true));
+                handler.post(() -> browser.finish());
             }
             catch(Exception ex)
             {
                 Log.e("Browser", ex.getMessage());
+
+                handler.post(() -> browser.fail(ex));
             }
         });
 

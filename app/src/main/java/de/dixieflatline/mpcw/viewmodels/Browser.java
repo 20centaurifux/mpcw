@@ -24,18 +24,51 @@ import de.dixieflatline.mpcw.*;
 
 public class Browser extends BaseObservable
 {
-    private boolean loaded;
+    private boolean loading;
+    private boolean finished;
+    private boolean failed;
+    private String cause;
     private Iterable<Tag> tags;
     private Iterable<Song> songs;
 
     @Bindable
-    public boolean getLoaded() { return loaded; }
+    public boolean getLoading() { return loading; }
 
-    public void setLoaded(boolean loaded)
+    public void setLoading(boolean loading)
     {
-        this.loaded = loaded;
-        notifyPropertyChanged(BR.loaded);
+        this.loading = loading;
+        notifyPropertyChanged(BR.loading);
     }
+
+    @Bindable
+    public boolean getFinished() { return finished; }
+
+    public void finish()
+    {
+        this.loading = false;
+        notifyPropertyChanged(BR.loading);
+
+        this.finished = true;
+        notifyPropertyChanged(BR.finished);
+    }
+
+    @Bindable
+    public boolean getFailed() { return failed; }
+
+    public void fail(Exception cause)
+    {
+        this.loading = false;
+        notifyPropertyChanged(BR.loading);
+
+        this.failed = true;
+        notifyPropertyChanged(BR.failed);
+
+        this.cause = cause.getMessage();
+        notifyPropertyChanged(BR.cause);
+    }
+
+    @Bindable
+    public String getCause() { return cause; }
 
     @Bindable
     public Iterable<Tag> getTags()
