@@ -111,7 +111,7 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
 
         {
             playerService.clear();
-            notification.center(message);
+            notification.show(message);
         });
     }
 
@@ -122,9 +122,9 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
 
         if(playerService == null)
         {
-            NavigationUtil navigationUtil = new NavigationUtil(getActivity());
+            MainNavigation mainNavigation = new MainNavigation(getActivity());
 
-            navigationUtil.openConnectionFailure(new Exception("Please check connection preferences."));
+            mainNavigation.openConnectionFailure(new Exception("Please check connection preferences."));
         }
         else
         {
@@ -158,9 +158,9 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
     @Override
     public void onAborted(Exception cause)
     {
-        NavigationUtil navigationUtil = new NavigationUtil(getActivity());
+        MainNavigation mainNavigation = new MainNavigation(getActivity());
 
-        navigationUtil.openConnectionFailure(cause);
+        mainNavigation.openConnectionFailure(cause);
     }
 
     @Override

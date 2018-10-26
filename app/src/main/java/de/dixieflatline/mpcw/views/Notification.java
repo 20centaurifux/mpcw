@@ -36,14 +36,9 @@ public class Notification
         this.activity = activity;
     }
 
-    public void center(String message)
+    public void show(String message)
     {
         show(message, Gravity.CENTER, 0, 0);
-    }
-
-    public void bottom(String message)
-    {
-        show(message, Gravity.BOTTOM | Gravity.CENTER, 0, 15);
     }
 
     private void show(String message, int gravity, int xOffset, int yOffset)

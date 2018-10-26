@@ -22,8 +22,6 @@ import android.databinding.*;
 import android.os.*;
 import android.support.wear.widget.*;
 import android.util.*;
-import android.view.*;
-import android.widget.*;
 
 import java.util.*;
 import java.util.stream.*;
@@ -230,7 +228,7 @@ public class BrowserActivity extends AInjectableActivity
     {
         Notification notification = new Notification(this);
 
-        notification.bottom(message);
+        notification.show(message);
     }
 
     @Override

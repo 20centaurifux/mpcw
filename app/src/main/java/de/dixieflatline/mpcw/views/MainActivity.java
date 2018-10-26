@@ -24,7 +24,7 @@ import de.dixieflatline.mpcw.*;
 
 public class MainActivity extends WearableActivity
 {
-    private NavigationUtil navigationUtil;
+    private MainNavigation mainNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,7 +33,7 @@ public class MainActivity extends WearableActivity
 
         setContentView(R.layout.activity_main);
 
-        navigationUtil = new NavigationUtil(this);
+        mainNavigation = new MainNavigation(this);
 
         setupDrawer();
     }
@@ -43,7 +43,7 @@ public class MainActivity extends WearableActivity
     {
         super.onStart();
 
-        navigationUtil.openStartScreen();
+        mainNavigation.openStartScreen();
     }
 
     private void setupDrawer()
@@ -52,6 +52,6 @@ public class MainActivity extends WearableActivity
 
         wearableNavigationDrawer.setAdapter(new NavigationAdapter(this));
         wearableNavigationDrawer.getController().peekDrawer();
-        wearableNavigationDrawer.addOnItemSelectedListener(navigationUtil);
+        wearableNavigationDrawer.addOnItemSelectedListener(mainNavigation);
     }
 }

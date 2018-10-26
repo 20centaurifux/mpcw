@@ -22,11 +22,11 @@ import android.support.wear.widget.drawer.*;
 
 import de.dixieflatline.mpcw.*;
 
-public class NavigationUtil implements WearableNavigationDrawerView.OnItemSelectedListener
+public class MainNavigation implements WearableNavigationDrawerView.OnItemSelectedListener
 {
     private final Activity currentActivity;
 
-    public NavigationUtil(Activity currentActivity)
+    public MainNavigation(Activity currentActivity)
     {
         this.currentActivity = currentActivity;
     }

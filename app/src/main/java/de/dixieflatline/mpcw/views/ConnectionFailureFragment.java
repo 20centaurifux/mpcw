@@ -51,9 +51,9 @@ public class ConnectionFailureFragment extends Fragment
 
         view.findViewById(R.id.retry).setOnClickListener(v ->
         {
-            NavigationUtil navigationUtil = new NavigationUtil(getActivity());
+            MainNavigation mainNavigation = new MainNavigation(getActivity());
 
-            navigationUtil.openStartScreen();
+            mainNavigation.openStartScreen();
         });
     }
 }
