@@ -228,20 +228,9 @@ public class BrowserActivity extends AInjectableActivity
 
     private void postNotification(String message)
     {
-        handler.post(() ->
-        {
-            Toast toast = new Toast(getApplicationContext());
+        Notification notification = new Notification(this);
 
-            toast.setDuration(Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 15);
-
-            LayoutToastBinding binding =  DataBindingUtil.inflate(getLayoutInflater(), R.layout.layout_toast, findViewById(R.id.toast_root), false);
-
-            binding.setMessage(new ToastMessage(message));
-
-            toast.setView(binding.getRoot());
-            toast.show();
-        });
+        notification.bottom(message);
     }
 
     @Override

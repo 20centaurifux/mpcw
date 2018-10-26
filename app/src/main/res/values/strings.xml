@@ -18,4 +18,5 @@
     <string name="author">Author</string>
     <string name="license">License</string>
     <string name="website">Website</string>
+    <string name="playlist_cleared">playlist cleared</string>
 </resources>
