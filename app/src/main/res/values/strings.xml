@@ -1,5 +1,5 @@
 <resources>
-    <string name="title_activity_main">mpcw</string>
+    <string name="title_activity_main">MPC Wear</string>
     <string name="title_fragment_player">Player</string>
     <string name="title_fragment_preferences">Preferences</string>
     <string name="title_fragment_about">About</string>
