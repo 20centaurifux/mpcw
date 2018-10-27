@@ -56,12 +56,12 @@ public class BindingAdapters
         view.setEnabled(enabled);
     }
 
-    @BindingAdapter("notAvailableIfNullOrEmpty")
-    public static void setTextAttrNotAvailableIfNull(TextView view, String text)
+    @BindingAdapter({"text", "placeholder"})
+    public static void setText(TextView view, String text, String placeHolder)
     {
         if(text == null || text.isEmpty())
         {
-            view.setText("n/a");
+            view.setText(placeHolder);
         }
         else
         {
