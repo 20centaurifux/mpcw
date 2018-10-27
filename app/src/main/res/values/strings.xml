@@ -4,7 +4,7 @@
     <string name="title_fragment_preferences">Preferences</string>
     <string name="title_fragment_about">About</string>
     <string name="title_activity_browser">Browse</string>
-    <string name="app_name">mpcw</string>
+    <string name="app_name">MPC Wear</string>
     <string name="connection">Connection</string>
     <string name="hostname">Hostname</string>
     <string name="authentication">Authentication</string>
