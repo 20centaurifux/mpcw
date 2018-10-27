@@ -99,7 +99,7 @@ public class AsyncConnectionLoop implements Runnable
                 }
                 catch(Exception ex)
                 {
-                    Log.d("AsyncConnectionLoop", ex.getMessage());
+                    Log.d("AsyncConnectionLoop", "Connection failed.", ex);
 
                     ++errorCounter;
 
