@@ -20,5 +20,5 @@ import de.dixieflatline.mpcw.viewmodels.*;
 
 public interface IAboutService
 {
-    public About getAbout();
+    About getAbout();
 }

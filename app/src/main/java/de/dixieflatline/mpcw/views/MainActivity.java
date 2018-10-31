@@ -18,24 +18,24 @@ package de.dixieflatline.mpcw.views;
 
 import android.os.*;
 import android.support.wear.widget.drawer.*;
-import android.support.wearable.activity.*;
+
+import javax.inject.*;
 
 import de.dixieflatline.mpcw.*;
+import de.dixieflatline.mpcw.services.*;
 
-public class MainActivity extends WearableActivity
+public class MainActivity extends AInjectableActivity
 {
-    private MainNavigation mainNavigation;
+    @Inject IPreferencesService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
+        inject();
+
         setContentView(R.layout.activity_main);
-
-        mainNavigation = new MainNavigation(this);
-
-        setupDrawer();
     }
 
     @Override
@@ -43,15 +43,25 @@ public class MainActivity extends WearableActivity
     {
         super.onStart();
 
-        mainNavigation.openStartScreen();
+        MainNavigation navigation = new MainNavigation(this);
+
+        if(service.isConfigured())
+        {
+            setupDrawer(navigation);
+            navigation.openStartScreen();
+        }
+        else
+        {
+            navigation.startWizard();
+        }
     }
 
-    private void setupDrawer()
+    private void setupDrawer(MainNavigation navigation)
     {
         WearableNavigationDrawerView wearableNavigationDrawer = findViewById(R.id.top_navigation_drawer);
 
         wearableNavigationDrawer.setAdapter(new NavigationAdapter(this));
         wearableNavigationDrawer.getController().peekDrawer();
-        wearableNavigationDrawer.addOnItemSelectedListener(mainNavigation);
+        wearableNavigationDrawer.addOnItemSelectedListener(navigation);
     }
 }

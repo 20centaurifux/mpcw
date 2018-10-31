@@ -20,7 +20,7 @@ import de.dixieflatline.mpcw.viewmodels.Preferences;
 
 public interface IPreferencesService
 {
+    boolean isConfigured();
     Preferences load();
-
     void save(Preferences preferences);
 }

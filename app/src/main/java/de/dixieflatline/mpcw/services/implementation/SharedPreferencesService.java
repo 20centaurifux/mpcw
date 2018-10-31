@@ -29,6 +29,7 @@ public class SharedPreferencesService implements IPreferencesService
     public static final int DEFAULT_MPD_PORT = 6600;
 
     private static final String NAME = "UserPreferences";
+    private static final String MPD_CONFIGURED = "mpd.configured";
     private static final String MPD_HOSTNAME = "mpd.hostname";
     private static final String MPD_PORT = "mpd.port";
     private static final String MPD_AUTHENTICATION = "mpd.authentication";
@@ -39,6 +40,12 @@ public class SharedPreferencesService implements IPreferencesService
     public SharedPreferencesService(Context context)
     {
         this.context = context;
+    }
+
+    @Override
+    public boolean isConfigured()
+    {
+        return getSharedPreferences().getBoolean(MPD_CONFIGURED, false);
     }
 
     @Override
@@ -74,6 +81,7 @@ public class SharedPreferencesService implements IPreferencesService
     {
         Editor editor = getSharedPreferences().edit();
 
+        editor.putBoolean(MPD_CONFIGURED, true);
         editor.putString(MPD_HOSTNAME, preferences.getHostname());
         editor.putInt(MPD_PORT, preferences.getPort());
         editor.putBoolean(MPD_AUTHENTICATION, preferences.getAuthenticationEnabled());

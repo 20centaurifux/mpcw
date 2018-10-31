@@ -28,5 +28,5 @@
     <string name="enter_server_details">At first, please specify where your MPD service can be found.</string>
     <string name="password_required">Do you need a password to access the MPD service?</string>
     <string name="enter_password">Please enter the password required to access the MPD service.</string>
-    <string name="complete_wizard">Setup finished, enjoy MPC Wear :)</string>
+    <string name="complete_wizard">Setup finished, enjoy your music.</string>
 </resources>

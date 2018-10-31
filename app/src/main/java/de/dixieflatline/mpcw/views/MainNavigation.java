@@ -17,6 +17,7 @@
 package de.dixieflatline.mpcw.views;
 
 import android.app.*;
+import android.content.*;
 import android.os.*;
 import android.support.wear.widget.drawer.*;
 
@@ -87,5 +88,13 @@ public class MainNavigation implements WearableNavigationDrawerView.OnItemSelect
         manager.beginTransaction()
                .replace(R.id.fragment_container, fragment)
                .commit();
+    }
+
+    public void startWizard()
+    {
+        Intent intent  = new Intent(currentActivity, WizardActivity.class);
+
+        currentActivity.startActivity(intent);
+        currentActivity.finish();
     }
 }
