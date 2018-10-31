@@ -13,7 +13,6 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black_54p"
         android:padding="@dimen/inner_frame_layout_padding"
         app:boxedEdges="left|top|right">
         <android.support.v4.widget.NestedScrollView

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="default_background">#1A237E</color>
+    <color name="toast_background">#7986CB</color>
+    <color name="action_bar">#000000</color>
+</resources>
