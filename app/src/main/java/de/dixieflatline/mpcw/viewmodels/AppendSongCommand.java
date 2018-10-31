@@ -20,6 +20,7 @@ import android.util.*;
 
 import javax.inject.*;
 
+import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.services.*;
 
 public class AppendSongCommand implements ISongCommand
@@ -37,7 +38,7 @@ public class AppendSongCommand implements ISongCommand
             }
             catch(Exception ex)
             {
-                Log.e("AppendSongCommand", ex.getMessage());
+                Log.e(Tags.COMMAND, "Couldn't append song.", ex);
             }
         });
 

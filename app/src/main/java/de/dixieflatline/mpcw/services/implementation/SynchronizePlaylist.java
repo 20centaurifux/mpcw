@@ -25,7 +25,7 @@ import de.dixieflatline.mpcw.viewmodels.PlaylistItem;
 
 public class SynchronizePlaylist implements IConnectionHandler
 {
-    private final List<IPlaylistListener> listeners = new ArrayList<IPlaylistListener>();
+    private final List<IPlaylistListener> listeners = new ArrayList<>();
     private IPlaylist playlist;
 
     public void addListener(IPlaylistListener listener)

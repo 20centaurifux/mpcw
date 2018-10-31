@@ -21,6 +21,7 @@ import android.util.*;
 import java.util.*;
 import java.util.concurrent.*;
 
+import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.client.*;
 import de.dixieflatline.mpcw.client.Connection;
 import de.dixieflatline.mpcw.services.*;
@@ -30,9 +31,9 @@ public class AsyncConnectionLoop implements Runnable
 {
     private static final int MAX_ERRORS = 3;
 
-    private final List<IConnectionListener> listeners = new ArrayList<IConnectionListener>();
+    private final List<IConnectionListener> listeners = new ArrayList<>();
     private final IConnection connection;
-    private final Queue<Runnable> queue = new ConcurrentLinkedDeque<Runnable>();
+    private final Queue<Runnable> queue = new ConcurrentLinkedDeque<>();
     private final Loop loop = new Loop();
     private boolean oldState;
 
@@ -99,7 +100,7 @@ public class AsyncConnectionLoop implements Runnable
                 }
                 catch(Exception ex)
                 {
-                    Log.d("AsyncConnectionLoop", "Server failed.", ex);
+                    Log.d(Tags.SERVICE, "Server failed.", ex);
 
                     ++errorCounter;
 
@@ -147,7 +148,7 @@ public class AsyncConnectionLoop implements Runnable
 
         if(newState != oldState)
         {
-            Log.d("AsyncConnectionLoop", "Server state changed: " + newState);
+            Log.d(Tags.SERVICE, "Server state changed: " + newState);
 
             if(newState)
             {
@@ -179,7 +180,7 @@ public class AsyncConnectionLoop implements Runnable
             }
             catch(CommunicationException ex)
             {
-                Log.w("AsyncConnectionLoop", ex);
+                Log.w(Tags.SERVICE, ex);
             }
             finally
             {
@@ -198,7 +199,7 @@ public class AsyncConnectionLoop implements Runnable
         }
         catch(Exception ex)
         {
-            Log.wtf("AsyncConnectionLoop", ex);
+            Log.wtf(Tags.SERVICE, ex);
 
             connection = null;
         }

@@ -14,27 +14,11 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.services.implementation;
+package de.dixieflatline.mpcw;
 
-import android.util.*;
-
-import de.dixieflatline.mpcw.*;
-import de.dixieflatline.mpcw.client.*;
-
-public abstract class APlayerCommand implements IConnectionHandler
+public final class Tags
 {
-    @Override
-    public void run(IConnection connection)
-    {
-        try
-        {
-            run(connection.getClient().getPlayer());
-        }
-        catch(Exception ex)
-        {
-            Log.w(Tags.SERVICE, ex);
-        }
-    }
-
-    protected abstract void run(IPlayer player) throws Exception;
+    public static final String APOCALYPSE = "Apocalypse";
+    public static final String SERVICE = "Service";
+    public static final String COMMAND = "Command";
 }

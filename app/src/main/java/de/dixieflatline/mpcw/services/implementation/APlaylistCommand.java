@@ -18,6 +18,7 @@ package de.dixieflatline.mpcw.services.implementation;
 
 import android.util.*;
 
+import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.client.*;
 
 public abstract class APlaylistCommand implements IConnectionHandler
@@ -31,7 +32,7 @@ public abstract class APlaylistCommand implements IConnectionHandler
         }
         catch(Exception ex)
         {
-            Log.w("APlaylistCommand", ex);
+            Log.w(Tags.SERVICE, ex);
         }
     }
 

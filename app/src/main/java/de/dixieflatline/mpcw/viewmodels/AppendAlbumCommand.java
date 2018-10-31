@@ -20,6 +20,7 @@ import android.util.*;
 
 import javax.inject.*;
 ;
+import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.services.*;
 
 public class AppendAlbumCommand implements ITagCommand
@@ -43,7 +44,7 @@ public class AppendAlbumCommand implements ITagCommand
             }
             catch(Exception ex)
             {
-                Log.e("AppendAlbumCommand", ex.getMessage());
+                Log.e(Tags.COMMAND, "Couldn't append album.", ex);
             }
         });
 

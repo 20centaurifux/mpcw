@@ -31,8 +31,8 @@ public class NavigationAdapter extends WearableNavigationDrawerView.WearableNavi
     public static final int ABOUT = 2;
 
     private Context context;
-    private ArrayList<String> texts = new ArrayList<String>();
-    private ArrayList<Drawable> drawables = new ArrayList<Drawable>();
+    private ArrayList<String> texts = new ArrayList<>();
+    private ArrayList<Drawable> drawables = new ArrayList<>();
 
     public NavigationAdapter(Context context)
     {

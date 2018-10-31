@@ -20,8 +20,8 @@ import java.util.*;
 
 public class Loop
 {
-    private final List<RecurringRunnable> recurringRunnables = new ArrayList<RecurringRunnable>();
-    private final Queue<Runnable> runnables = new LinkedList<Runnable>();
+    private final List<RecurringRunnable> recurringRunnables = new ArrayList<>();
+    private final Queue<Runnable> runnables = new LinkedList<>();
 
     public void add(Runnable runnable)
     {

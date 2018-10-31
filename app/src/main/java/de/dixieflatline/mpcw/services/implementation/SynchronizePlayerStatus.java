@@ -23,7 +23,7 @@ import de.dixieflatline.mpcw.services.*;
 
 public class SynchronizePlayerStatus implements IConnectionHandler
 {
-    private final List<IPlayerListener> listeners = new ArrayList<IPlayerListener>();
+    private final List<IPlayerListener> listeners = new ArrayList<>();
     private boolean firstRun = true;
     private String lastArtist;
     private String lastTitle;

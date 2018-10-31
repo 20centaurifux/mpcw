@@ -23,8 +23,6 @@ import android.support.v7.widget.*;
 import android.view.View;
 import android.widget.*;
 
-import java.io.*;
-
 import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.viewmodels.*;
 

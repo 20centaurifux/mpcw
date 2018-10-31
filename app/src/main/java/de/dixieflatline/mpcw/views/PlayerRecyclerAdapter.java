@@ -31,7 +31,7 @@ public class PlayerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public static final int PLAYLISTITEM = 1;
 
     private final Player player;
-    private final List<PlaylistItem> items = new ArrayList<PlaylistItem>();
+    private final List<PlaylistItem> items = new ArrayList<>();
 
     public PlayerRecyclerAdapter(Player player)
     {

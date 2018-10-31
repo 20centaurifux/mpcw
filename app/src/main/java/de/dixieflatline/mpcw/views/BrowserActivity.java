@@ -35,10 +35,6 @@ import de.dixieflatline.mpcw.viewmodels.*;
 
 public class BrowserActivity extends AInjectableActivity
 {
-    private static final int ARTISTS = 0;
-    private static final int ALBUMS = 1;
-    private static final int SONGS = 2;
-
     private ActivityBrowserBinding binding;
     private Browser browser = new Browser();
     private Thread thread;
@@ -101,8 +97,6 @@ public class BrowserActivity extends AInjectableActivity
             }
             catch(Exception ex)
             {
-                Log.e("Browser", ex.getMessage());
-
                 handler.post(() -> browser.fail(ex));
             }
         });
@@ -215,7 +209,7 @@ public class BrowserActivity extends AInjectableActivity
 
         inject(selectSongCommand);
 
-        List<Song> songList = new ArrayList<Song>();
+        List<Song> songList = new ArrayList<>();
 
         for(Song song : songs)
         {

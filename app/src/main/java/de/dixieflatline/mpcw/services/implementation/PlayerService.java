@@ -21,13 +21,14 @@ import android.util.*;
 import java.util.*;
 import java.util.concurrent.*;
 
+import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.client.*;
 import de.dixieflatline.mpcw.services.*;
 import de.dixieflatline.mpcw.viewmodels.*;
 
 public class PlayerService implements IPlayerService
 {
-    private final List<IPlayerListener> playerListeners = new ArrayList<IPlayerListener>();
+    private final List<IPlayerListener> playerListeners = new ArrayList<>();
     private final AsyncConnectionLoop loop;
     private final SynchronizePlayerStatus synchronizePlayerStatus;
     private final SynchronizePlaylist synchronizePlaylist;
@@ -80,7 +81,7 @@ public class PlayerService implements IPlayerService
                 }
                 catch(InterruptedException ex)
                 {
-                    Log.w("PlayerService", ex);
+                    Log.w(Tags.SERVICE, ex);
                 }
 
                 thread = null;

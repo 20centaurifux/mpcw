@@ -22,10 +22,10 @@ import android.util.Log;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import de.dixieflatline.mpcw.*;
+
 public class Injector
 {
-    private static final String TAG = "Injector";
-
     private final Context context;
 
     public Injector(Context context)
@@ -45,15 +45,15 @@ public class Injector
         }
         catch(NoSuchMethodException ex)
         {
-            Log.d(TAG, "inject() not found.");
+            Log.d(Tags.APOCALYPSE, "inject() not found.");
         }
         catch(IllegalAccessException ex)
         {
-            Log.w(TAG, ex);
+            Log.w(Tags.APOCALYPSE, ex);
         }
         catch(InvocationTargetException ex)
         {
-            Log.wtf(TAG, ex);
+            Log.wtf(Tags.APOCALYPSE, ex);
         }
     }
 

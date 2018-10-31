@@ -20,6 +20,7 @@ import android.util.*;
 
 import javax.inject.*;
 
+import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.services.*;
 
 public class AppendArtistCommand implements ITagCommand
@@ -37,7 +38,7 @@ public class AppendArtistCommand implements ITagCommand
             }
             catch(Exception ex)
             {
-                Log.e("AppendArtistCommand", ex.getMessage());
+                Log.e(Tags.COMMAND, "Couldn't append artist.", ex);
             }
         });
 

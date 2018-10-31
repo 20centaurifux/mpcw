@@ -29,7 +29,7 @@ public class BrowserRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public static final int TAG= 0;
     public static final int SONG = 1;
 
-    private final List<Object> items = new ArrayList<Object>();
+    private final List<Object> items = new ArrayList<>();
 
     @Override
     public int getItemViewType(int position)
