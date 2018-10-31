@@ -14,25 +14,38 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.di;
+package de.dixieflatline.mpcw.viewmodels;
 
-import javax.inject.Singleton;
+import android.databinding.*;
 
-import dagger.Component;
+import de.dixieflatline.mpcw.*;
 
-import de.dixieflatline.mpcw.viewmodels.*;
-import de.dixieflatline.mpcw.views.*;
-
-@Singleton
-@Component(modules = { ServicesModule.class })
-public interface IComponent
+public class Server extends BaseObservable
 {
-    void inject(WizardActivity activity);
-    void inject(PlayerFragment fragment);
-    void inject(PreferencesFragment fragment);
-    void inject(AboutFragment fragment);
-    void inject(BrowserActivity activity);
-    void inject(AppendArtistCommand command);
-    void inject(AppendAlbumCommand command);
-    void inject(AppendSongCommand command);
+    private String hostname;
+    private int port = 6600;
+    
+    @Bindable
+    public String getHostname()
+    {
+        return hostname;
+    }
+
+    public void setHostname(String hostname)
+    {
+        this.hostname = hostname;
+        notifyPropertyChanged(BR.hostname);
+    }
+
+    @Bindable
+    public int getPort()
+    {
+        return port;
+    }
+
+    public void setPort(int port)
+    {
+        this.port = port;
+        notifyPropertyChanged(BR.port);
+    }
 }

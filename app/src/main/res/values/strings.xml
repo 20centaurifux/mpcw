@@ -4,14 +4,15 @@
     <string name="title_fragment_preferences">Preferences</string>
     <string name="title_fragment_about">About</string>
     <string name="title_activity_browser">Browse</string>
+    <string name="title_activity_wizard">Wizard</string>
     <string name="app_name">MPC Wear</string>
-    <string name="connection">Connection</string>
+    <string name="server">Server</string>
     <string name="hostname">Hostname</string>
     <string name="authentication">Authentication</string>
     <string name="enabled">Enabled</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="connection_issue">Connection issue</string>
+    <string name="connection_issue">Server issue</string>
     <string name="retry">Retry</string>
     <string name="version">Version</string>
     <string name="date">Date</string>
@@ -22,4 +23,10 @@
     <string name="no_artist">No Artist</string>
     <string name="no_title">No Title</string>
     <string name="unknown">Unknown</string>
+    <string name="yes">Yes</string>
+    <string name="welcome_message">Let\'s start to setup MPC Wear. Swipe left on the screen if you\'re ready to start.</string>
+    <string name="enter_server_details">At first, please specify where your MPD service can be found.</string>
+    <string name="password_required">Do you need a password to access the MPD service?</string>
+    <string name="enter_password">Please enter the password required to access the MPD service.</string>
+    <string name="complete_wizard">Setup finished, enjoy MPC Wear :)</string>
 </resources>

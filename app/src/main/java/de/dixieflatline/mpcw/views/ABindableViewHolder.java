@@ -14,25 +14,33 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.di;
+package de.dixieflatline.mpcw.views;
 
-import javax.inject.Singleton;
+import android.databinding.*;
+import android.support.v7.widget.*;
 
-import dagger.Component;
-
-import de.dixieflatline.mpcw.viewmodels.*;
-import de.dixieflatline.mpcw.views.*;
-
-@Singleton
-@Component(modules = { ServicesModule.class })
-public interface IComponent
+public abstract class ABindableViewHolder<TBinding extends ViewDataBinding> extends RecyclerView.ViewHolder
 {
-    void inject(WizardActivity activity);
-    void inject(PlayerFragment fragment);
-    void inject(PreferencesFragment fragment);
-    void inject(AboutFragment fragment);
-    void inject(BrowserActivity activity);
-    void inject(AppendArtistCommand command);
-    void inject(AppendAlbumCommand command);
-    void inject(AppendSongCommand command);
+    protected final TBinding binding;
+
+    public ABindableViewHolder(TBinding binding)
+    {
+        super(binding.getRoot());
+
+        this.binding = binding;
+    }
+
+    public static <TBinding extends ViewDataBinding> ABindableViewHolder newInstance(TBinding binding, IBinder binder)
+    {
+        return new ABindableViewHolder(binding)
+        {
+            @Override
+            public void bind(BaseObservable viewModel)
+            {
+                binder.bind(this.binding, viewModel);
+            }
+        };
+    }
+
+    public abstract void bind(BaseObservable viewModel);
 }

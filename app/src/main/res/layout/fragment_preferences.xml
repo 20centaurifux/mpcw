@@ -29,7 +29,7 @@
                     android:id="@+id/textHostTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/connection"
+                    android:text="@string/server"
                     android:textAlignment="center"/>
                 <EditText
                     android:id="@+id/editHostname"

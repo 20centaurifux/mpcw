@@ -24,7 +24,7 @@ import android.widget.*;
 
 import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.databinding.*;
-import de.dixieflatline.mpcw.viewmodels.*;
+import de.dixieflatline.mpcw.viewmodels.Message;
 
 public class Notification
 {
@@ -55,7 +55,7 @@ public class Notification
                                                                  activity.findViewById(R.id.toast_root),
                                                   false);
 
-            binding.setMessage(new ToastMessage(message));
+            binding.setMessage(new Message(message));
 
             toast.setView(binding.getRoot());
             toast.show();

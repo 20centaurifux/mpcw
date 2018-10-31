@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="confirmation"
+            type="de.dixieflatline.mpcw.viewmodels.Confirmation" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/textAuthenticationTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{confirmation.question}"
+                android:textAlignment="center"/>
+            <Switch
+                android:id="@+id/switchEnableAuthentication"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingTop="5dp"
+                android:text="@string/yes"
+                android:checked="@={confirmation.confirmed}" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

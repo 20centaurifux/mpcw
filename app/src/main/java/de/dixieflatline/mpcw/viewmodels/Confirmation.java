@@ -14,25 +14,38 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.di;
+package de.dixieflatline.mpcw.viewmodels;
 
-import javax.inject.Singleton;
+import android.databinding.*;
 
-import dagger.Component;
+import de.dixieflatline.mpcw.*;
 
-import de.dixieflatline.mpcw.viewmodels.*;
-import de.dixieflatline.mpcw.views.*;
-
-@Singleton
-@Component(modules = { ServicesModule.class })
-public interface IComponent
+public class Confirmation extends BaseObservable
 {
-    void inject(WizardActivity activity);
-    void inject(PlayerFragment fragment);
-    void inject(PreferencesFragment fragment);
-    void inject(AboutFragment fragment);
-    void inject(BrowserActivity activity);
-    void inject(AppendArtistCommand command);
-    void inject(AppendAlbumCommand command);
-    void inject(AppendSongCommand command);
+    private String question;
+    private boolean confirmed;
+
+    @Bindable
+    public String getQuestion()
+    {
+        return question;
+    }
+
+    public void setQuestion(String question)
+    {
+        this.question = question;
+        notifyPropertyChanged(BR.question);
+    }
+
+    @Bindable
+    public boolean getConfirmed()
+    {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed)
+    {
+        this.confirmed = confirmed;
+        notifyPropertyChanged(BR.confirmed);
+    }
 }

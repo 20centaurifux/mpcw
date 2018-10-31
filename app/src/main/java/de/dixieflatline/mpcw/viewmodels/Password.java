@@ -20,24 +20,19 @@ import android.databinding.*;
 
 import de.dixieflatline.mpcw.*;
 
-public class ToastMessage extends BaseObservable
+public class Password extends BaseObservable
 {
-    private String message;
-
-    public ToastMessage(String message)
-    {
-        this.message = message;
-    }
-
+    private String password;
+    
     @Bindable
-    public String getMessage()
+    public String getPassword()
     {
-        return message;
+        return password;
     }
 
-    public void setMessage(String message)
+    public void setPassword(String password)
     {
-        this.message = message;
-        notifyPropertyChanged(BR.message);
+        this.password = password;
+        notifyPropertyChanged(BR.password);
     }
 }

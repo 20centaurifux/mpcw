@@ -99,7 +99,7 @@ public class AsyncConnectionLoop implements Runnable
                 }
                 catch(Exception ex)
                 {
-                    Log.d("AsyncConnectionLoop", "Connection failed.", ex);
+                    Log.d("AsyncConnectionLoop", "Server failed.", ex);
 
                     ++errorCounter;
 
@@ -147,7 +147,7 @@ public class AsyncConnectionLoop implements Runnable
 
         if(newState != oldState)
         {
-            Log.d("AsyncConnectionLoop", "Connection state changed: " + newState);
+            Log.d("AsyncConnectionLoop", "Server state changed: " + newState);
 
             if(newState)
             {

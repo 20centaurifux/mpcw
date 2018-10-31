@@ -33,7 +33,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/connection"
+                    android:text="@string/server"
                     android:orientation="vertical"
                     android:padding="2dp"
                     app:layout_constraintTop_toTopOf="parent"

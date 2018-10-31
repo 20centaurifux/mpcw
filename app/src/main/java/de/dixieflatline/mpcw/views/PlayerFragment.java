@@ -30,6 +30,7 @@ import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.databinding.*;
 import de.dixieflatline.mpcw.services.*;
 import de.dixieflatline.mpcw.viewmodels.*;
+import de.dixieflatline.mpcw.viewmodels.Message;
 
 public class PlayerFragment extends AInjectableFragment implements IConnectionListener, IPlayerListener, IPlaylistListener
 {
@@ -244,7 +245,7 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
 
             LayoutToastBinding binding =  DataBindingUtil.inflate(getLayoutInflater(), R.layout.layout_toast, view.findViewById(R.id.toast_root), false);
 
-            binding.setMessage(new ToastMessage(message));
+            binding.setMessage(new Message(message));
 
             toast.setView(binding.getRoot());
             toast.show();

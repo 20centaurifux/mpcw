@@ -14,25 +14,11 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.di;
+package de.dixieflatline.mpcw.views;
 
-import javax.inject.Singleton;
+import android.databinding.*;
 
-import dagger.Component;
-
-import de.dixieflatline.mpcw.viewmodels.*;
-import de.dixieflatline.mpcw.views.*;
-
-@Singleton
-@Component(modules = { ServicesModule.class })
-public interface IComponent
+public interface IBinder<TBinding extends ViewDataBinding, TViewModel extends BaseObservable>
 {
-    void inject(WizardActivity activity);
-    void inject(PlayerFragment fragment);
-    void inject(PreferencesFragment fragment);
-    void inject(AboutFragment fragment);
-    void inject(BrowserActivity activity);
-    void inject(AppendArtistCommand command);
-    void inject(AppendAlbumCommand command);
-    void inject(AppendSongCommand command);
+    void bind(TBinding binding, TViewModel viewModel);
 }
