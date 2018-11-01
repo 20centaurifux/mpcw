@@ -21,7 +21,6 @@ import android.content.*;
 import android.databinding.*;
 import android.os.*;
 import android.support.wear.widget.*;
-import android.util.*;
 
 import java.util.*;
 import java.util.stream.*;
@@ -31,11 +30,13 @@ import javax.inject.*;
 import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.databinding.*;
 import de.dixieflatline.mpcw.services.*;
+import de.dixieflatline.mpcw.utils.*;
 import de.dixieflatline.mpcw.viewmodels.*;
 
 public class BrowserActivity extends AInjectableActivity
 {
     private ActivityBrowserBinding binding;
+    private NetworkManager networkManager;
     private Browser browser = new Browser();
     private Thread thread;
     private final Handler handler = new Handler();
@@ -53,7 +54,25 @@ public class BrowserActivity extends AInjectableActivity
         binding.setBrowser(browser);
 
         setupRecyclerView();
-        queryAsync();
+
+        networkManager = new NetworkManager(getApplicationContext());
+
+        networkManager.addListener(new INetworkMangerListener()
+        {
+            @Override
+            public void onConnected()
+            {
+                queryAsync();
+            }
+
+            @Override
+            public void onFailure(Exception cause)
+            {
+                handler.post(() -> browser.fail(cause));
+            }
+        });
+
+        networkManager.connect();
     }
 
     private void setupRecyclerView()
@@ -239,5 +258,7 @@ public class BrowserActivity extends AInjectableActivity
             thread.join();
         }
         catch(InterruptedException ex) { }
+
+        networkManager.release();
     }
 }

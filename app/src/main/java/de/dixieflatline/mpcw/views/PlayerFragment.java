@@ -29,6 +29,7 @@ import javax.inject.*;
 import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.databinding.*;
 import de.dixieflatline.mpcw.services.*;
+import de.dixieflatline.mpcw.utils.*;
 import de.dixieflatline.mpcw.viewmodels.*;
 import de.dixieflatline.mpcw.viewmodels.Message;
 
@@ -36,6 +37,7 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
 {
     private PlayerRecyclerAdapter adapter;
     private final Handler handler = new Handler();
+    private NetworkManager networkManager;
 
     @Inject IPlayerService playerService;
 
@@ -52,11 +54,34 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
+        setupNetworkManager();
         setupPlayer();
         setupRecyclerView();
         setupPlayerService();
         setupActions();
         setupListeners();
+    }
+
+    private void setupNetworkManager()
+    {
+        networkManager = new NetworkManager(getContext());
+
+        networkManager.addListener(new INetworkMangerListener()
+        {
+            @Override
+            public void onConnected()
+            {
+                playerService.startAsync();
+            }
+
+            @Override
+            public void onFailure(Exception cause)
+            {
+                MainNavigation mainNavigation = new MainNavigation(getActivity());
+
+                mainNavigation.openConnectionFailure(cause);
+            }
+        });
     }
 
     private void setupPlayer()
@@ -121,15 +146,15 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
     {
         super.onResume();
 
+        MainNavigation mainNavigation = new MainNavigation(getActivity());
+
         if(playerService == null)
         {
-            MainNavigation mainNavigation = new MainNavigation(getActivity());
-
             mainNavigation.openConnectionFailure(new Exception("Please check connection preferences."));
         }
         else
         {
-            playerService.startAsync();
+            networkManager.connect();
         }
     }
 
@@ -142,6 +167,8 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
         {
             playerService.stopService();
         }
+
+        networkManager.release();
     }
 
     @Override
