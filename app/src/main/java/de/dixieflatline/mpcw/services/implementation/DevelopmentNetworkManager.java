@@ -14,10 +14,34 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.utils;
+package de.dixieflatline.mpcw.services.implementation;
 
-public interface INetworkMangerListener
+import java.util.*;
+
+import de.dixieflatline.mpcw.services.*;
+
+public class DevelopmentNetworkManager implements INetworkManager
 {
-    void onConnected();
-    void onFailure(Exception cause);
+    private final List<INetworkManagerListener> listeners = new ArrayList<>();
+
+    @Override
+    public void connect()
+    {
+        listeners.forEach(l -> l.onConnected());
+    }
+
+    @Override
+    public void release() { }
+
+    @Override
+    public void addListener(INetworkManagerListener listener)
+    {
+        listeners.add(listener);
+    }
+
+    @Override
+    public void removeListener(INetworkManagerListener listener)
+    {
+        listeners.remove(listener);
+    }
 }

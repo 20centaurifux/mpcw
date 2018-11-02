@@ -7,11 +7,11 @@ android {
         minSdkVersion 26
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -21,6 +21,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     productFlavors {
+        flavorDimensions "version"
+        emulator {
+            buildConfigField "boolean", "REQUEST_WIFI", "false"
+        }
+        device {
+            buildConfigField "boolean", "REQUEST_WIFI", "true"
+        }
     }
 }
 

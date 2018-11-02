@@ -24,7 +24,7 @@ import de.dixieflatline.mpcw.*;
 
 public class Browser extends BaseObservable
 {
-    private boolean loading;
+    private boolean loading = true;
     private boolean finished;
     private boolean failed;
     private String cause;
@@ -33,12 +33,6 @@ public class Browser extends BaseObservable
 
     @Bindable
     public boolean getLoading() { return loading; }
-
-    public void setLoading(boolean loading)
-    {
-        this.loading = loading;
-        notifyPropertyChanged(BR.loading);
-    }
 
     @Bindable
     public boolean getFinished() { return finished; }

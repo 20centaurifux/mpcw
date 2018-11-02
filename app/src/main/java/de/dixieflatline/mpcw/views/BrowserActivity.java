@@ -30,18 +30,17 @@ import javax.inject.*;
 import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.databinding.*;
 import de.dixieflatline.mpcw.services.*;
-import de.dixieflatline.mpcw.utils.*;
 import de.dixieflatline.mpcw.viewmodels.*;
 
 public class BrowserActivity extends AInjectableActivity
 {
     private ActivityBrowserBinding binding;
-    private NetworkManager networkManager;
     private Browser browser = new Browser();
     private Thread thread;
     private final Handler handler = new Handler();
 
     @Inject IBrowserService browserService;
+    @Inject INetworkManager networkManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -55,9 +54,7 @@ public class BrowserActivity extends AInjectableActivity
 
         setupRecyclerView();
 
-        networkManager = new NetworkManager(getApplicationContext());
-
-        networkManager.addListener(new INetworkMangerListener()
+        networkManager.addListener(new INetworkManagerListener()
         {
             @Override
             public void onConnected()

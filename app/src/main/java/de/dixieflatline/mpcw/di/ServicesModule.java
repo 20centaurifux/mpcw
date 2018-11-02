@@ -21,6 +21,7 @@ import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
 
+import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.services.*;
 import de.dixieflatline.mpcw.services.implementation.*;
 
@@ -60,11 +61,28 @@ public class ServicesModule
     }
 
     @Provides
-    @Singleton
     public IAboutService provideAboutService()
     {
         IAboutService aboutService = new AboutService(context);
 
-        return new AboutService(context);
+        return aboutService;
+    }
+
+    @Provides
+    public INetworkManager provideNetworkManager()
+    {
+        INetworkManager networkManager;
+
+        if(BuildConfig.REQUEST_WIFI)
+        {
+            networkManager = new WifiNetworkManager(context);
+        }
+        else
+        {
+            networkManager = new DevelopmentNetworkManager();
+
+        }
+
+        return networkManager;
     }
 }

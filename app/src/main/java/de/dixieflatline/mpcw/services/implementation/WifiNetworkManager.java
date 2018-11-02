@@ -14,7 +14,7 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.utils;
+package de.dixieflatline.mpcw.services.implementation;
 
 import android.content.*;
 import android.net.*;
@@ -23,21 +23,24 @@ import android.os.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-public class NetworkManager
+import de.dixieflatline.mpcw.services.*;
+
+public class WifiNetworkManager implements INetworkManager
 {
     private final static int ConnectionTimeoutMillis = 10000;
 
     private final ConnectivityManager connectivityManager;
-    private final List<INetworkMangerListener> listeners = new ArrayList<>();
+    private final List<INetworkManagerListener> listeners = new ArrayList<>();
     private final Handler handler = new Handler();
     private ConnectivityManager.NetworkCallback callback;
     private Runnable timeoutCallback;
 
-    public NetworkManager(Context context)
+    public WifiNetworkManager(Context context)
     {
         connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
+    @Override
     public void connect()
     {
         unregisterCallbacks();
@@ -71,6 +74,7 @@ public class NetworkManager
         handler.postDelayed(timeoutCallback, ConnectionTimeoutMillis);
     }
 
+    @Override
     public void release()
     {
         unregisterCallbacks();
@@ -100,12 +104,14 @@ public class NetworkManager
         }
     }
 
-    public void addListener(INetworkMangerListener listener)
+    @Override
+    public void addListener(INetworkManagerListener listener)
     {
         listeners.add(listener);
     }
 
-    public void removeListener(INetworkMangerListener listener)
+    @Override
+    public void removeListener(INetworkManagerListener listener)
     {
         listeners.remove(listener);
     }

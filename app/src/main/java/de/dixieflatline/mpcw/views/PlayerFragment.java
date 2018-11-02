@@ -29,7 +29,6 @@ import javax.inject.*;
 import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.databinding.*;
 import de.dixieflatline.mpcw.services.*;
-import de.dixieflatline.mpcw.utils.*;
 import de.dixieflatline.mpcw.viewmodels.*;
 import de.dixieflatline.mpcw.viewmodels.Message;
 
@@ -37,9 +36,9 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
 {
     private PlayerRecyclerAdapter adapter;
     private final Handler handler = new Handler();
-    private NetworkManager networkManager;
 
     @Inject IPlayerService playerService;
+    @Inject INetworkManager networkManager;
 
     private final Player player = new Player();
 
@@ -64,9 +63,7 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
 
     private void setupNetworkManager()
     {
-        networkManager = new NetworkManager(getContext());
-
-        networkManager.addListener(new INetworkMangerListener()
+        networkManager.addListener(new INetworkManagerListener()
         {
             @Override
             public void onConnected()
@@ -121,7 +118,7 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
 
         button.setOnClickListener((btn) ->
         {
-            Intent intent  = new Intent(getActivity(), BrowserActivity.class);
+            Intent intent = new Intent(getActivity(), BrowserActivity.class);
 
             startActivity(intent);
         });
