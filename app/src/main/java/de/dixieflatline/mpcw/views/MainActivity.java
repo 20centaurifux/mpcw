@@ -18,6 +18,7 @@ package de.dixieflatline.mpcw.views;
 
 import android.os.*;
 import android.support.wear.widget.drawer.*;
+import android.view.*;
 
 import javax.inject.*;
 
@@ -54,6 +55,22 @@ public class MainActivity extends AInjectableActivity
         {
             navigation.startWizard();
         }
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        findViewById(R.id.fragment_container).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+
+        findViewById(R.id.fragment_container).setVisibility(View.GONE);
     }
 
     private void setupDrawer(MainNavigation navigation)
