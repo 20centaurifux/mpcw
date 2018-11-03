@@ -29,9 +29,6 @@ import de.dixieflatline.mpcw.viewmodels.Preferences;
 
 public class PreferencesFragment extends AInjectableFragment
 {
-    private FragmentPreferencesBinding binding;
-    private Preferences preferences;
-
     @Inject IPreferencesService service;
 
     @Override
@@ -39,9 +36,9 @@ public class PreferencesFragment extends AInjectableFragment
     {
         inject();
 
-        preferences = service.load();
+        Preferences preferences = service.load();
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_preferences, container, false);
+        FragmentPreferencesBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_preferences, container, false);
         binding.setPreferences(preferences);
 
         preferences.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback()

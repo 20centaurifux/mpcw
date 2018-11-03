@@ -19,7 +19,6 @@ package de.dixieflatline.mpcw.views;
 import android.support.v7.widget.*;
 import android.view.*;
 
-import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.databinding.*;
 import de.dixieflatline.mpcw.viewmodels.*;
 
@@ -39,8 +38,6 @@ public class SongViewHolder extends RecyclerView.ViewHolder
         binding.setSong(song);
 
         View view = binding.getRoot();
-
-        view.findViewById(R.id.frame_song);
 
         view.setOnLongClickListener(v ->
         {

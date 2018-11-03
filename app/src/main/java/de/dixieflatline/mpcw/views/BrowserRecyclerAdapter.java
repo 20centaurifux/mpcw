@@ -26,8 +26,8 @@ import de.dixieflatline.mpcw.viewmodels.*;
 
 public class BrowserRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
-    public static final int TAG= 0;
-    public static final int SONG = 1;
+    private static final int TAG= 0;
+    private static final int SONG = 1;
 
     private final List<Object> items = new ArrayList<>();
 

@@ -34,9 +34,9 @@ public class WizardActivity extends AInjectableActivity
     private LinearLayoutManager layoutManager;
     private WizardRecyclerAdapter adapter;
 
-    private Server server = new Server();
-    private Confirmation enableAuthentication = new Confirmation();
-    private Password password = new Password();
+    private final Server server = new Server();
+    private final Confirmation enableAuthentication = new Confirmation();
+    private final Password password = new Password();
 
     @Inject IPreferencesService service;
 

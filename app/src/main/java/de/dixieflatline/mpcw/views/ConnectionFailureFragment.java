@@ -27,8 +27,6 @@ import de.dixieflatline.mpcw.viewmodels.*;
 
 public class ConnectionFailureFragment extends Fragment
 {
-    private FragmentConnectionfailureBinding binding;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -38,7 +36,7 @@ public class ConnectionFailureFragment extends Fragment
 
         failure.setMessage(message);
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_connectionfailure, container, false);
+        FragmentConnectionfailureBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_connectionfailure, container, false);
         binding.setFailure(failure);
 
         return binding.getRoot();
@@ -53,7 +51,7 @@ public class ConnectionFailureFragment extends Fragment
         {
             MainNavigation mainNavigation = new MainNavigation(getActivity());
 
-            mainNavigation.openStartScreen();
+            mainNavigation.openPlayer();
         });
     }
 }

@@ -19,7 +19,6 @@ package de.dixieflatline.mpcw.views;
 import android.support.v7.widget.*;
 import android.view.*;
 
-import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.databinding.*;
 import de.dixieflatline.mpcw.viewmodels.*;
 
@@ -39,8 +38,6 @@ public class TagViewHolder extends RecyclerView.ViewHolder
         binding.setTag(tag);
 
         View view = binding.getRoot();
-
-        view.findViewById(R.id.frame_tag);
 
         view.setOnClickListener(v ->
         {

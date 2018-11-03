@@ -35,7 +35,7 @@ public class SharedPreferencesService implements IPreferencesService
     private static final String MPD_AUTHENTICATION = "mpd.authentication";
     private static final String MPD_PASSWORD = "mpd.password";
 
-    private Context context;
+    private final Context context;
 
     public SharedPreferencesService(Context context)
     {

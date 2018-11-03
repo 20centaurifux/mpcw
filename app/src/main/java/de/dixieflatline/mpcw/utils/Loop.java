@@ -35,6 +35,12 @@ public class Loop
 
     public void iterate()
     {
+        runRecurringTasks();
+        runOnetimeTasks();
+    }
+
+    private void runRecurringTasks()
+    {
         for(RecurringRunnable runnable : recurringRunnables)
         {
             if(runnable.due())
@@ -42,7 +48,10 @@ public class Loop
                 runnable.run();
             }
         }
+    }
 
+    private void runOnetimeTasks()
+    {
         while(!runnables.isEmpty())
         {
             Runnable runnable = runnables.peek();

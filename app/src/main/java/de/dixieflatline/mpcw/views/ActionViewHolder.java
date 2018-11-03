@@ -18,7 +18,6 @@ package de.dixieflatline.mpcw.views;
 
 import android.databinding.*;
 import android.support.design.widget.*;
-import android.view.*;
 
 import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.databinding.*;
@@ -29,9 +28,6 @@ public class ActionViewHolder extends ABindableViewHolder<LayoutActionBinding>
     public ActionViewHolder(LayoutActionBinding binding)
     {
         super(binding);
-
-        View view = binding.getRoot();
-        view.findViewById(R.id.button);
     }
 
     public void bind(BaseObservable viewModel)

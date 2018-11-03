@@ -58,11 +58,6 @@ public class MainNavigation implements WearableNavigationDrawerView.OnItemSelect
         navigateTo(fragment);
     }
 
-    public void openStartScreen()
-    {
-        openPlayer();
-    }
-
     public void openPlayer()
     {
         navigateTo(new PlayerFragment());

@@ -40,8 +40,6 @@ public class PlaylistItemViewHolder extends RecyclerView.ViewHolder
 
         View view = binding.getRoot();
 
-        view.findViewById(R.id.frame_playlistitem);
-
         view.setOnClickListener(v ->
         {
             item.getSelectCommand().run(item, getAdapterPosition() - 1);

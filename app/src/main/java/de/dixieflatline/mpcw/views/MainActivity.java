@@ -49,7 +49,7 @@ public class MainActivity extends AInjectableActivity
         if(service.isConfigured())
         {
             setupDrawer(navigation);
-            navigation.openStartScreen();
+            navigation.openPlayer();
         }
         else
         {

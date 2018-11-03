@@ -34,10 +34,9 @@ import de.dixieflatline.mpcw.viewmodels.*;
 
 public class BrowserActivity extends AInjectableActivity
 {
-    private ActivityBrowserBinding binding;
-    private Browser browser = new Browser();
-    private Thread thread;
+    private final Browser browser = new Browser();
     private final Handler handler = new Handler();
+    private Thread thread;
 
     @Inject IBrowserService browserService;
     @Inject INetworkManager networkManager;
@@ -49,7 +48,7 @@ public class BrowserActivity extends AInjectableActivity
 
         inject();
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_browser);
+        ActivityBrowserBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_browser);
         binding.setBrowser(browser);
 
         setupRecyclerView();
@@ -70,6 +69,21 @@ public class BrowserActivity extends AInjectableActivity
         });
 
         networkManager.connect();
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+
+        try
+        {
+            thread.interrupt();
+            thread.join(500);
+        }
+        catch(InterruptedException ex) { }
+
+        networkManager.release();
     }
 
     private void setupRecyclerView()
@@ -241,21 +255,5 @@ public class BrowserActivity extends AInjectableActivity
         Notification notification = new Notification(this);
 
         notification.show(message);
-    }
-
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-
-        thread.interrupt();
-
-        try
-        {
-            thread.join();
-        }
-        catch(InterruptedException ex) { }
-
-        networkManager.release();
     }
 }

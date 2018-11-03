@@ -26,6 +26,7 @@ import de.dixieflatline.mpcw.services.*;
 public class AppendAlbumCommand implements ITagCommand
 {
     private final String artist;
+
     @Inject IBrowserService browserService;
 
     public AppendAlbumCommand(String artist)

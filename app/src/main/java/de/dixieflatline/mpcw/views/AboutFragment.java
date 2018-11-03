@@ -28,8 +28,6 @@ import de.dixieflatline.mpcw.services.*;
 
 public class AboutFragment extends AInjectableFragment
 {
-    private FragmentAboutBinding binding;
-
     @Inject IAboutService aboutService;
 
     @Override
@@ -37,7 +35,7 @@ public class AboutFragment extends AInjectableFragment
     {
         inject();
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_about, container, false);
+        FragmentAboutBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_about, container, false);
         binding.setAbout(aboutService.getAbout());
 
         return binding.getRoot();

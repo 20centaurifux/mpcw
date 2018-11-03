@@ -27,9 +27,8 @@ import de.dixieflatline.mpcw.viewmodels.Player;
 
 public class PlayerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
-    public static final int PLAYER = 0;
-    public static final int PLAYLISTITEM = 1;
-
+    private static final int PLAYER = 0;
+    private static final int PLAYLISTITEM = 1;
     private final Player player;
     private final List<PlaylistItem> items = new ArrayList<>();
 
