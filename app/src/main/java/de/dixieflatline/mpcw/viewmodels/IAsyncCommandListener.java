@@ -16,7 +16,8 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.viewmodels;
 
-public interface ITagCommand
+public interface IAsyncCommandListener<T>
 {
-    void run(Tag tag);
+    void onSuccess(T result);
+    void onFailed(Exception cause);
 }

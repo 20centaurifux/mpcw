@@ -20,6 +20,7 @@
     <string name="license">License</string>
     <string name="website">Website</string>
     <string name="playlist_cleared">playlist cleared</string>
+    <string name="playlist_operation_failed">action failed</string>
     <string name="no_artist">No Artist</string>
     <string name="no_title">No Title</string>
     <string name="unknown">Unknown</string>

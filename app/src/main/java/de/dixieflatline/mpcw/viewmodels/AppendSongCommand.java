@@ -16,32 +16,17 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.viewmodels;
 
-import android.util.*;
-
 import javax.inject.*;
 
-import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.services.*;
 
-public class AppendSongCommand implements ISongCommand
+public class AppendSongCommand extends AAsyncCommand<Song>
 {
     @Inject IBrowserService browserService;
 
     @Override
-    public void run(Song song)
+    protected void run(Song song) throws Exception
     {
-        Thread thread = new Thread(() ->
-        {
-            try
-            {
-                browserService.appendSong(song);
-            }
-            catch(Exception ex)
-            {
-                Log.e(Tags.COMMAND, "Couldn't append song.", ex);
-            }
-        });
-
-        thread.start();
+        browserService.appendSong(song);
     }
 }

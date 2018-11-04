@@ -30,7 +30,7 @@ public class Song extends BaseObservable
     private int track;
     private String title;
     private String displayTitle;
-    private ISongCommand songSelectCommand;
+    private AAsyncCommand<Song> songSelectCommand;
 
     @Bindable
     public String getFilename()
@@ -124,12 +124,12 @@ public class Song extends BaseObservable
         }
     }
 
-    public ISongCommand getSongSelectCommand()
+    public AAsyncCommand<Song> getSongSelectCommand()
     {
         return songSelectCommand;
     }
 
-    public void setSongSelectCommand(ISongCommand songSelectCommand)
+    public void setSongSelectCommand(AAsyncCommand<Song> songSelectCommand)
     {
         this.songSelectCommand = songSelectCommand;
     }

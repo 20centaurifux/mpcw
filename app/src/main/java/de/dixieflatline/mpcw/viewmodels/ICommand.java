@@ -16,7 +16,7 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.viewmodels;
 
-public interface ISongCommand
+public interface ICommand<T>
 {
-    void run(Song song);
+    void run(T arg);
 }

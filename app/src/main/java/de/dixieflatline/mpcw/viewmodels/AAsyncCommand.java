@@ -16,35 +16,45 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.viewmodels;
 
-import android.app.*;
-import android.content.*;
-import android.os.*;
+import android.util.*;
 
-import de.dixieflatline.mpcw.views.*;
+import java.util.*;
 
-public class BrowseAlbumCommand implements ICommand<Tag>
+import de.dixieflatline.mpcw.*;
+
+public abstract class AAsyncCommand<T>
 {
-    private final Activity activity;
-    private final String artist;
+    private List<IAsyncCommandListener<T>> listeners = new ArrayList<>();
 
-    public BrowseAlbumCommand(Activity activity, String artist)
+    public void runAsync(T arg)
     {
-        this.activity = activity;
-        this.artist = artist;
+        Thread thread = new Thread(() ->
+        {
+            try
+            {
+               run(arg);
+               listeners.forEach(l -> l.onSuccess(arg));
+            }
+            catch(Exception ex)
+            {
+                Log.d(Tags.COMMAND, "Command execution failed.", ex);
+
+                listeners.forEach(l -> l.onFailed(ex));
+            }
+        });
+
+        thread.start();
     }
 
-    @Override
-    public void run(Tag album)
+    protected abstract void run(T arg) throws Exception;
+
+    public void addListener(IAsyncCommandListener<T> listener)
     {
-        Bundle bundle = new Bundle();
+        listeners.add(listener);
+    }
 
-        bundle.putString("ARTIST_FILTER", artist);
-        bundle.putString("ALBUM_FILTER", album.getValue());
-
-        Intent intent = new Intent(activity, BrowserActivity.class);
-
-        intent.putExtras(bundle);
-
-        activity.startActivity(intent);
+    public void removeListener(IAsyncCommandListener<T> listener)
+    {
+        listeners.remove(listener);
     }
 }

@@ -38,6 +38,36 @@ public class BrowserActivity extends AInjectableActivity
     private final Handler handler = new Handler();
     private Thread thread;
 
+    private final IAsyncCommandListener<Tag> tagCommandListener = new IAsyncCommandListener<Tag>()
+    {
+        @Override
+        public void onSuccess(Tag result)
+        {
+            postNotification(result.getValue());
+        }
+
+        @Override
+        public void onFailed(Exception cause)
+        {
+            postNotification(R.string.playlist_operation_failed);
+        }
+    };
+
+    private final IAsyncCommandListener<Song> songCommandListener = new IAsyncCommandListener<Song>()
+    {
+        @Override
+        public void onSuccess(Song result)
+        {
+            postNotification(result.getDisplayTitle());
+        }
+
+        @Override
+        public void onFailed(Exception cause)
+        {
+            postNotification(R.string.playlist_operation_failed);
+        }
+    };
+
     @Inject IBrowserService browserService;
     @Inject INetworkManager networkManager;
 
@@ -138,15 +168,11 @@ public class BrowserActivity extends AInjectableActivity
     {
         Activity activity = this;
         Iterator<String> artistIterator = browserService.getAllArtists().iterator();
-        ITagCommand activateTagCommand = new BrowseArtistCommand(activity);
-        ITagCommand selectTagCommand = new AppendArtistCommand();
-        ITagCommand selectTagCommandWrapper = tag ->
-        {
-            postNotification(tag.getValue());
-            selectTagCommand.run(tag);
-        };
+        ICommand<Tag> activateTagCommand = new BrowseArtistCommand(activity);
+        AAsyncCommand selectTagCommand = new AppendArtistCommand();
 
         inject(selectTagCommand);
+        selectTagCommand.addListener(tagCommandListener);
 
         Iterable<Tag> tags = () -> new Iterator<Tag>()
         {
@@ -162,7 +188,7 @@ public class BrowserActivity extends AInjectableActivity
                 Tag tag = Tag.Artist(artistIterator.next());
 
                 tag.setTagActivateCommand(activateTagCommand);
-                tag.setTagSelectCommand(selectTagCommandWrapper);
+                tag.setTagSelectCommand(selectTagCommand);
 
                 return tag;
             }
@@ -175,15 +201,11 @@ public class BrowserActivity extends AInjectableActivity
     {
         Activity activity = this;
         Iterator<String> albumIterator = browserService.getAlbumsByArtist(artist).iterator();
-        ITagCommand activateTagCommand = new BrowseAlbumCommand(activity, artist);
-        ITagCommand selectTagCommand = new AppendAlbumCommand(artist);
-        ITagCommand selectTagCommandWrapper = tag ->
-        {
-            postNotification(tag.getValue());
-            selectTagCommand.run(tag);
-        };
+        ICommand<Tag> activateTagCommand = new BrowseAlbumCommand(activity, artist);
+        AAsyncCommand selectTagCommand = new AppendAlbumCommand(artist);
 
         inject(selectTagCommand);
+        selectTagCommand.addListener(tagCommandListener);
 
         Iterable<Tag> tags = () -> new Iterator<Tag>()
         {
@@ -199,7 +221,7 @@ public class BrowserActivity extends AInjectableActivity
                 Tag tag = Tag.Album(albumIterator.next());
 
                 tag.setTagActivateCommand(activateTagCommand);
-                tag.setTagSelectCommand(selectTagCommandWrapper);
+                tag.setTagSelectCommand(selectTagCommand);
 
                 return tag;
             }
@@ -230,20 +252,16 @@ public class BrowserActivity extends AInjectableActivity
 
     private Iterable<Song> injectSongs(Iterable<Song> songs)
     {
-        ISongCommand selectSongCommand = new AppendSongCommand();
-        ISongCommand selectSongCommandWrapper = song ->
-        {
-            postNotification(song.getDisplayTitle());
-            selectSongCommand.run(song);
-        };
+        AAsyncCommand<Song> selectSongCommand = new AppendSongCommand();
 
         inject(selectSongCommand);
+        selectSongCommand.addListener(songCommandListener);
 
         List<Song> songList = new ArrayList<>();
 
         for(Song song : songs)
         {
-            song.setSongSelectCommand(selectSongCommandWrapper);
+            song.setSongSelectCommand(selectSongCommand);
             songList.add(song);
         }
 
@@ -252,8 +270,21 @@ public class BrowserActivity extends AInjectableActivity
 
     private void postNotification(String message)
     {
-        Notification notification = new Notification(this);
+        handler.post(() ->
+        {
+            Notification notification = new Notification(this);
 
-        notification.show(message);
+            notification.show(message);
+        });
+    }
+
+    private void postNotification(int resourceId)
+    {
+        handler.post(() ->
+        {
+            Notification notification = new Notification(this);
+
+            notification.show(getResources().getString(resourceId));
+        });
     }
 }

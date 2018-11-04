@@ -16,14 +16,11 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.viewmodels;
 
-import android.util.*;
-
 import javax.inject.*;
 ;
-import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.services.*;
 
-public class AppendAlbumCommand implements ITagCommand
+public class AppendAlbumCommand extends AAsyncCommand<Tag>
 {
     private final String artist;
 
@@ -35,20 +32,8 @@ public class AppendAlbumCommand implements ITagCommand
     }
 
     @Override
-    public void run(Tag album)
+    public void run(Tag album) throws Exception
     {
-        Thread thread = new Thread(() ->
-        {
-            try
-            {
-                browserService.appendSongsFromAlbum(artist, album.getValue());
-            }
-            catch(Exception ex)
-            {
-                Log.e(Tags.COMMAND, "Couldn't append album.", ex);
-            }
-        });
-
-        thread.start();
+        browserService.appendSongsFromAlbum(artist, album.getValue());
     }
 }

@@ -22,7 +22,7 @@ import android.os.*;
 
 import de.dixieflatline.mpcw.views.*;
 
-public class BrowseArtistCommand implements ITagCommand
+public class BrowseArtistCommand implements ICommand<Tag>
 {
     private final Activity activity;
 

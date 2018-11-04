@@ -46,7 +46,7 @@ public class TagViewHolder extends RecyclerView.ViewHolder
 
         view.setOnLongClickListener(v ->
         {
-            tag.getTagSelectCommand().run(tag);
+            tag.getTagSelectCommand().runAsync(tag);
 
             return true;
         });

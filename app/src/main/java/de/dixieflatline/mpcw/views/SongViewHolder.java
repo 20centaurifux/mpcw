@@ -41,7 +41,7 @@ public class SongViewHolder extends RecyclerView.ViewHolder
 
         view.setOnLongClickListener(v ->
         {
-            song.getSongSelectCommand().run(song);
+            song.getSongSelectCommand().runAsync(song);
 
             return true;
         });

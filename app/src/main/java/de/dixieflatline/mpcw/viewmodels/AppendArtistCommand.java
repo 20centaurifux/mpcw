@@ -16,32 +16,17 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.viewmodels;
 
-import android.util.*;
-
 import javax.inject.*;
 
-import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.services.*;
 
-public class AppendArtistCommand implements ITagCommand
+public class AppendArtistCommand extends AAsyncCommand<Tag>
 {
     @Inject IBrowserService browserService;
 
     @Override
-    public void run(Tag artist)
+    protected void run(Tag artist) throws Exception
     {
-        Thread thread = new Thread(() ->
-        {
-            try
-            {
-                browserService.appendSongsFromArtist(artist.getValue());
-            }
-            catch(Exception ex)
-            {
-                Log.e(Tags.COMMAND, "Couldn't append artist.", ex);
-            }
-        });
-
-        thread.start();
+        browserService.appendSongsFromArtist(artist.getValue());
     }
 }

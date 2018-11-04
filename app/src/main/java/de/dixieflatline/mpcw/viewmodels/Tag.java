@@ -24,8 +24,8 @@ public class Tag extends BaseObservable
 {
     private final ETag tag;
     private String value;
-    private ITagCommand tagActivateCommand;
-    private ITagCommand tagSelectCommand;
+    private ICommand<Tag> tagActivateCommand;
+    private AAsyncCommand tagSelectCommand;
 
     private Tag(ETag tag, String value)
     {
@@ -55,22 +55,22 @@ public class Tag extends BaseObservable
         notifyPropertyChanged(BR.value);
     }
 
-    public ITagCommand getTagActivateCommand()
+    public ICommand<Tag> getTagActivateCommand()
     {
         return tagActivateCommand;
     }
 
-    public void setTagActivateCommand(ITagCommand tagActivateCommand)
+    public void setTagActivateCommand(ICommand<Tag> tagActivateCommand)
     {
         this.tagActivateCommand = tagActivateCommand;
     }
 
-    public ITagCommand getTagSelectCommand()
+    public AAsyncCommand getTagSelectCommand()
     {
         return tagSelectCommand;
     }
 
-    public void setTagSelectCommand(ITagCommand tagSelectCommand)
+    public void setTagSelectCommand(AAsyncCommand tagSelectCommand)
     {
         this.tagSelectCommand = tagSelectCommand;
     }
