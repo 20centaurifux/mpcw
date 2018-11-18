@@ -19,6 +19,7 @@
     <string name="author">Author</string>
     <string name="license">License</string>
     <string name="website">Website</string>
+    <string name="command_failed">command failed</string>
     <string name="playlist_cleared">playlist cleared</string>
     <string name="playlist_operation_failed">action failed</string>
     <string name="no_artist">No Artist</string>

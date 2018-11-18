@@ -22,6 +22,8 @@ import android.os.*;
 import android.view.*;
 import android.widget.*;
 
+import java.util.concurrent.*;
+
 import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.databinding.*;
 import de.dixieflatline.mpcw.viewmodels.Message;
@@ -39,6 +41,40 @@ public class Notification
     public void show(String message)
     {
         show(message, Gravity.CENTER, 0, 0);
+    }
+
+    public void show(int resourceId)
+    {
+        String message = activity.getResources().getString(resourceId);
+
+        show(message, Gravity.CENTER, 0, 0);
+    }
+
+    public void tryShowInFuture(Future<Void> future, int timeoutMillis, int successResourceId, int failureResourceId)
+    {
+        handler.post(() ->
+        {
+            boolean success;
+
+            try
+            {
+                future.get(timeoutMillis, TimeUnit.MILLISECONDS);
+                success = future.isDone();
+            }
+            catch(Exception ex)
+            {
+                success = false;
+            }
+
+            int resourceId = failureResourceId;
+
+            if(success)
+            {
+                resourceId = successResourceId;
+            }
+
+            show(resourceId);
+        });
     }
 
     private void show(String message, int gravity, int xOffset, int yOffset)

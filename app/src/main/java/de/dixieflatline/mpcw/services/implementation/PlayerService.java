@@ -93,9 +93,9 @@ public class PlayerService implements IPlayerService
     }
 
     @Override
-    public void previous()
+    public Future<Void> previous()
     {
-        loop.addTimeout(new APlayerCommand()
+        return loop.addTimeout(new APlayerCommand()
         {
             @Override
             protected void run(IPlayer player) throws CommunicationException, ProtocolException
@@ -106,9 +106,9 @@ public class PlayerService implements IPlayerService
     }
 
     @Override
-    public void next()
+    public Future<Void> next()
     {
-        loop.addTimeout(new APlayerCommand()
+        return loop.addTimeout(new APlayerCommand()
         {
             @Override
             protected void run(IPlayer player) throws CommunicationException, ProtocolException
@@ -119,9 +119,9 @@ public class PlayerService implements IPlayerService
     }
 
     @Override
-    public void toggle()
+    public Future<Void> toggle()
     {
-        loop.addTimeout(new APlayerCommand()
+        return loop.addTimeout(new APlayerCommand()
         {
             @Override
             protected void run(IPlayer player) throws CommunicationException, ProtocolException
@@ -146,9 +146,9 @@ public class PlayerService implements IPlayerService
     }
 
     @Override
-    public void clear()
+    public Future<Void> clear()
     {
-        loop.addTimeout(new APlayerCommand()
+        return loop.addTimeout(new APlayerCommand()
         {
             @Override
             protected void run(IPlayer player) throws CommunicationException, ProtocolException
@@ -159,9 +159,9 @@ public class PlayerService implements IPlayerService
     }
 
     @Override
-    public void playFromCurrentPlaylist(int position)
+    public Future<Void> playFromCurrentPlaylist(int position)
     {
-        loop.addTimeout(new APlaylistCommand()
+        return loop.addTimeout(new APlaylistCommand()
         {
             @Override
             protected void run(IPlaylist playlist) throws Exception

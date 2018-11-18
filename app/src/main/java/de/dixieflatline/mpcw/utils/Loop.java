@@ -16,7 +16,11 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.utils;
 
+import android.util.*;
+
 import java.util.*;
+
+import de.dixieflatline.mpcw.*;
 
 public class Loop
 {
@@ -59,11 +63,14 @@ public class Loop
             try
             {
                 runnable.run();
-                runnables.remove();
             }
             catch(Exception ex)
             {
-                throw ex;
+                Log.w(Tags.MISC, ex);
+            }
+            finally
+            {
+                runnables.remove();
             }
         }
     }

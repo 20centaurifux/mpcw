@@ -24,6 +24,8 @@ import android.support.wear.widget.*;
 import android.view.*;
 import android.widget.*;
 
+import java.util.concurrent.*;
+
 import javax.inject.*;
 
 import de.dixieflatline.mpcw.*;
@@ -82,9 +84,28 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
 
     private void setupPlayer()
     {
-        player.setPreviousCommand(() -> playerService.previous());
-        player.setNextCommand(() -> playerService.next());
-        player.setToggleCommand(() -> playerService.toggle());
+        FutureNotification notification = new FutureNotification(getActivity(), 2500);
+
+        player.setPreviousCommand(() ->
+        {
+            Future<Void> future = playerService.previous();
+
+            notification.showOnFailure(future, R.string.command_failed);
+        });
+
+        player.setNextCommand(() ->
+        {
+            Future<Void> future = playerService.next();
+
+            notification.showOnFailure(future, R.string.command_failed);
+        });
+
+        player.setToggleCommand(() ->
+        {
+            Future<Void> future = playerService.toggle();
+
+            notification.showOnFailure(future, R.string.command_failed);
+        });
     }
 
     private void setupRecyclerView()
@@ -126,14 +147,13 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
     private void setupListeners()
     {
         View view = getView();
-        Notification notification = new Notification(getActivity());
-        String message = getResources().getString(R.string.playlist_cleared);
 
         view.findViewById(R.id.clear_playlist).setOnClickListener((s) ->
-
         {
-            playerService.clear();
-            notification.show(message);
+            FutureNotification notification = new FutureNotification(getActivity(), 2500);
+            Future<Void> future = playerService.clear();
+
+            notification.show(future, R.string.playlist_cleared, R.string.command_failed);
         });
     }
 

@@ -284,7 +284,7 @@ public class BrowserActivity extends AInjectableActivity
         {
             Notification notification = new Notification(this);
 
-            notification.show(getResources().getString(resourceId));
+            notification.show(resourceId);
         });
     }
 }

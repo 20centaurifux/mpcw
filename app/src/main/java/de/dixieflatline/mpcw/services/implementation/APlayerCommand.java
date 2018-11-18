@@ -33,6 +33,8 @@ public abstract class APlayerCommand implements IConnectionHandler
         catch(Exception ex)
         {
             Log.w(Tags.SERVICE, ex);
+
+            throw new RuntimeException(ex);
         }
     }
 

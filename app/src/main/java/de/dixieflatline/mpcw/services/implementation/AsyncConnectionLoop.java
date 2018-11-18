@@ -52,9 +52,29 @@ public class AsyncConnectionLoop implements Runnable
         listeners.remove(listener);
     }
 
-    public void addTimeout(IConnectionHandler handler)
+    public Future<Void> addTimeout(IConnectionHandler handler)
     {
-        queue.add(wrapConnectionHandler(handler));
+        CompletableFuture<Void> future = new CompletableFuture<>();
+
+        queue.add(wrapTimeoutConnectionHandler(handler, future));
+
+        return future;
+    }
+
+    private Runnable wrapTimeoutConnectionHandler(IConnectionHandler handler, CompletableFuture<Void> future)
+    {
+        return () ->
+        {
+            try
+            {
+                handler.run(connection);
+                future.complete(null);
+            }
+            catch(CommunicationException ex)
+            {
+                future.completeExceptionally(ex);
+            }
+        };
     }
 
     public void addInterval(IConnectionHandler handler, long millis)

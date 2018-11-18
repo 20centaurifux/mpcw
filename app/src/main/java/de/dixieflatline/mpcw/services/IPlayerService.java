@@ -16,15 +16,17 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.services;
 
+import java.util.concurrent.*;
+
 public interface IPlayerService
 {
     void startAsync();
     void stopService();
-    void next();
-    void previous();
-    void toggle();
-    void clear();
-    void playFromCurrentPlaylist(int position);
+    Future<Void> next();
+    Future<Void> previous();
+    Future<Void> toggle();
+    Future<Void> clear();
+    Future<Void> playFromCurrentPlaylist(int position);
     void addConnectionListener(IConnectionListener listener);
     void removeConnectionListener(IConnectionListener listener);
     void addPlayerListener(IPlayerListener listener);
