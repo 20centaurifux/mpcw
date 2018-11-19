@@ -24,7 +24,8 @@ public class AppendAlbumCommand extends AAsyncCommand<Tag>
 {
     private final String artist;
 
-    @Inject IBrowserService browserService;
+    @Inject
+    IBrowserService browserService;
 
     public AppendAlbumCommand(String artist)
     {

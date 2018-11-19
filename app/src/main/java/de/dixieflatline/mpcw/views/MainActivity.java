@@ -27,7 +27,8 @@ import de.dixieflatline.mpcw.services.*;
 
 public class MainActivity extends AInjectableActivity
 {
-    @Inject IPreferencesService service;
+    @Inject
+    IPreferencesService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

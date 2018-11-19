@@ -40,8 +40,11 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
     private final Handler handler = new Handler();
     private final Player player = new Player();
 
-    @Inject IPlayerService playerService;
-    @Inject INetworkManager networkManager;
+    @Inject
+    IPlayerService playerService;
+
+    @Inject
+    INetworkManager networkManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

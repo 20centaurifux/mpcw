@@ -79,12 +79,12 @@ public class AsyncConnectionLoop implements Runnable
 
     public void addInterval(IConnectionHandler handler, long millis)
     {
-        Runnable runnable = wrapConnectionHandler(handler);
+        Runnable runnable = wrapIntervalConnectionHandler(handler);
 
         queue.add(new RecurringRunnable(runnable, millis));
     }
 
-    private Runnable wrapConnectionHandler(IConnectionHandler handler)
+    private Runnable wrapIntervalConnectionHandler(IConnectionHandler handler)
     {
         return () ->
         {
@@ -120,7 +120,7 @@ public class AsyncConnectionLoop implements Runnable
                 }
                 catch(Exception ex)
                 {
-                    Log.d(Tags.SERVICE, "Server failed.", ex);
+                    Log.d(Tags.SERVICE, "Service failed.", ex);
 
                     ++errorCounter;
 
@@ -168,7 +168,7 @@ public class AsyncConnectionLoop implements Runnable
 
         if(newState != oldState)
         {
-            Log.d(Tags.SERVICE, "Server state changed: " + newState);
+            Log.d(Tags.SERVICE, "Connection state changed: " + newState);
 
             if(newState)
             {

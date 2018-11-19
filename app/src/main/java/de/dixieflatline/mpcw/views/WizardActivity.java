@@ -38,7 +38,8 @@ public class WizardActivity extends AInjectableActivity
     private final Confirmation enableAuthentication = new Confirmation();
     private final Password password = new Password();
 
-    @Inject IPreferencesService service;
+    @Inject
+    IPreferencesService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

@@ -22,7 +22,8 @@ import de.dixieflatline.mpcw.services.*;
 
 public class AppendSongCommand extends AAsyncCommand<Song>
 {
-    @Inject IBrowserService browserService;
+    @Inject
+    IBrowserService browserService;
 
     @Override
     protected void run(Song song) throws Exception

@@ -32,10 +32,16 @@ public class Browser extends BaseObservable
     private Iterable<Song> songs;
 
     @Bindable
-    public boolean getLoading() { return loading; }
+    public boolean getLoading()
+    {
+        return loading;
+    }
 
     @Bindable
-    public boolean getFinished() { return finished; }
+    public boolean getFinished()
+    {
+        return finished;
+    }
 
     public void finish()
     {
@@ -47,7 +53,10 @@ public class Browser extends BaseObservable
     }
 
     @Bindable
-    public boolean getFailed() { return failed; }
+    public boolean getFailed()
+    {
+        return failed;
+    }
 
     public void fail(Exception cause)
     {
@@ -62,7 +71,10 @@ public class Browser extends BaseObservable
     }
 
     @Bindable
-    public String getCause() { return cause; }
+    public String getCause()
+    {
+        return cause;
+    }
 
     @Bindable
     public Iterable<Tag> getTags()

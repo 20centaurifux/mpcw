@@ -29,7 +29,8 @@ import de.dixieflatline.mpcw.viewmodels.Preferences;
 
 public class PreferencesFragment extends AInjectableFragment
 {
-    @Inject IPreferencesService service;
+    @Inject
+    IPreferencesService service;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

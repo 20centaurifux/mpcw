@@ -68,8 +68,11 @@ public class BrowserActivity extends AInjectableActivity
         }
     };
 
-    @Inject IBrowserService browserService;
-    @Inject INetworkManager networkManager;
+    @Inject
+    IBrowserService browserService;
+
+    @Inject
+    INetworkManager networkManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

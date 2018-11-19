@@ -18,8 +18,8 @@ package de.dixieflatline.mpcw;
 
 public final class Tags
 {
-    public static final String APOCALYPSE = "Apocalypse";
-    public static final String MISC = "Misc";
+    public static final String GENERAL = "General";
     public static final String SERVICE = "Service";
     public static final String COMMAND = "Command";
+    public static final String APOCALYPSE = "Apocalypse";
 }

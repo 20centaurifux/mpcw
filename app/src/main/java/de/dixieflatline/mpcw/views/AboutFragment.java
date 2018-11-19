@@ -28,7 +28,8 @@ import de.dixieflatline.mpcw.services.*;
 
 public class AboutFragment extends AInjectableFragment
 {
-    @Inject IAboutService aboutService;
+    @Inject
+    IAboutService aboutService;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

@@ -66,7 +66,7 @@ public class Loop
             }
             catch(Exception ex)
             {
-                Log.w(Tags.MISC, ex);
+                Log.w(Tags.GENERAL, ex);
             }
             finally
             {

@@ -32,7 +32,7 @@ public abstract class APlaylistCommand implements IConnectionHandler
         }
         catch(Exception ex)
         {
-            Log.w(Tags.SERVICE, ex);
+            Log.w(Tags.COMMAND, ex);
         }
     }
 

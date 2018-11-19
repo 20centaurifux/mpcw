@@ -22,7 +22,8 @@ import de.dixieflatline.mpcw.services.*;
 
 public class AppendArtistCommand extends AAsyncCommand<Tag>
 {
-    @Inject IBrowserService browserService;
+    @Inject
+    IBrowserService browserService;
 
     @Override
     protected void run(Tag artist) throws Exception
