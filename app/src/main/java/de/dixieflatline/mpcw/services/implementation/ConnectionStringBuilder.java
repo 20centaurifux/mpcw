@@ -34,7 +34,12 @@ public final class ConnectionStringBuilder
 
         try
         {
-            String parameter = URLEncoder.encode(password, "UTF-8");
+            String parameter = "";
+
+            if(password != null)
+            {
+                parameter = URLEncoder.encode(password, "UTF-8");
+            }
 
             connectionString += parameter;
         }

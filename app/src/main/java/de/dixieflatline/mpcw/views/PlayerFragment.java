@@ -67,22 +67,28 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
 
     private void setupNetworkManager()
     {
-        networkManager.addListener(new INetworkManagerListener()
+        if(networkManager != null)
         {
-            @Override
-            public void onConnected()
+            networkManager.addListener(new INetworkManagerListener()
             {
-                playerService.startAsync();
-            }
+                @Override
+                public void onConnected()
+                {
+                    if(playerService != null)
+                    {
+                        playerService.startAsync();
+                    }
+                }
 
-            @Override
-            public void onFailure(Exception cause)
-            {
-                MainNavigation mainNavigation = new MainNavigation(getActivity());
+                @Override
+                public void onFailure(Exception cause)
+                {
+                    MainNavigation mainNavigation = new MainNavigation(getActivity());
 
-                mainNavigation.openConnectionFailure(cause);
-            }
-        });
+                    mainNavigation.openConnectionFailure(cause);
+                }
+            });
+        }
     }
 
     private void setupPlayer()
@@ -171,7 +177,7 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
         {
             mainNavigation.openConnectionFailure(new Exception("Please check connection preferences."));
         }
-        else
+        else if(networkManager != null)
         {
             networkManager.connect();
         }
@@ -187,7 +193,10 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
             playerService.stopService();
         }
 
-        networkManager.release();
+        if(networkManager != null)
+        {
+            networkManager.release();
+        }
     }
 
     @Override

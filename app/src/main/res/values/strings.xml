@@ -12,7 +12,7 @@
     <string name="enabled">Enabled</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="connection_issue">Server issue</string>
+    <string name="connection_issue">Connection issue</string>
     <string name="retry">Retry</string>
     <string name="version">Version</string>
     <string name="date">Date</string>
