@@ -17,7 +17,6 @@
 package de.dixieflatline.mpcw.views;
 
 import android.content.*;
-import android.databinding.*;
 import android.os.*;
 import android.support.v7.widget.*;
 import android.support.wear.widget.*;
@@ -29,10 +28,8 @@ import java.util.concurrent.*;
 import javax.inject.*;
 
 import de.dixieflatline.mpcw.*;
-import de.dixieflatline.mpcw.databinding.*;
 import de.dixieflatline.mpcw.services.*;
 import de.dixieflatline.mpcw.viewmodels.*;
-import de.dixieflatline.mpcw.viewmodels.Message;
 
 public class PlayerFragment extends AInjectableFragment implements IConnectionListener, IPlayerListener, IPlaylistListener
 {
@@ -206,10 +203,7 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
     }
 
     @Override
-    public void onDisconnected()
-    {
-        handler.post(() -> player.setConnected(false));
-    }
+    public void onDisconnected() { }
 
     @Override
     public void onAborted(Exception cause)
@@ -285,25 +279,6 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
         handler.post(() ->
         {
             adapter.remove(from, count);
-        });
-    }
-
-    private void postNotification(String message)
-    {
-        handler.post(() ->
-        {
-            View view = getView();
-            Toast toast = new Toast(view.getContext());
-
-            toast.setDuration(Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 15);
-
-            LayoutToastBinding binding =  DataBindingUtil.inflate(getLayoutInflater(), R.layout.layout_toast, view.findViewById(R.id.toast_root), false);
-
-            binding.setMessage(new Message(message));
-
-            toast.setView(binding.getRoot());
-            toast.show();
         });
     }
 }
