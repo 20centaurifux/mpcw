@@ -49,7 +49,7 @@ public class BrowserActivity extends AInjectableActivity
         @Override
         public void onFailed(Exception cause)
         {
-            postNotification(R.string.playlist_operation_failed);
+            postNotification(R.string.notification_playlist_operation_failed);
         }
     };
 
@@ -64,7 +64,7 @@ public class BrowserActivity extends AInjectableActivity
         @Override
         public void onFailed(Exception cause)
         {
-            postNotification(R.string.playlist_operation_failed);
+            postNotification(R.string.notification_playlist_operation_failed);
         }
     };
 

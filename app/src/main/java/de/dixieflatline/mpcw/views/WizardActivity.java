@@ -83,21 +83,21 @@ public class WizardActivity extends AInjectableActivity
 
     private void appendWelcomeMessage()
     {
-        adapter.append(createMessage(R.string.welcome_message));
+        adapter.append(createMessage(R.string.wizard_welcome));
     }
 
     private void appendServerScreens()
     {
-        adapter.append(createMessage(R.string.enter_server_details));
+        adapter.append(createMessage(R.string.wizard_enter_server_details));
         adapter.append(server);
     }
 
     private void appendPasswordScreens()
     {
-        enableAuthentication.setQuestion(getResources().getString(R.string.password_required));
+        enableAuthentication.setQuestion(getResources().getString(R.string.wizard_enable_authentication));
         adapter.append(enableAuthentication);
 
-        Message passwordMessage = new Message(getString(R.string.enter_password));
+        Message passwordMessage = new Message(getString(R.string.wizard_enter_password));
 
         enableAuthentication.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback()
         {
@@ -126,7 +126,7 @@ public class WizardActivity extends AInjectableActivity
     private void appendFinalScreen()
     {
         Resources resources = getResources();
-        Action action = new Action(resources.getString(R.string.complete_wizard));
+        Action action = new Action(resources.getString(R.string.wizard_complete));
 
         action.setDrawable(resources.getDrawable(R.drawable.ic_done));
         action.setCommand(() ->

@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingTop="5dp"
-                android:text="@string/yes"
+                android:text="@string/button_yes"
                 android:checked="@={confirmation.confirmed}" />
         </LinearLayout>
     </RelativeLayout>

@@ -33,7 +33,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/server"
+                    android:text="@string/title_server"
                     android:orientation="vertical"
                     android:padding="2dp"
                     app:layout_constraintTop_toTopOf="parent"
@@ -48,7 +48,7 @@
                         android:maxLines="1"
                         android:ellipsize="end"
                         app:text="@{player.artist}"
-                        app:placeholder="@{@string/no_artist}" />
+                        app:placeholder="@{@string/player_no_artist}" />
                     <TextView
                         android:id="@+id/title"
                         android:layout_width="match_parent"
@@ -58,7 +58,7 @@
                         android:maxLines="2"
                         android:ellipsize="end"
                         app:text="@{player.title}"
-                        app:placeholder="@{@string/no_title}" />
+                        app:placeholder="@{@string/player_no_title}" />
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/player_buttons"

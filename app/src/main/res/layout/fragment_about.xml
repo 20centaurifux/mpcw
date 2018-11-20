@@ -23,7 +23,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/version"
+                    android:text="@string/title_version"
                     android:textStyle="bold"
                     android:textAlignment="center"/>
                 <TextView
@@ -34,7 +34,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/date"
+                    android:text="@string/title_date"
                     android:paddingTop="5dp"
                     android:textStyle="bold"
                     android:textAlignment="center"/>
@@ -46,7 +46,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/author"
+                    android:text="@string/title_author"
                     android:paddingTop="5dp"
                     android:textStyle="bold"
                     android:textAlignment="center"/>
@@ -58,7 +58,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/license"
+                    android:text="@string/title_license"
                     android:paddingTop="5dp"
                     android:textStyle="bold"
                     android:textAlignment="center"/>
@@ -70,7 +70,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/website"
+                    android:text="@string/title_website"
                     android:paddingTop="5dp"
                     android:textStyle="bold"
                     android:textAlignment="center"/>

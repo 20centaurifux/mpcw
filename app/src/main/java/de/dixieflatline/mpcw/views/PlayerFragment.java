@@ -99,21 +99,21 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
         {
             Future<Void> future = playerService.previous();
 
-            notification.showOnFailure(future, R.string.command_failed);
+            notification.showOnFailure(future, R.string.notification_command_failed);
         });
 
         player.setNextCommand(() ->
         {
             Future<Void> future = playerService.next();
 
-            notification.showOnFailure(future, R.string.command_failed);
+            notification.showOnFailure(future, R.string.notification_command_failed);
         });
 
         player.setToggleCommand(() ->
         {
             Future<Void> future = playerService.toggle();
 
-            notification.showOnFailure(future, R.string.command_failed);
+            notification.showOnFailure(future, R.string.notification_command_failed);
         });
     }
 
@@ -162,7 +162,7 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
             FutureNotification notification = new FutureNotification(getActivity(), 2500);
             Future<Void> future = playerService.clear();
 
-            notification.show(future, R.string.playlist_cleared, R.string.command_failed);
+            notification.show(future, R.string.notification_playlist_cleared, R.string.notification_command_failed);
         });
     }
 

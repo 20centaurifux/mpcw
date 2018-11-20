@@ -28,7 +28,7 @@
                     android:id="@+id/textHostTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/server"
+                    android:text="@string/title_server"
                     android:textAlignment="center"/>
                 <EditText
                     android:id="@+id/editHostname"
@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="text"
-                    android:hint="@string/hostname"
+                    android:hint="@string/setting_hostname"
                     android:text="@={preferences.hostname}" />
                 <EditText
                     android:id="@+id/editPort"
@@ -49,13 +49,13 @@
                     android:id="@+id/textAuthenticationTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/authentication"
+                    android:text="@string/title_authentication"
                     android:textAlignment="center"/>
                 <Switch
                     android:id="@+id/switchEnableAuthentication"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/enabled"
+                    android:text="@string/setting_enabled"
                     android:checked="@={preferences.authenticationEnabled}" />
                 <EditText
                     android:id="@+id/editPassword"
@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPassword"
-                    android:hint="@string/password"
+                    android:hint="@string/setting_password"
                     android:text="@={preferences.password}"
                     app:visibleIf="@{preferences.authenticationEnabled}" />
             </LinearLayout>

@@ -21,6 +21,6 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             app:text="@{tag.value}"
-            app:placeholder="@{@string/unknown}" />
+            app:placeholder="@{@string/tag_unknown}" />
     </FrameLayout>
 </layout>
