@@ -30,5 +30,6 @@
     <string name="wizard_enter_server_details">At first, please specify where your MPD service can be found.</string>
     <string name="wizard_enable_authentication">Do you need a password to access the MPD service?</string>
     <string name="wizard_enter_password">Please enter the password required to access the MPD service.</string>
-    <string name="wizard_complete">Setup finished, enjoy your music.</string>
+    <string name="wizard_bluetooth_hint">Hint: MPC Wear will connect faster to your mpd server if your watch isn\'t connected to your phone.</string>
+    <string name="wizard_complete">Complete wizard and enjoy your music.</string>
 </resources>
