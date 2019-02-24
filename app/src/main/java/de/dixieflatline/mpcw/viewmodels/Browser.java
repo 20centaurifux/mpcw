@@ -63,6 +63,9 @@ public class Browser extends BaseObservable
         this.loading = false;
         notifyPropertyChanged(BR.loading);
 
+        this.finished = false;
+        notifyPropertyChanged(BR.finished);
+
         this.failed = true;
         notifyPropertyChanged(BR.failed);
 
