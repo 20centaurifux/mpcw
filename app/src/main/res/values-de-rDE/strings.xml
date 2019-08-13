@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_fragment_player">Player</string>
+    <string name="title_fragment_preferences">Einstellungen</string>
+    <string name="title_fragment_about">Über</string>
+    <string name="title_activity_wizard">Assistent</string>
+    <string name="title_activity_browser">Browser</string>
+    <string name="title_app">MPC Wear</string>
+    <string name="title_server">Server</string>
+    <string name="setting_hostname">Hostname</string>
+    <string name="title_authentication">Authentifizierung</string>
+    <string name="setting_enabled">Aktiviert</string>
+    <string name="setting_username">Benutzername</string>
+    <string name="setting_password">Passwort</string>
+    <string name="title_connection_failed">Verbindung fehlgeschlagen</string>
+    <string name="button_retry">Wiederholen</string>
+    <string name="title_version">Version</string>
+    <string name="title_date">Datum</string>
+    <string name="title_author">Autor</string>
+    <string name="title_license">Lizenz</string>
+    <string name="title_website">Webseite</string>
+    <string name="notification_command_failed">Befehl fehlgeschlagen</string>
+    <string name="notification_playlist_cleared">Wiedergabeliste geleert</string>
+    <string name="notification_playlist_operation_failed">Aktion fehlgeschlagen</string>
+    <string name="player_no_artist">Kein Interpret</string>
+    <string name="player_no_title">Kein Titel</string>
+    <string name="tag_unknown">Unbekannt</string>
+    <string name="button_yes">Ja</string>
+    <string name="wizard_welcome">Wische nach links um mit der Einrichtung von MPC Wear zu beginnen.</string>
+    <string name="wizard_enter_server_details">Bitte gib an, wo sich Dein MPD-Server befindet.</string>
+    <string name="wizard_enable_authentication">Benötigst Du ein Passwort um Dich anzumelden?</string>
+    <string name="wizard_enter_password">Bitte gibt das Passwort zur Anmeldung ein.</string>
+    <string name="wizard_bluetooth_hint">Tipp: MPC Wear verbindet sich schneller, wenn Deine Uhr nicht mit dem Smartphone verbunden ist.</string>
+    <string name="wizard_complete">Beende den Einrichtungsassistenten und starte MPC Wear.</string>
+</resources>
