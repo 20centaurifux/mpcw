@@ -31,5 +31,6 @@
     <string name="wizard_enable_authentication">Benötigst Du ein Passwort um Dich anzumelden?</string>
     <string name="wizard_enter_password">Bitte gibt das Passwort zur Anmeldung ein.</string>
     <string name="wizard_bluetooth_hint">Tipp: MPC Wear verbindet sich schneller, wenn Deine Uhr nicht mit dem Smartphone verbunden ist.</string>
+    <string name="wizard_battery_hint">Tipp: MPC Wear kann sich eventuell nicht verbinden, wenn der Stromsparmodus eingeschaltet ist.</string>
     <string name="wizard_complete">Beende den Einrichtungsassistenten und starte MPC Wear.</string>
 </resources>
