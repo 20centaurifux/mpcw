@@ -17,7 +17,7 @@
 package de.dixieflatline.mpcw.views;
 
 import android.content.Context;
-import android.support.wear.widget.drawer.WearableNavigationDrawerView;
+import androidx.wear.widget.drawer.WearableNavigationDrawerView;
 import android.graphics.drawable.Drawable;
 
 import java.util.ArrayList;

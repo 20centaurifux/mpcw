@@ -18,10 +18,10 @@ package de.dixieflatline.mpcw.views;
 
 import android.content.*;
 import android.content.res.*;
-import android.databinding.*;
+import androidx.databinding.*;
 import android.os.Bundle;
-import android.support.v7.widget.*;
-import android.support.wear.widget.*;
+import androidx.recyclerview.widget.*;
+import androidx.wear.widget.*;
 
 import javax.inject.*;
 

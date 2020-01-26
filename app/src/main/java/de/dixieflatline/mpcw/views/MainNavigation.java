@@ -19,7 +19,7 @@ package de.dixieflatline.mpcw.views;
 import android.app.*;
 import android.content.*;
 import android.os.*;
-import android.support.wear.widget.drawer.*;
+import androidx.wear.widget.drawer.*;
 
 import de.dixieflatline.mpcw.*;
 

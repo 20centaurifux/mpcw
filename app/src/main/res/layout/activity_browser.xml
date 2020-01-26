@@ -22,23 +22,22 @@
                 android:layout_centerInParent="true"
                 style="@android:style/Widget.Material.ProgressBar.Large"
                 app:visibleIf="@{browser.loading}" />
-            <android.support.wear.widget.WearableRecyclerView
+            <androidx.wear.widget.WearableRecyclerView
                 android:id="@+id/recycler_view"
                 android:scrollbars="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:visibleIf="@{browser.finished}"
                 app:foundItems="@{browser.items}" />
-            <android.support.wear.widget.BoxInsetLayout
+            <androidx.wear.widget.BoxInsetLayout
                 android:id="@+id/player_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:visibleIf="@{browser.failed}">
-                <android.support.v4.widget.NestedScrollView
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fillViewport="true"
-                    app:boxedEdges="all">
+                    android:fillViewport="true"> <!--app:boxedEdges="all">-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -56,8 +55,8 @@
                             android:textAlignment="center"
                             android:text="@{browser.cause}" />
                     </LinearLayout>
-                </android.support.v4.widget.NestedScrollView>
-            </android.support.wear.widget.BoxInsetLayout>
+                </androidx.core.widget.NestedScrollView>
+            </androidx.wear.widget.BoxInsetLayout>
         </RelativeLayout>
     </FrameLayout>
 </layout>

@@ -5,13 +5,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.wear.widget.BoxInsetLayout
+        <androidx.wear.widget.BoxInsetLayout
             android:id="@+id/player_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_marginBottom="@dimen/action_drawer_peek_view_height">
-            <android.support.wear.widget.WearableRecyclerView
+            <androidx.wear.widget.WearableRecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -19,13 +19,13 @@
                 android:clipToPadding="false"
                 android:layout_alignParentTop="true"
                 app:boxedEdges="left|right" />
-        </android.support.wear.widget.BoxInsetLayout>
+        </androidx.wear.widget.BoxInsetLayout>
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/action_drawer_peek_view_height"
             android:layout_alignParentBottom="true"
             android:background="@color/action_bar">
-            <android.support.wear.widget.BoxInsetLayout
+            <androidx.wear.widget.BoxInsetLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <LinearLayout
@@ -56,7 +56,7 @@
                             android:background="@drawable/ic_playlist_add" />
                     </RelativeLayout>
                 </LinearLayout>
-            </android.support.wear.widget.BoxInsetLayout>
+            </androidx.wear.widget.BoxInsetLayout>
         </FrameLayout>
     </RelativeLayout>
 </layout>

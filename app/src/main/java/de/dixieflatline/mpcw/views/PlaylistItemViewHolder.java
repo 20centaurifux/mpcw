@@ -16,7 +16,7 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.views;
 
-import android.support.v7.widget.*;
+import androidx.recyclerview.widget.*;
 import android.view.*;
 
 import de.dixieflatline.mpcw.*;

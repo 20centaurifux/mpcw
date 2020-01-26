@@ -11,7 +11,7 @@
             type="de.dixieflatline.mpcw.viewmodels.Player" />
     </data>
 
-    <android.support.wear.widget.BoxInsetLayout
+    <androidx.wear.widget.BoxInsetLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <FrameLayout
@@ -25,7 +25,7 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 style="@android:style/Widget.Material.ProgressBar.Large"
                 app:visibleIfNot="@{player.connected}" />
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:visibleIf="@{player.connected}">
@@ -108,7 +108,7 @@
                             app:enableIf="@{player.hasNext}" />
                     </RelativeLayout>
                 </LinearLayout>
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>
-    </android.support.wear.widget.BoxInsetLayout>
+    </androidx.wear.widget.BoxInsetLayout>
 </layout>

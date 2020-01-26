@@ -16,10 +16,10 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.views;
 
-import android.databinding.BindingAdapter;
-import android.databinding.InverseBindingAdapter;
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.InverseBindingAdapter;
 
-import android.support.v7.widget.*;
+import androidx.recyclerview.widget.*;
 import android.view.View;
 import android.widget.*;
 

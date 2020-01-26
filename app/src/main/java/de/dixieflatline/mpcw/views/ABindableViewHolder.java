@@ -16,8 +16,8 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.views;
 
-import android.databinding.*;
-import android.support.v7.widget.*;
+import androidx.databinding.*;
+import androidx.recyclerview.widget.*;
 
 public abstract class ABindableViewHolder<TBinding extends ViewDataBinding> extends RecyclerView.ViewHolder
 {

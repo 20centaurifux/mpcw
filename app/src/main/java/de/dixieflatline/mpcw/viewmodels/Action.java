@@ -16,7 +16,7 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.viewmodels;
 
-import android.databinding.*;
+import androidx.databinding.*;
 import android.graphics.drawable.*;
 
 import de.dixieflatline.mpcw.*;

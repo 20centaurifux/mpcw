@@ -9,7 +9,7 @@
             type="de.dixieflatline.mpcw.viewmodels.Failure" />
     </data>
 
-    <android.support.wear.widget.BoxInsetLayout
+    <androidx.wear.widget.BoxInsetLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <FrameLayout
@@ -36,7 +36,7 @@
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
                         android:text="@{failure.message}" />
-                    <android.support.design.widget.FloatingActionButton
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/retry"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -46,5 +46,5 @@
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
         </FrameLayout>
-    </android.support.wear.widget.BoxInsetLayout>
+    </androidx.wear.widget.BoxInsetLayout>
 </layout>

@@ -16,7 +16,7 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.views;
 
-import android.databinding.*;
+import androidx.databinding.*;
 
 public interface IBinder<TBinding extends ViewDataBinding, TViewModel extends BaseObservable>
 {

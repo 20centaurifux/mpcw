@@ -16,8 +16,8 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.views;
 
-import android.databinding.*;
-import android.support.design.widget.*;
+import androidx.databinding.*;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import de.dixieflatline.mpcw.*;
 import de.dixieflatline.mpcw.databinding.*;

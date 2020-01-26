@@ -16,7 +16,7 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.views;
 
-import android.databinding.*;
+import androidx.databinding.*;
 import android.os.Bundle;
 import android.view.*;
 

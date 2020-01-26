@@ -17,7 +17,7 @@
 package de.dixieflatline.mpcw.views;
 
 import android.os.*;
-import android.support.wear.widget.drawer.*;
+import androidx.wear.widget.drawer.*;
 import android.view.*;
 
 import javax.inject.*;
