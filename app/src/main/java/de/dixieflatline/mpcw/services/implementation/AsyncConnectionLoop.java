@@ -18,6 +18,7 @@ package de.dixieflatline.mpcw.services.implementation;
 
 import android.util.*;
 
+import java.net.*;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -192,20 +193,27 @@ public class AsyncConnectionLoop implements Runnable
 
     private void disconnect()
     {
-        if(connection.isConnected())
+        try
         {
-            try
+            if(connection == null)
+            {
+                throw new ConnectException("MPD url is malformed.");
+            }
+
+            if(connection.isConnected())
             {
                 connection.disconnect();
             }
-            catch(CommunicationException ex)
-            {
-                Log.w(Tags.SERVICE, ex);
-            }
-            finally
-            {
-                listeners.forEach((l) -> l.onDisconnected());
-            }
+        }
+        catch(Exception ex)
+        {
+            Log.w(Tags.SERVICE, ex);
+
+            listeners.forEach((l) -> l.onAborted(ex));
+        }
+        finally
+        {
+            listeners.forEach((l) -> l.onDisconnected());
         }
     }
 

@@ -6,13 +6,12 @@ android {
         applicationId "de.dixieflatline.mpcw"
         minSdkVersion 26
         targetSdkVersion 28
-        versionCode 1
+        versionCode 5
         versionName "0.1.0"
     }
     buildTypes {
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled false
         }
     }
     dataBinding.enabled = true
@@ -20,12 +19,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    flavorDimensions "version"
     productFlavors {
-        flavorDimensions "version"
         emulator {
+            dimension "version"
             buildConfigField "boolean", "REQUEST_WIFI", "false"
         }
         device {
+            dimension "version"
             buildConfigField "boolean", "REQUEST_WIFI", "true"
         }
     }
