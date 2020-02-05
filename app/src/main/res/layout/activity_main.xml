@@ -16,5 +16,5 @@
     <androidx.wear.widget.drawer.WearableNavigationDrawerView
         android:id="@+id/top_navigation_drawer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" /> <!-- app:navigationStyle="singlePage" /> -->
+        android:layout_height="match_parent" />
 </androidx.wear.widget.drawer.WearableDrawerLayout>

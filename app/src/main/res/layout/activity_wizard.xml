@@ -7,7 +7,7 @@
         android:background="@color/default_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="1dp">
+        android:padding="10dp">
         <androidx.wear.widget.WearableRecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"

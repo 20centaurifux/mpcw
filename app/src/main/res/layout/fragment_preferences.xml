@@ -8,11 +8,10 @@
             type="de.dixieflatline.mpcw.viewmodels.Preferences" />
     </data>
 
-    <FrameLayout
+    <androidx.wear.widget.BoxInsetLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/inner_frame_layout_padding"
-        app:boxedEdges="left|top|right">
+        android:padding="10dp">
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -66,5 +65,5 @@
                     app:visibleIf="@{preferences.authenticationEnabled}" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-    </FrameLayout>
+    </androidx.wear.widget.BoxInsetLayout>
 </layout>

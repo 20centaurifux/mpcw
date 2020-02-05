@@ -8,9 +8,10 @@
             type="de.dixieflatline.mpcw.viewmodels.About" />
     </data>
 
-    <FrameLayout
+    <androidx.wear.widget.BoxInsetLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="10dp">
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -81,5 +82,5 @@
                     android:textAlignment="center"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-    </FrameLayout>
+    </androidx.wear.widget.BoxInsetLayout>
 </layout>
