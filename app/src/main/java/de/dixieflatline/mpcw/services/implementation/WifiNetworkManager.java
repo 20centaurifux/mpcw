@@ -45,8 +45,10 @@ public class WifiNetworkManager implements INetworkManager
     {
         unregisterCallbacks();
 
-        NetworkRequest request = new NetworkRequest.Builder().addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-                                                             .build();
+        NetworkRequest request = new NetworkRequest.Builder()
+                                                    .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                                                    .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED)
+                                                    .build();
 
         callback = new ConnectivityManager.NetworkCallback()
         {
