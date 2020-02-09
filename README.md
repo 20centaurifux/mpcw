@@ -24,4 +24,4 @@ Please keep in mind that MPC Wear connects faster to your MPD server if your dev
 
 ## Playstore
 
-You're welcome to join the [beta program](https://play.google.com/apps/testing/de.dixieflatline.mpcw) if you want to test MPC Wear.
+MPC Wear is available on [Google Play](https://play.google.com/store/apps/details?id=de.dixieflatline.mpcw).
