@@ -78,7 +78,6 @@ public class WizardActivity extends AInjectableActivity
         appendWelcomeMessage();
         appendServerScreens();
         appendPasswordScreens();
-        appendBluetoothHintScreen();
         appendBatterySaverHintScreen();
         appendFinalScreen();
     }
@@ -123,11 +122,6 @@ public class WizardActivity extends AInjectableActivity
                 }
             }
         });
-    }
-
-    private void appendBluetoothHintScreen()
-    {
-        adapter.append(createMessage(R.string.wizard_bluetooth_hint));
     }
 
     private void appendBatterySaverHintScreen()
