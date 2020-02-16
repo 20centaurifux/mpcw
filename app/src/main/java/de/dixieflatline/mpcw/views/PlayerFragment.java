@@ -144,7 +144,7 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
 
         button.setOnClickListener((btn) ->
         {
-            Intent intent = new Intent(getActivity(), BrowserActivity.class);
+            Intent intent = new Intent(getActivity(), BrowserSelectionActivity.class);
 
             startActivity(intent);
         });

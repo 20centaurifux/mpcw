@@ -3,6 +3,7 @@
     <string name="title_fragment_player">Player</string>
     <string name="title_fragment_preferences">Einstellungen</string>
     <string name="title_fragment_about">About</string>
+    <string name="title_activity_browser_selection">Browse...</string>
     <string name="title_activity_browser">Browse</string>
     <string name="title_activity_wizard">Wizard</string>
     <string name="title_app">MPC Wear</string>
@@ -32,4 +33,6 @@
     <string name="wizard_enter_password">Please enter the password required to access the MPD service.</string>
     <string name="wizard_battery_hint">Hint: MPC Wear may not be able to connect to your mpd server if battery saver is turned on.</string>
     <string name="wizard_complete">Complete wizard and enjoy your music.</string>
+    <string name="browse_artists">Browse Artists</string>
+    <string name="browse_albums">Browse Albums</string>
 </resources>

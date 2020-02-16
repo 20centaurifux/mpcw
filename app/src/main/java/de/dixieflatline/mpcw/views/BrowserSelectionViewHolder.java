@@ -14,39 +14,35 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
     General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.viewmodels;
+package de.dixieflatline.mpcw.views;
 
-import javax.inject.*;
-;
-import de.dixieflatline.mpcw.services.*;
+import android.view.*;
 
-public class AppendAlbumCommand extends AAsyncCommand<Tag>
+import androidx.recyclerview.widget.*;
+
+import de.dixieflatline.mpcw.databinding.*;
+import de.dixieflatline.mpcw.viewmodels.*;
+
+public class BrowserSelectionViewHolder extends RecyclerView.ViewHolder
 {
-    private final String artist;
+    private final LayoutAvailableBrowserBinding binding;
 
-    @Inject
-    IBrowserService browserService;
-
-    public AppendAlbumCommand()
+    public BrowserSelectionViewHolder(LayoutAvailableBrowserBinding binding)
     {
-        this.artist = "";
+        super(binding.getRoot());
+
+        this.binding = binding;
     }
 
-    public AppendAlbumCommand(String artist)
+    public void bind(AvailableBrowser browser)
     {
-        this.artist = artist;
-    }
+        binding.setBrowser(browser);
 
-    @Override
-    public void run(Tag album) throws Exception
-    {
-        if(artist == null || artist.isEmpty())
+        View view = binding.getRoot();
+
+        view.setOnClickListener(v ->
         {
-            browserService.appendSongsFromAlbum(album.getValue());
-        }
-        else
-        {
-            browserService.appendSongsFromArtistAndAlbum(artist, album.getValue());
-        }
+            browser.getSelectBrowserCommand().run(browser);
+        });
     }
 }

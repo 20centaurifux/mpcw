@@ -16,37 +16,42 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.viewmodels;
 
-import javax.inject.*;
-;
-import de.dixieflatline.mpcw.services.*;
+import android.content.*;
+import android.os.*;
 
-public class AppendAlbumCommand extends AAsyncCommand<Tag>
+import de.dixieflatline.mpcw.views.*;
+
+public class OpenBrowserCommand implements ICommand<EBrowser>
 {
-    private final String artist;
+    private final Context context;
 
-    @Inject
-    IBrowserService browserService;
-
-    public AppendAlbumCommand()
+    public OpenBrowserCommand(Context context)
     {
-        this.artist = "";
-    }
-
-    public AppendAlbumCommand(String artist)
-    {
-        this.artist = artist;
+        this.context = context;
     }
 
     @Override
-    public void run(Tag album) throws Exception
+    public void run(EBrowser browser)
     {
-        if(artist == null || artist.isEmpty())
+        Intent intent = null;
+
+        switch(browser)
         {
-            browserService.appendSongsFromAlbum(album.getValue());
+            case Artists:
+                intent = new Intent(context, BrowserActivity.class);
+                break;
+
+            case Albums:
+                Bundle bundle = new Bundle();
+
+                bundle.putString("ARTIST_FILTER", "");
+
+                intent = new Intent(context, BrowserActivity.class);
+
+                intent.putExtras(bundle);
+                break;
         }
-        else
-        {
-            browserService.appendSongsFromArtistAndAlbum(artist, album.getValue());
-        }
+
+        context.startActivity(intent);
     }
 }

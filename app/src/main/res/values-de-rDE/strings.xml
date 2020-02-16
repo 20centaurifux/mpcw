@@ -4,6 +4,7 @@
     <string name="title_fragment_preferences">Einstellungen</string>
     <string name="title_fragment_about">Über</string>
     <string name="title_activity_wizard">Assistent</string>
+    <string name="title_activity_browser_selection">Durchsuchen...</string>
     <string name="title_activity_browser">Browser</string>
     <string name="title_app">MPC Wear</string>
     <string name="title_server">Server</string>
@@ -30,6 +31,8 @@
     <string name="wizard_enter_server_details">Bitte gib an, wo sich Dein MPD-Server befindet.</string>
     <string name="wizard_enable_authentication">Benötigst Du ein Passwort um Dich anzumelden?</string>
     <string name="wizard_enter_password">Bitte gibt das Passwort zur Anmeldung ein.</string>
-    <string name="wizard_bluetooth_hint">Tipp: MPC Wear verbindet sich schneller, wenn Deine Uhr nicht mit dem Smartphone verbunden ist.</string>
+    <string name="wizard_battery_hint">Tipp: MPC Wear kann sich eventuell nicht verbinden, wenn der Stromsparmodus eingeschaltet ist.</string>
     <string name="wizard_complete">Beende den Einrichtungsassistenten und starte MPC Wear.</string>
+    <string name="browse_artists">Interpreten suchen</string>
+    <string name="browse_albums">Alben suchen</string>
 </resources>

@@ -14,39 +14,11 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
     General Public License v3 for more details.
  ***************************************************************************/
-package de.dixieflatline.mpcw.viewmodels;
+package de.dixieflatline.mpcw.services;
 
-import javax.inject.*;
-;
-import de.dixieflatline.mpcw.services.*;
+import de.dixieflatline.mpcw.viewmodels.*;
 
-public class AppendAlbumCommand extends AAsyncCommand<Tag>
+public interface IBrowserAvailabilityService
 {
-    private final String artist;
-
-    @Inject
-    IBrowserService browserService;
-
-    public AppendAlbumCommand()
-    {
-        this.artist = "";
-    }
-
-    public AppendAlbumCommand(String artist)
-    {
-        this.artist = artist;
-    }
-
-    @Override
-    public void run(Tag album) throws Exception
-    {
-        if(artist == null || artist.isEmpty())
-        {
-            browserService.appendSongsFromAlbum(album.getValue());
-        }
-        else
-        {
-            browserService.appendSongsFromArtistAndAlbum(artist, album.getValue());
-        }
-    }
+    Iterable<AvailableBrowser> getAvailableBrowsers();
 }

@@ -148,7 +148,16 @@ public class BrowserActivity extends AInjectableActivity
                     }
                     else
                     {
-                        loadAlbums(extras.getString("ARTIST_FILTER"));
+                        String artist = extras.getString("ARTIST_FILTER");
+
+                        if(artist == null || artist.isEmpty())
+                        {
+                            loadAllAlbums();
+                        }
+                        else
+                        {
+                            loadAlbums(artist);
+                        }
                     }
                 }
                 else
@@ -200,6 +209,39 @@ public class BrowserActivity extends AInjectableActivity
         handler.post(() -> browser.setTags(tags));
     }
 
+    private void loadAllAlbums() throws Exception
+    {
+        Activity activity = this;
+        Iterator<String> albumIterator = browserService.getAllAlbums().iterator();
+        ICommand<Tag> activateTagCommand = new BrowseAlbumCommand(activity, "");
+        AAsyncCommand selectTagCommand = new AppendAlbumCommand("");
+
+        inject(selectTagCommand);
+        selectTagCommand.addListener(tagCommandListener);
+
+        Iterable<Tag> tags = () -> new Iterator<Tag>()
+        {
+            @Override
+            public boolean hasNext()
+            {
+                return albumIterator.hasNext();
+            }
+
+            @Override
+            public Tag next()
+            {
+                Tag tag = Tag.Album(albumIterator.next());
+
+                tag.setTagActivateCommand(activateTagCommand);
+                tag.setTagSelectCommand(selectTagCommand);
+
+                return tag;
+            }
+        };
+
+        handler.post(() -> browser.setTags(tags));
+    }
+
     private void loadAlbums(String artist) throws Exception
     {
         Activity activity = this;
@@ -234,7 +276,7 @@ public class BrowserActivity extends AInjectableActivity
                                                   .filter(t -> !t.getValue().isEmpty())
                                                   ::iterator;
 
-        Iterable<Song> songs = browserService.getSongsByAlbum(artist, "");
+        Iterable<Song> songs = browserService.getSongsByArtistAndAlbum(artist, "");
 
         handler.post(() ->
         {
@@ -245,7 +287,16 @@ public class BrowserActivity extends AInjectableActivity
 
     private void loadSongs(String artist, String album) throws Exception
     {
-        Iterable<Song> songs = browserService.getSongsByAlbum(artist, album);
+        Iterable<Song> songs;
+
+        if(artist == null || artist.isEmpty())
+        {
+            songs = browserService.getSongsByAlbum(album);
+        }
+        else
+        {
+            songs = browserService.getSongsByArtistAndAlbum(artist, album);
+        }
 
         handler.post(() ->
         {

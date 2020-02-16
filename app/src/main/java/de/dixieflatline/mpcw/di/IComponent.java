@@ -32,6 +32,7 @@ public interface IComponent
     void inject(PlayerFragment fragment);
     void inject(PreferencesFragment fragment);
     void inject(AboutFragment fragment);
+    void inject(BrowserSelectionActivity activity);
     void inject(BrowserActivity activity);
     void inject(AppendArtistCommand command);
     void inject(AppendAlbumCommand command);

@@ -69,6 +69,14 @@ public class ServicesModule
     }
 
     @Provides
+    public IBrowserAvailabilityService provideBrowserAvailabilityService()
+    {
+        IBrowserAvailabilityService browserAvailabilityService = new BrowserAvailabilityService(context);
+
+        return browserAvailabilityService;
+    }
+
+    @Provides
     public INetworkManager provideNetworkManager()
     {
         INetworkManager networkManager;

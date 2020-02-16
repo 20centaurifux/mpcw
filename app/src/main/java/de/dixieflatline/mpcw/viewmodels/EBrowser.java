@@ -16,37 +16,8 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.viewmodels;
 
-import javax.inject.*;
-;
-import de.dixieflatline.mpcw.services.*;
-
-public class AppendAlbumCommand extends AAsyncCommand<Tag>
+public enum EBrowser
 {
-    private final String artist;
-
-    @Inject
-    IBrowserService browserService;
-
-    public AppendAlbumCommand()
-    {
-        this.artist = "";
-    }
-
-    public AppendAlbumCommand(String artist)
-    {
-        this.artist = artist;
-    }
-
-    @Override
-    public void run(Tag album) throws Exception
-    {
-        if(artist == null || artist.isEmpty())
-        {
-            browserService.appendSongsFromAlbum(album.getValue());
-        }
-        else
-        {
-            browserService.appendSongsFromArtistAndAlbum(artist, album.getValue());
-        }
-    }
+    Artists,
+    Albums
 }

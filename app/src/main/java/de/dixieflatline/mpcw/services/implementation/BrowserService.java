@@ -48,6 +48,19 @@ public class BrowserService implements IBrowserService
     }
 
     @Override
+    public Iterable<String> getAllAlbums() throws DispatchException,
+            URISyntaxException,
+            CommunicationException,
+            AuthenticationException,
+            ProtocolException
+    {
+        ISearchResult<de.dixieflatline.mpcw.client.Tag> result = query(browser -> browser.findTags(ETag.Album));
+
+        return selectTagValues(result.getItems()
+                                     .iterator());
+    }
+
+    @Override
     public Iterable<String> getAlbumsByArtist(String artist) throws DispatchException,
                                                                     URISyntaxException,
                                                                     CommunicationException,
@@ -55,6 +68,7 @@ public class BrowserService implements IBrowserService
                                                                     ProtocolException
     {
         Filter[] filter = new Filter[] { new Filter(ETag.Artist, artist) };
+
         ISearchResult<de.dixieflatline.mpcw.client.Tag> result = query(browser -> browser.findTags(ETag.Album, filter));
 
         return selectTagValues(result.getItems()
@@ -85,17 +99,36 @@ public class BrowserService implements IBrowserService
     }
 
     @Override
-    public Iterable<Song> getSongsByAlbum(String artist, String album) throws DispatchException,
-                                                                              URISyntaxException,
-                                                                              CommunicationException,
-                                                                              AuthenticationException,
-                                                                              ProtocolException
+    public Iterable<Song> getSongsByAlbum(String album) throws DispatchException,
+                                                               URISyntaxException,
+                                                               CommunicationException,
+                                                               AuthenticationException,
+                                                               ProtocolException
+    {
+        Filter[] filter = new Filter[]
+        {
+            new Filter(ETag.Album, album)
+        };
+
+        ISearchResult<de.dixieflatline.mpcw.client.Song> result = query(browser -> browser.findSongs(filter));
+
+        return convertSongs(result.getItems()
+                .iterator());
+    }
+
+    @Override
+    public Iterable<Song> getSongsByArtistAndAlbum(String artist, String album) throws DispatchException,
+                                                                                       URISyntaxException,
+                                                                                       CommunicationException,
+                                                                                       AuthenticationException,
+                                                                                       ProtocolException
     {
         Filter[] filter = new Filter[]
         {
             new Filter(ETag.Artist, artist),
             new Filter(ETag.Album, album),
         };
+
         ISearchResult<de.dixieflatline.mpcw.client.Song> result = query(browser -> browser.findSongs(filter));
 
         return convertSongs(result.getItems()
@@ -139,7 +172,17 @@ public class BrowserService implements IBrowserService
         appendSongs(new Filter[] { new Filter(ETag.Artist, artist) });
     }
 
-    public void appendSongsFromAlbum(String artist, String album) throws Exception
+    public void appendSongsFromAlbum( String album) throws Exception
+    {
+        Filter[] filter = new Filter[]
+        {
+            new Filter(ETag.Album, album),
+        };
+
+        appendSongs(filter);
+    }
+
+    public void appendSongsFromArtistAndAlbum(String artist, String album) throws Exception
     {
         Filter[] filter = new Filter[]
         {
