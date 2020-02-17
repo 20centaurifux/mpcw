@@ -23,11 +23,16 @@ import de.dixieflatline.mpcw.services.*;
 public class AppendArtistCommand extends AAsyncCommand<Tag>
 {
     @Inject
+    INetworkManager networkManager;
+
+    @Inject
     IBrowserService browserService;
 
     @Override
     protected void run(Tag artist) throws Exception
     {
+        networkManager.connectAndWait();
+
         browserService.appendSongsFromArtist(artist.getValue());
     }
 }

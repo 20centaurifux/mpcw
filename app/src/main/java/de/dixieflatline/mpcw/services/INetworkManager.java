@@ -19,6 +19,7 @@ package de.dixieflatline.mpcw.services;
 public interface INetworkManager
 {
     void connect();
+    void connectAndWait() throws Exception;
     void release();
     void addListener(INetworkManagerListener listener);
     void removeListener(INetworkManagerListener listener);

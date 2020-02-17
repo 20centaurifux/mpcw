@@ -33,14 +33,15 @@ public class AsyncConnectionLoop implements Runnable
     private static final int MAX_ERRORS = 3;
 
     private final List<IConnectionListener> listeners = new ArrayList<>();
-    private final IConnection connection;
+    private final String connectionString;
+    private IConnection connection;
     private final Queue<Runnable> queue = new ConcurrentLinkedDeque<>();
     private final Loop loop = new Loop();
     private boolean oldState;
 
     public AsyncConnectionLoop(String connectionString)
     {
-        connection = createConnection(connectionString);
+        this.connectionString = connectionString;
     }
 
     public void addListener(IConnectionListener listener)
@@ -105,6 +106,8 @@ public class AsyncConnectionLoop implements Runnable
     {
         boolean interrupted = false;
         int errorCounter = 0;
+
+        connection = createConnection(connectionString);
 
         while(!interrupted && connection != null)
         {

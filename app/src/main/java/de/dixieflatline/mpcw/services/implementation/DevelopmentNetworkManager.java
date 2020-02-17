@@ -31,6 +31,9 @@ public class DevelopmentNetworkManager implements INetworkManager
     }
 
     @Override
+    public void connectAndWait() { }
+
+    @Override
     public void release() { }
 
     @Override

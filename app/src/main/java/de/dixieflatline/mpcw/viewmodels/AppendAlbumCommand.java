@@ -25,6 +25,9 @@ public class AppendAlbumCommand extends AAsyncCommand<Tag>
     private final String artist;
 
     @Inject
+    INetworkManager networkManager;
+
+    @Inject
     IBrowserService browserService;
 
     public AppendAlbumCommand()
@@ -40,6 +43,8 @@ public class AppendAlbumCommand extends AAsyncCommand<Tag>
     @Override
     public void run(Tag album) throws Exception
     {
+        networkManager.connectAndWait();
+
         if(artist == null || artist.isEmpty())
         {
             browserService.appendSongsFromAlbum(album.getValue());

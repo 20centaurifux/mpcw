@@ -27,7 +27,7 @@ import de.dixieflatline.mpcw.services.*;
 
 public class WifiNetworkManager implements INetworkManager
 {
-    private final static int ConnectionTimeoutMillis = 10000;
+    private final static int CONNECTION_TIMEOUT_MILLIS = 30000;
 
     private final ConnectivityManager connectivityManager;
     private final List<INetworkManagerListener> listeners = new ArrayList<>();
@@ -45,10 +45,7 @@ public class WifiNetworkManager implements INetworkManager
     {
         unregisterCallbacks();
 
-        NetworkRequest request = new NetworkRequest.Builder()
-                                                    .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-                                                    .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED)
-                                                    .build();
+        NetworkRequest request = createNetworkRequest();
 
         callback = new ConnectivityManager.NetworkCallback()
         {
@@ -73,7 +70,44 @@ public class WifiNetworkManager implements INetworkManager
             listeners.forEach(l -> l.onFailure(new TimeoutException("Couldn't establish WiFi connection.")));
         };
 
-        handler.postDelayed(timeoutCallback, ConnectionTimeoutMillis);
+        handler.postDelayed(timeoutCallback, CONNECTION_TIMEOUT_MILLIS);
+    }
+
+    @Override
+    public void connectAndWait() throws InterruptedException, ExecutionException, TimeoutException
+    {
+        NetworkRequest request = createNetworkRequest();
+        CompletableFuture<Void> future = new CompletableFuture<>();
+
+        ConnectivityManager.NetworkCallback callback = new ConnectivityManager.NetworkCallback()
+        {
+            @Override
+            public void onAvailable(Network network)
+            {
+                super.onAvailable(network);
+
+                unregisterTimeoutCallback();
+
+                if(connectivityManager.bindProcessToNetwork(network))
+                {
+                    future.complete(null);
+                }
+            }
+        };
+
+        connectivityManager.requestNetwork(request, callback);
+
+        future.get(CONNECTION_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+    }
+
+    private NetworkRequest createNetworkRequest()
+    {
+        NetworkRequest request = new NetworkRequest.Builder()
+                                                   .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                                                   .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED)
+                                                   .build();
+
+        return request;
     }
 
     @Override
