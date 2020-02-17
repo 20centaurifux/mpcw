@@ -35,11 +35,7 @@ public class BrowserService implements IBrowserService
     }
 
     @Override
-    public Iterable<String> getAllArtists() throws DispatchException,
-                                                   URISyntaxException,
-                                                   CommunicationException,
-                                                   AuthenticationException,
-                                                   ProtocolException
+    public Iterable<String> getAllArtists() throws Exception
     {
         ISearchResult<de.dixieflatline.mpcw.client.Tag> result = query(browser -> browser.findTags(ETag.Artist));
 
@@ -48,11 +44,7 @@ public class BrowserService implements IBrowserService
     }
 
     @Override
-    public Iterable<String> getAllAlbums() throws DispatchException,
-            URISyntaxException,
-            CommunicationException,
-            AuthenticationException,
-            ProtocolException
+    public Iterable<String> getAllAlbums() throws Exception
     {
         ISearchResult<de.dixieflatline.mpcw.client.Tag> result = query(browser -> browser.findTags(ETag.Album));
 
@@ -61,11 +53,7 @@ public class BrowserService implements IBrowserService
     }
 
     @Override
-    public Iterable<String> getAlbumsByArtist(String artist) throws DispatchException,
-                                                                    URISyntaxException,
-                                                                    CommunicationException,
-                                                                    AuthenticationException,
-                                                                    ProtocolException
+    public Iterable<String> getAlbumsByArtist(String artist) throws Exception
     {
         Filter[] filter = new Filter[] { new Filter(ETag.Artist, artist) };
 
@@ -99,11 +87,7 @@ public class BrowserService implements IBrowserService
     }
 
     @Override
-    public Iterable<Song> getSongsByAlbum(String album) throws DispatchException,
-                                                               URISyntaxException,
-                                                               CommunicationException,
-                                                               AuthenticationException,
-                                                               ProtocolException
+    public Iterable<Song> getSongsByAlbum(String album) throws Exception
     {
         Filter[] filter = new Filter[]
         {
@@ -117,11 +101,7 @@ public class BrowserService implements IBrowserService
     }
 
     @Override
-    public Iterable<Song> getSongsByArtistAndAlbum(String artist, String album) throws DispatchException,
-                                                                                       URISyntaxException,
-                                                                                       CommunicationException,
-                                                                                       AuthenticationException,
-                                                                                       ProtocolException
+    public Iterable<Song> getSongsByArtistAndAlbum(String artist, String album) throws Exception
     {
         Filter[] filter = new Filter[]
         {
@@ -193,11 +173,7 @@ public class BrowserService implements IBrowserService
         appendSongs(filter);
     }
 
-    private void appendSongs(Filter[] filter) throws DispatchException,
-                                                     URISyntaxException,
-                                                     AuthenticationException,
-                                                     CommunicationException,
-                                                     ProtocolException
+    private void appendSongs(Filter[] filter) throws Exception
     {
         IConnection connection = Connection.create(connectionString);
 
@@ -245,11 +221,7 @@ public class BrowserService implements IBrowserService
         }
     }
 
-    private <T> T query(IQuery<T> query) throws DispatchException,
-                                                URISyntaxException,
-                                                CommunicationException,
-                                                AuthenticationException,
-                                                ProtocolException
+    private <T> T query(IQuery<T> query) throws Exception
     {
         IConnection connection = Connection.create(connectionString);
 
