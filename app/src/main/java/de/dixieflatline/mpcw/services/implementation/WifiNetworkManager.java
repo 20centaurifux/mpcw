@@ -31,13 +31,15 @@ public class WifiNetworkManager implements INetworkManager
 
     private final ConnectivityManager connectivityManager;
     private final List<INetworkManagerListener> listeners = new ArrayList<>();
-    private final Handler handler = new Handler();
+    private final Handler handler;
     private ConnectivityManager.NetworkCallback callback;
     private Runnable timeoutCallback;
 
     public WifiNetworkManager(Context context)
     {
         connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        handler = new Handler(context.getMainLooper());
     }
 
     @Override
@@ -94,8 +96,6 @@ public class WifiNetworkManager implements INetworkManager
                 public void onAvailable(Network network)
                 {
                     super.onAvailable(network);
-
-                    unregisterTimeoutCallback();
 
                     if(connectivityManager.bindProcessToNetwork(network))
                     {
