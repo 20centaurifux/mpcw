@@ -2,13 +2,11 @@
 
 MPC Wear is a [MPD](https://www.musicpd.org/) client for Wear OS.
 
-It connects your wearable device to a MPD server running in your local network. You can control the daemon, browse your music collection and add music to your playlist.
+It connects your wearable device to a MPD server running in your local network over WiFi. You can control the daemon, browse your music collection and add music to the queue.
 
 ## Sceenshots
 
 ![Player](/media/Player1.png)
-
-![Player](/media/Player2.png)
 
 ![Browser](/media/Browser1.png)
 
@@ -20,7 +18,7 @@ It connects your wearable device to a MPD server running in your local network. 
 
 When a Wear OS device has a Bluetooth connection to a phone, the network traffic is proxied through the phone. It cannot access local network resources. Therefore MPC Wear connects to MPD over WiFi.
 
-Please keep in mind that MPC Wear connects faster to your MPD server if your device isn't connected to your phone. It may also not be able to connect to your MPD server if battery saver is turned on.
+Please keep in mind that MPC Wear might not be able to connect to your MPD server if battery saver is turned on.
 
 ## Playstore
 
