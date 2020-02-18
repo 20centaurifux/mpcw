@@ -45,59 +45,85 @@ public class WifiNetworkManager implements INetworkManager
     {
         unregisterCallbacks();
 
-        NetworkRequest request = createNetworkRequest();
-
-        callback = new ConnectivityManager.NetworkCallback()
+        if(testActiveNetwork())
         {
-            @Override
-            public void onAvailable(Network network)
+            listeners.forEach(l -> l.onConnected());
+        }
+        else
+        {
+            NetworkRequest request = createNetworkRequest();
+
+            callback = new ConnectivityManager.NetworkCallback()
             {
-                super.onAvailable(network);
-
-                unregisterTimeoutCallback();
-
-                if(connectivityManager.bindProcessToNetwork(network))
+                @Override
+                public void onAvailable(Network network)
                 {
-                    listeners.forEach(l -> l.onConnected());
+                    super.onAvailable(network);
+
+                    unregisterTimeoutCallback();
+
+                    if(connectivityManager.bindProcessToNetwork(network))
+                    {
+                        listeners.forEach(l -> l.onConnected());
+                    }
                 }
-            }
-        };
+            };
 
-        connectivityManager.requestNetwork(request, callback);
+            connectivityManager.requestNetwork(request, callback);
 
-        timeoutCallback = () ->
-        {
-            listeners.forEach(l -> l.onFailure(new TimeoutException("Couldn't establish WiFi connection.")));
-        };
+            timeoutCallback = () ->
+            {
+                listeners.forEach(l -> l.onFailure(new TimeoutException("Couldn't establish WiFi connection.")));
+            };
 
-        handler.postDelayed(timeoutCallback, CONNECTION_TIMEOUT_MILLIS);
+            handler.postDelayed(timeoutCallback, CONNECTION_TIMEOUT_MILLIS);
+        }
     }
 
     @Override
     public void connectAndWait() throws InterruptedException, ExecutionException, TimeoutException
     {
-        NetworkRequest request = createNetworkRequest();
-        CompletableFuture<Void> future = new CompletableFuture<>();
-
-        ConnectivityManager.NetworkCallback callback = new ConnectivityManager.NetworkCallback()
+        if(!testActiveNetwork())
         {
-            @Override
-            public void onAvailable(Network network)
+            NetworkRequest request = createNetworkRequest();
+            CompletableFuture<Void> future = new CompletableFuture<>();
+
+            ConnectivityManager.NetworkCallback callback = new ConnectivityManager.NetworkCallback()
             {
-                super.onAvailable(network);
-
-                unregisterTimeoutCallback();
-
-                if(connectivityManager.bindProcessToNetwork(network))
+                @Override
+                public void onAvailable(Network network)
                 {
-                    future.complete(null);
+                    super.onAvailable(network);
+
+                    unregisterTimeoutCallback();
+
+                    if(connectivityManager.bindProcessToNetwork(network))
+                    {
+                        future.complete(null);
+                    }
                 }
-            }
-        };
+            };
 
-        connectivityManager.requestNetwork(request, callback);
+            connectivityManager.requestNetwork(request, callback);
 
-        future.get(CONNECTION_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+            future.get(CONNECTION_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+        }
+    }
+
+    private boolean testActiveNetwork()
+    {
+        Network activeNetwork = connectivityManager.getActiveNetwork();
+        boolean success = false;
+
+        if(activeNetwork != null)
+        {
+            NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(activeNetwork);
+
+            success = capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                      && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
+        }
+
+        return success;
     }
 
     private NetworkRequest createNetworkRequest()

@@ -59,7 +59,6 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
         setupRecyclerView();
         setupPlayerService();
         setupActions();
-        setupListeners();
     }
 
     private void setupNetworkManager()
@@ -148,10 +147,7 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
 
             startActivity(intent);
         });
-    }
 
-    private void setupListeners()
-    {
         View view = getView();
 
         view.findViewById(R.id.clear_playlist).setOnClickListener((s) ->
@@ -168,10 +164,10 @@ public class PlayerFragment extends AInjectableFragment implements IConnectionLi
     {
         super.onResume();
 
-        MainNavigation mainNavigation = new MainNavigation(getActivity());
-
         if(playerService == null)
         {
+            MainNavigation mainNavigation = new MainNavigation(getActivity());
+
             mainNavigation.openConnectionFailure(new Exception("Please check connection preferences."));
         }
         else if(networkManager != null)
