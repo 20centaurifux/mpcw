@@ -33,24 +33,22 @@ public class OpenBrowserCommand implements ICommand<EBrowser>
     @Override
     public void run(EBrowser browser)
     {
-        Intent intent = null;
+        Bundle bundle = new Bundle();
 
         switch(browser)
         {
             case Artists:
-                intent = new Intent(context, BrowserActivity.class);
+                bundle.putSerializable("VIEW", EBrowserViewKind.ARTIST_ALBUM_SONG);
                 break;
 
             case Albums:
-                Bundle bundle = new Bundle();
-
-                bundle.putString("ARTIST_FILTER", "");
-
-                intent = new Intent(context, BrowserActivity.class);
-
-                intent.putExtras(bundle);
+                bundle.putSerializable("VIEW", EBrowserViewKind.ALBUM_ARTIST_SONG);
                 break;
         }
+
+        Intent intent = new Intent(context, BrowserActivity.class);
+
+        intent.putExtras(bundle);
 
         context.startActivity(intent);
     }

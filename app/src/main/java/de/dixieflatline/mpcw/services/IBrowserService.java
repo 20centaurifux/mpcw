@@ -21,8 +21,10 @@ import de.dixieflatline.mpcw.viewmodels.*;
 public interface IBrowserService
 {
     Iterable<String> getAllArtists() throws Exception;
+    Iterable<String> getArtistsByAlbum(String album) throws Exception;;
     Iterable<String> getAllAlbums() throws Exception;
     Iterable<String> getAlbumsByArtist(String artist) throws Exception;
+    Iterable<Song> getSongsByArtist(String artist) throws Exception;
     Iterable<Song> getSongsByAlbum(String album) throws Exception;
     Iterable<Song> getSongsByArtistAndAlbum(String artist, String album) throws Exception;
     void appendSongsFromArtist(String artist) throws Exception;

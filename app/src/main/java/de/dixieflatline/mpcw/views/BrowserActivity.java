@@ -16,10 +16,11 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.views;
 
-import android.app.*;
 import android.content.*;
 import androidx.databinding.*;
 import android.os.*;
+import android.util.*;
+
 import androidx.wear.widget.*;
 
 import java.util.*;
@@ -139,30 +140,25 @@ public class BrowserActivity extends AInjectableActivity
             {
                 Intent intent = getIntent();
                 Bundle extras = intent.getExtras();
+                EBrowserViewKind viewKind = EBrowserViewKind.ARTIST_ALBUM_SONG;
 
-                if(extras != null && extras.containsKey("ARTIST_FILTER"))
+                if(extras != null && extras.containsKey("VIEW"))
                 {
-                    if(extras.containsKey("ALBUM_FILTER"))
-                    {
-                        loadSongs(extras.getString("ARTIST_FILTER"), extras.getString("ALBUM_FILTER"));
-                    }
-                    else
-                    {
-                        String artist = extras.getString("ARTIST_FILTER");
-
-                        if(artist == null || artist.isEmpty())
-                        {
-                            loadAllAlbums();
-                        }
-                        else
-                        {
-                            loadAlbums(artist);
-                        }
-                    }
+                    viewKind = (EBrowserViewKind) extras.getSerializable("VIEW");
                 }
-                else
+
+                switch(viewKind)
                 {
-                    loadAllArtists();
+                    case ARTIST_ALBUM_SONG:
+                        artistAlbumView(extras);
+                        break;
+
+                    case ALBUM_ARTIST_SONG:
+                        albumArtistView(extras);
+                        break;
+
+                    default:
+                        Log.d(Tags.APOCALYPSE, "View not found: " + viewKind);
                 }
 
                 handler.post(() -> browser.finish());
@@ -176,12 +172,97 @@ public class BrowserActivity extends AInjectableActivity
         thread.start();
     }
 
+    private void artistAlbumView(Bundle extras) throws Exception
+    {
+        boolean hasArtistFilter = extras.containsKey("ARTIST_FILTER");
+
+        if(hasArtistFilter)
+        {
+            String artist = extras.getString("ARTIST_FILTER");
+            boolean hasAlbumFilter = extras.containsKey("ALBUM_FILTER");
+
+            if(hasAlbumFilter)
+            {
+                String album = extras.getString("ALBUM_FILTER");
+
+                loadSongs(artist, album);
+            }
+            else
+            {
+                loadAlbumsByArtist(artist);
+            }
+        }
+        else
+        {
+            loadAllArtists();
+        }
+    }
+
+    private void albumArtistView(Bundle extras) throws Exception
+    {
+        boolean hasAlbumFilter = extras.containsKey("ALBUM_FILTER");
+
+        if(hasAlbumFilter)
+        {
+            String album = extras.getString("ALBUM_FILTER");
+            boolean hasArtistFilter = extras.containsKey("ARTIST_FILTER");
+
+            if(hasArtistFilter)
+            {
+                String artist = extras.getString("ARTIST_FILTER");
+
+                loadSongs(artist, album);
+            }
+            else
+            {
+                loadArtistsByAlbum(album);
+            }
+        }
+        else
+        {
+            loadAllAlbums();
+        }
+    }
+
     private void loadAllArtists() throws Exception
     {
-        Activity activity = this;
-        Iterator<String> artistIterator = browserService.getAllArtists().iterator();
-        ICommand<Tag> activateTagCommand = new BrowseArtistCommand(activity);
-        AAsyncCommand selectTagCommand = new AppendArtistCommand();
+        Iterator<String> artistIterator = browserService.getAllArtists()
+                                                        .iterator();
+        ICommand<Tag> activateTagCommand = new BrowseAlbumCommand(this);
+        AAsyncCommand selectTagCommand = AppendArtistCommand.all();
+
+        inject(selectTagCommand);
+        selectTagCommand.addListener(tagCommandListener);
+
+        Iterable<Tag> tags = () -> new Iterator<Tag>()
+        {
+            @Override
+            public boolean hasNext()
+            {
+                return artistIterator.hasNext();
+            }
+
+            @Override
+            public Tag next()
+            {
+                Tag tag = Tag.Artist(artistIterator.next());
+
+                tag.setTagActivateCommand(activateTagCommand);
+                tag.setTagSelectCommand(selectTagCommand);
+
+                return tag;
+            }
+        };
+
+        handler.post(() -> browser.setTags(tags));
+    }
+
+    private void loadArtistsByAlbum(String album) throws Exception
+    {
+        Iterator<String> artistIterator = browserService.getArtistsByAlbum(album)
+                                                        .iterator();
+        ICommand<Tag> activateTagCommand = BrowseSongsCommand.byAlbumAndArtist(this, album);
+        AAsyncCommand selectTagCommand = AppendArtistCommand.withAlbum(album);
 
         inject(selectTagCommand);
         selectTagCommand.addListener(tagCommandListener);
@@ -211,10 +292,10 @@ public class BrowserActivity extends AInjectableActivity
 
     private void loadAllAlbums() throws Exception
     {
-        Activity activity = this;
-        Iterator<String> albumIterator = browserService.getAllAlbums().iterator();
-        ICommand<Tag> activateTagCommand = new BrowseAlbumCommand(activity, "");
-        AAsyncCommand selectTagCommand = new AppendAlbumCommand("");
+        Iterator<String> albumIterator = browserService.getAllAlbums()
+                                                       .iterator();
+        ICommand<Tag> activateTagCommand = new BrowseArtistCommand(this);
+        AAsyncCommand selectTagCommand = AppendAlbumCommand.all();
 
         inject(selectTagCommand);
         selectTagCommand.addListener(tagCommandListener);
@@ -242,12 +323,12 @@ public class BrowserActivity extends AInjectableActivity
         handler.post(() -> browser.setTags(tags));
     }
 
-    private void loadAlbums(String artist) throws Exception
+    private void loadAlbumsByArtist(String artist) throws Exception
     {
-        Activity activity = this;
-        Iterator<String> albumIterator = browserService.getAlbumsByArtist(artist).iterator();
-        ICommand<Tag> activateTagCommand = new BrowseAlbumCommand(activity, artist);
-        AAsyncCommand selectTagCommand = new AppendAlbumCommand(artist);
+        Iterator<String> albumIterator = browserService.getAlbumsByArtist(artist)
+                                                       .iterator();
+        ICommand<Tag> activateTagCommand = BrowseSongsCommand.byArtistAndAlbum(this, artist);
+        AAsyncCommand selectTagCommand = AppendAlbumCommand.withArtist(artist);
 
         inject(selectTagCommand);
         selectTagCommand.addListener(tagCommandListener);
@@ -289,7 +370,21 @@ public class BrowserActivity extends AInjectableActivity
     {
         Iterable<Song> songs;
 
-        if(artist == null || artist.isEmpty())
+        if(artist == null)
+        {
+            artist = "";
+        }
+
+        if(album == null)
+        {
+            album = "";
+        }
+
+        if(!artist.isEmpty() && album.isEmpty())
+        {
+            songs = browserService.getSongsByArtist(artist);
+        }
+        else if(!album.isEmpty() && artist.isEmpty())
         {
             songs = browserService.getSongsByAlbum(album);
         }

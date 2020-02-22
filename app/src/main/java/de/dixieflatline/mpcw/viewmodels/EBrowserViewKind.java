@@ -16,33 +16,8 @@
  ***************************************************************************/
 package de.dixieflatline.mpcw.viewmodels;
 
-import android.app.*;
-import android.content.*;
-import android.os.*;
-
-import de.dixieflatline.mpcw.views.*;
-
-public class BrowseAlbumCommand implements ICommand<Tag>
+public enum EBrowserViewKind
 {
-    private final Activity activity;
-
-    public BrowseAlbumCommand(Activity activity)
-    {
-        this.activity = activity;
-    }
-
-    @Override
-    public void run(Tag artist)
-    {
-        Intent intent = new Intent(activity, BrowserActivity.class);
-
-        Bundle bundle = new Bundle();
-
-        bundle.putSerializable("VIEW", EBrowserViewKind.ARTIST_ALBUM_SONG);
-        bundle.putString("ARTIST_FILTER", artist.getValue());
-
-        intent.putExtras(bundle);
-
-        activity.startActivity(intent);
-    }
+    ARTIST_ALBUM_SONG,
+    ALBUM_ARTIST_SONG
 }

@@ -30,12 +30,17 @@ public class AppendAlbumCommand extends AAsyncCommand<Tag>
     @Inject
     IBrowserService browserService;
 
-    public AppendAlbumCommand()
+    public static AppendAlbumCommand all()
     {
-        this.artist = "";
+        return new AppendAlbumCommand("");
     }
 
-    public AppendAlbumCommand(String artist)
+    public static AppendAlbumCommand withArtist(String artist)
+    {
+        return new AppendAlbumCommand(artist);
+    }
+
+    private AppendAlbumCommand(String artist)
     {
         this.artist = artist;
     }

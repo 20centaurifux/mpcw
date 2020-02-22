@@ -22,24 +22,51 @@ import android.os.*;
 
 import de.dixieflatline.mpcw.views.*;
 
-public class BrowseAlbumCommand implements ICommand<Tag>
+public class BrowseSongsCommand implements ICommand<Tag>
 {
     private final Activity activity;
+    private final Bundle bundle = new Bundle();
 
-    public BrowseAlbumCommand(Activity activity)
+    public static BrowseSongsCommand byArtistAndAlbum(Activity activity, String artist)
+    {
+        BrowseSongsCommand command = new BrowseSongsCommand(activity);
+
+        command.bundle.putSerializable("VIEW", EBrowserViewKind.ARTIST_ALBUM_SONG);
+        command.bundle.putString("ARTIST_FILTER", artist);
+
+        return command;
+    }
+
+    public static BrowseSongsCommand byAlbumAndArtist(Activity activity, String album)
+    {
+        BrowseSongsCommand command = new BrowseSongsCommand(activity);
+
+        command.bundle.putSerializable("VIEW", EBrowserViewKind.ALBUM_ARTIST_SONG);
+        command.bundle.putString("ALBUM_FILTER", album);
+
+        return command;
+    }
+
+    private BrowseSongsCommand(Activity activity)
     {
         this.activity = activity;
     }
 
     @Override
-    public void run(Tag artist)
+    public void run(Tag tag)
     {
         Intent intent = new Intent(activity, BrowserActivity.class);
 
-        Bundle bundle = new Bundle();
+        EBrowserViewKind viewKind = (EBrowserViewKind)bundle.getSerializable("VIEW");
 
-        bundle.putSerializable("VIEW", EBrowserViewKind.ARTIST_ALBUM_SONG);
-        bundle.putString("ARTIST_FILTER", artist.getValue());
+        if(viewKind == EBrowserViewKind.ARTIST_ALBUM_SONG)
+        {
+            bundle.putString("ALBUM_FILTER", tag.getValue());
+        }
+        else
+        {
+            bundle.putString("ARTIST_FILTER", tag.getValue());
+        }
 
         intent.putExtras(bundle);
 

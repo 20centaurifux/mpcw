@@ -32,13 +32,14 @@ public class BrowseArtistCommand implements ICommand<Tag>
     }
 
     @Override
-    public void run(Tag artist)
+    public void run(Tag album)
     {
+        Intent intent = new Intent(activity, BrowserActivity.class);
+
         Bundle bundle = new Bundle();
 
-        bundle.putString("ARTIST_FILTER", artist.getValue());
-
-        Intent intent = new Intent(activity, BrowserActivity.class);
+        bundle.putSerializable("VIEW", EBrowserViewKind.ALBUM_ARTIST_SONG);
+        bundle.putString("ALBUM_FILTER", album.getValue());
 
         intent.putExtras(bundle);
 

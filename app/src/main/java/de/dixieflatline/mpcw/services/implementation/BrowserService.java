@@ -44,6 +44,20 @@ public class BrowserService implements IBrowserService
     }
 
     @Override
+    public Iterable<String> getArtistsByAlbum(String album) throws Exception
+    {
+        Filter[] filter = new Filter[]
+        {
+            new Filter(ETag.Album, album)
+        };
+
+        ISearchResult<de.dixieflatline.mpcw.client.Tag> result = query(browser -> browser.findTags(ETag.Artist, filter));
+
+        return selectTagValues(result.getItems()
+                                     .iterator());
+    }
+
+    @Override
     public Iterable<String> getAllAlbums() throws Exception
     {
         ISearchResult<de.dixieflatline.mpcw.client.Tag> result = query(browser -> browser.findTags(ETag.Album));
@@ -55,7 +69,10 @@ public class BrowserService implements IBrowserService
     @Override
     public Iterable<String> getAlbumsByArtist(String artist) throws Exception
     {
-        Filter[] filter = new Filter[] { new Filter(ETag.Artist, artist) };
+        Filter[] filter = new Filter[]
+        {
+                new Filter(ETag.Artist, artist)
+        };
 
         ISearchResult<de.dixieflatline.mpcw.client.Tag> result = query(browser -> browser.findTags(ETag.Album, filter));
 
@@ -87,6 +104,20 @@ public class BrowserService implements IBrowserService
     }
 
     @Override
+    public Iterable<Song> getSongsByArtist(String artist) throws Exception
+    {
+        Filter[] filter = new Filter[]
+        {
+            new Filter(ETag.Artist, artist)
+        };
+
+        ISearchResult<de.dixieflatline.mpcw.client.Song> result = query(browser -> browser.findSongs(filter));
+
+        return convertSongs(result.getItems()
+                                  .iterator());
+    }
+
+    @Override
     public Iterable<Song> getSongsByAlbum(String album) throws Exception
     {
         Filter[] filter = new Filter[]
@@ -97,7 +128,7 @@ public class BrowserService implements IBrowserService
         ISearchResult<de.dixieflatline.mpcw.client.Song> result = query(browser -> browser.findSongs(filter));
 
         return convertSongs(result.getItems()
-                .iterator());
+                                  .iterator());
     }
 
     @Override

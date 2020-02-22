@@ -22,17 +22,41 @@ import de.dixieflatline.mpcw.services.*;
 
 public class AppendArtistCommand extends AAsyncCommand<Tag>
 {
+    private final String album;
+
     @Inject
     INetworkManager networkManager;
 
     @Inject
     IBrowserService browserService;
 
+    public static AppendArtistCommand all()
+    {
+        return new AppendArtistCommand("");
+    }
+
+    public static AppendArtistCommand withAlbum(String album)
+    {
+        return new AppendArtistCommand(album);
+    }
+
+    private AppendArtistCommand(String album)
+    {
+        this.album = album;
+    }
+
     @Override
     protected void run(Tag artist) throws Exception
     {
         networkManager.connectAndWait();
 
-        browserService.appendSongsFromArtist(artist.getValue());
+        if(album.isEmpty())
+        {
+            browserService.appendSongsFromArtist(artist.getValue());
+        }
+        else
+        {
+            browserService.appendSongsFromArtistAndAlbum(artist.getValue(), album);
+        }
     }
 }
