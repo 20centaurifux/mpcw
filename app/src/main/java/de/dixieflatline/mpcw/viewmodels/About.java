@@ -23,6 +23,7 @@ import de.dixieflatline.mpcw.*;
 public class About extends BaseObservable
 {
     private String version;
+    private String versionCode;
     private String author;
     private String date;
     private String website;
@@ -38,6 +39,18 @@ public class About extends BaseObservable
     {
         this.version = version;
         notifyPropertyChanged(BR.version);
+    }
+
+    @Bindable
+    public String getVersionCode()
+    {
+        return versionCode;
+    }
+
+    public void setVersionCode(String versionCode)
+    {
+        this.versionCode = versionCode;
+        notifyPropertyChanged(BR.versionCode);
     }
 
     @Bindable

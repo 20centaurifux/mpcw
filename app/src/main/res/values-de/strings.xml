@@ -16,6 +16,7 @@
     <string name="title_connection_failed">Verbindung fehlgeschlagen</string>
     <string name="button_retry">Wiederholen</string>
     <string name="title_version">Version</string>
+    <string name="title_version_code">Versionscode</string>
     <string name="title_date">Datum</string>
     <string name="title_author">Autor</string>
     <string name="title_license">Lizenz</string>

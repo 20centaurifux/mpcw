@@ -42,10 +42,12 @@ public class AboutService implements IAboutService
             PackageInfo packageInfo = getPackageInfo();
 
             about.setVersion(packageInfo.versionName);
+            about.setVersionCode(String.valueOf(packageInfo.versionCode));
         }
         catch(PackageManager.NameNotFoundException ex)
         {
             about.setVersion("n/a");
+            about.setVersionCode("n/a");
         }
 
         about.setDate(context.getString(R.string.app_date));

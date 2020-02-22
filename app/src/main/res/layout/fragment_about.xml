@@ -22,15 +22,26 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_version"
+                android:textStyle="bold"
+                android:textAlignment="center"/>
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/title_version"
+                    android:text="@{about.version}"
+                    android:textAlignment="center"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_version_code"
                     android:textStyle="bold"
                     android:textAlignment="center"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{about.version}"
+                    android:text="@{about.versionCode}"
                     android:textAlignment="center"/>
                 <TextView
                     android:layout_width="match_parent"
