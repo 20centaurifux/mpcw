@@ -48,6 +48,7 @@ public class OpenBrowserCommand implements ICommand<EBrowser>
 
         Intent intent = new Intent(context, BrowserActivity.class);
 
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtras(bundle);
 
         context.startActivity(intent);
