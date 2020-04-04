@@ -101,8 +101,16 @@ public class BrowserActivity extends AInjectableActivity
                 handler.post(() -> browser.fail(cause));
             }
         });
+    }
 
-        networkManager.connect();
+    protected void onResume()
+    {
+        super.onResume();
+
+        if(networkManager != null && !browser.getFinished())
+        {
+            networkManager.connect();
+        }
     }
 
     @Override
@@ -112,12 +120,27 @@ public class BrowserActivity extends AInjectableActivity
 
         try
         {
-            thread.interrupt();
-            thread.join(500);
+            if(thread != null)
+            {
+                thread.interrupt();
+                thread.join(500);
+            }
         }
-        catch(InterruptedException ex) { }
+        catch(InterruptedException _)
+        {
+            /* /\_/\
+              ( o.o )
+               > ^ <  */
+        }
+        finally
+        {
+            thread = null;
+        }
 
-        networkManager.release();
+        if(networkManager != null)
+        {
+            networkManager.release();
+        }
     }
 
     private void setupRecyclerView()
@@ -162,6 +185,13 @@ public class BrowserActivity extends AInjectableActivity
                 }
 
                 handler.post(() -> browser.finish());
+            }
+            catch(InterruptedException _)
+            {
+                /* /\_/\
+                  ( o o )
+                  ==_Y_==
+                    `-'  */
             }
             catch(Exception ex)
             {
